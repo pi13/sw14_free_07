@@ -19,11 +19,11 @@ public class DB_Main extends Activity {
         Log.i(CMONsettings.LOG_TAG, "APP startup..."); 
         
         hlpLectures = new HLPlectures(this);
-        hlpLectures.resetTable();
-        hlpLectures.getCreationString();
-        
         hlpLectures.openCon();
+        hlpLectures.resetTable();
+          
         hlpLectures.addLecture("701.123", "Test LV", "Some Comment...", "LV", 1, 1);
+        hlpLectures.allEntriesToLog();
         hlpLectures.closeCon();
         
         Log.i(CMONsettings.LOG_TAG, "APP done. your brain will be toasted in a few seconds :P"); 

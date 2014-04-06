@@ -1,9 +1,5 @@
 package at.lvmaster3000.database.helper;
 
-import java.util.List;
-
-import akm.sql.helper.HLPwordlist;
-import akm.types.Word;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -15,7 +11,7 @@ import at.lvmaster3000.settings.DBsettings;
 public class HLPlectures extends SQLiteOpenHelper {
 
 	//table name
-	public static final String TABLE_NAME = "lecture";
+	public static final String TABLE_NAME = "lectures";
 	
 	//table columns
 	public static final String COL_ID = "_id";
@@ -102,6 +98,7 @@ public class HLPlectures extends SQLiteOpenHelper {
 	public void resetTable() {		
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
 		db.execSQL(LECTURES_CREATE);
+		Log.i(DBsettings.LOG_TAG, "Table '" + TABLE_NAME + "' reseted");
 	}
 	
 	/**
@@ -130,19 +127,30 @@ public class HLPlectures extends SQLiteOpenHelper {
 	}
 	
 	/**
-	 * Function graps all words stored in DB and returns a list
+	 * Function returns all lectures stored in DB as list
 	 * 
-	 * @return List<TBL_wordlist>
+	 * COL_ID, COL_NUMBER, COL_NAME, COL_COMMENT, COL_TYPE, COL_REQUIRED, COL_COMPULSORY
 	 */
-	public List<Word> getAll() {		
-		Cursor cursor = h_wordlist.openCon().query(HLPwordlist.TABLE_NAME, HLPwordlist.allColumns, null, null, null, null, null);
-		
-		List<Word> words = cursorToWordlist(cursor);
+	public void allEntriesToLog() {		
+		Cursor cursor = db.query(TABLE_NAME, allColumns, null, null, null, null, null);
+				
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {			
+			String logstr = "";
+			
+			logstr += "ID: " + cursor.getLong(0) + " | ";
+			logstr += "Number: " + cursor.getString(1) + " | ";
+			logstr += "Comment: " + cursor.getString(2) + " | ";
+			logstr += "Type: " + cursor.getString(3) + " | ";
+			logstr += "Required: " + cursor.getInt(4) + " | ";	
+			logstr += "Compulsory: " + cursor.getInt(5) + " | ";	
+			
+			Log.i(DBsettings.LOG_TAG, logstr);
+			
+			cursor.moveToNext();
+		}		
 		
 		cursor.close();
-		h_wordlist.closeCon();
-		
-		return words;		
 	}
 
 	/**
