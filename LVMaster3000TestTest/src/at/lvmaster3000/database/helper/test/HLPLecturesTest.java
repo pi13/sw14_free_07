@@ -4,7 +4,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
+import android.util.Log;
 import at.lvmaster3000.database.helper.HLPLectures;
+import at.lvmaster3000.database.objects.Lecture;
+import at.lvmaster3000.settings.DBsettings;
 
 /**
  * test class for functionality of lecture helper class
@@ -13,6 +16,7 @@ import at.lvmaster3000.database.helper.HLPLectures;
  */
 public class HLPLecturesTest extends AndroidTestCase{
 
+	private String logtag = DBsettings.LOG_TAG_LECTURES_TEST;
 	private HLPLectures hlpLectures;
 	private SQLiteDatabase db;
 	
@@ -36,17 +40,20 @@ public class HLPLecturesTest extends AndroidTestCase{
 	}
 	
 	/**
-	 * test if we can read a lecture and its values from the database
+	 * test if deletion of lecture works
 	 */
-	public void testLectureRead(){
+	public void testLectureDelete(){
 		hlpLectures.resetTable();
         long id = hlpLectures.addLecture("701.123", "Test LV", "Some Comment...", "LV", 1, 1);
-        
-        Lecture queryResult = hlpLectures.getLecture(id);
-        String lecNr = queryResult.getLectureNumber();
-        
-        assertNotSame(-1, id);
-        assertEquals("701.123", lecNr);
+		hlpLectures.deleteLecture(id);
+		
+		try{
+			// should throw exception because lecture has been deleted
+			Cursor cursor = db.rawQuery("SELECT * FROM " + hlpLectures.TABLE_NAME + " WHERE _id = " + id, null);
+			assertEquals(0, cursor.getCount());
+		}catch(Exception e){
+			assertNull(e);
+		}
 	}
 	
 	/**

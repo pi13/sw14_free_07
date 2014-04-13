@@ -5,7 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
+import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.settings.DBsettings;
 
 public class HLPLectures extends SQLiteOpenHelper {
@@ -167,4 +169,5 @@ public class HLPLectures extends SQLiteOpenHelper {
 		db.delete(TABLE_NAME, COL_ID + " = " + id, null);		
 		Log.i(logtag, "Word deleted. ID: " + id);
 	}
+
 }
