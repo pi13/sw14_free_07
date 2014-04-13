@@ -8,9 +8,20 @@ public class Date {
 	private long id;
 	private long timestamp;
 	private String location;
+	
+	/**
+	 * is it a lecture held, a milestone, a teammeeting?
+	 */
 	private String type;
 	private String comment;
 	
+	public Date(long id, long time, String location, String type, String comment) {
+		this.id = id;
+		this.timestamp = time;
+		this.location = location;
+		this.type = type;
+		this.comment = comment;
+	}
 	public long getID() {
 		return id;
 	}

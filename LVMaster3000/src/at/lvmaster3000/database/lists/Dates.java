@@ -34,4 +34,12 @@ public class Dates {
 			dates.get(i).printDate();
 		}
 	}
+
+	public int nrOfDates() {
+		return this.dates.size();
+	}
+
+	public void deleteAllDates() {
+		this.dates.clear();
+	}
 }

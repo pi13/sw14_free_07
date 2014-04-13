@@ -14,11 +14,11 @@ public class Coworkers {
 		this.coworkers = new ArrayList<Coworker>();
 	}
 	
-	public void addDate(Coworker Coworker) {
+	public void addCoworker(Coworker Coworker) {
 		this.coworkers.add(Coworker);
 	}
 	
-	public List<Coworker> getDates() {
+	public List<Coworker> getCoworkers() {
 		return this.coworkers;
 	}
 	
@@ -34,6 +34,14 @@ public class Coworkers {
 		for(int i = 0; i < coworkers.size(); i++) {
 			coworkers.get(i).printCoworker();
 		}
+	}
+
+	public int nrOfCoworkers() {
+		return this.coworkers.size();
+	}
+
+	public void deleteAllCoworkers() {
+		this.coworkers.clear();		
 	}
 	
 	

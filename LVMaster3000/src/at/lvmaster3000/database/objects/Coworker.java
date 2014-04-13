@@ -7,8 +7,26 @@ import at.lvmaster3000.settings.DBsettings;
 public class Coworker {
 	
 	private long id;
+	
+	/**
+	 * would be the reference to the contact in phonebook, if implemented
+	 */
 	private String refid;
+	
+	/**
+	 * the role the coworker has in the task/learngroup
+	 */
 	private String role;
+
+	public Coworker(){
+		
+	}
+	
+	public Coworker(long id, String refid, String role) {
+		this.id = id;
+		this.refid = refid;
+		this.role = role;
+	}
 
 	public long getID() {
 		return id;
