@@ -15,6 +15,10 @@ public class Date {
 	private String type;
 	private String comment;
 	
+	public Date() {
+
+	}
+	
 	public Date(long id, long time, String location, String type, String comment) {
 		this.id = id;
 		this.timestamp = time;
@@ -22,6 +26,7 @@ public class Date {
 		this.type = type;
 		this.comment = comment;
 	}
+
 	public long getID() {
 		return id;
 	}
