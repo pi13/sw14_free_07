@@ -10,6 +10,7 @@ import at.lvmaster3000.database.helper.HLPCoworkers;
 import at.lvmaster3000.database.helper.HLPDates;
 import at.lvmaster3000.database.helper.HLPExams;
 import at.lvmaster3000.database.helper.HLPLectures;
+import at.lvmaster3000.database.helper.HLPRelations;
 import at.lvmaster3000.database.helper.HLPResources;
 import at.lvmaster3000.database.helper.HLPTasks;
 import at.lvmaster3000.database.lists.Lectures;
@@ -25,6 +26,7 @@ public class DB_Main extends Activity {
 	private HLPExams hlpexams;
 	private HLPCoworkers hlpcoworkers;
 	private HLPDates hlpdates;
+	private HLPRelations hlprelations;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -87,6 +89,17 @@ public class DB_Main extends Activity {
         hlpdates.addDate(1234567890, "Testlocation", "LV", "Thats a comment");
         hlpdates.allEntriesToLog();
         hlpdates.closeCon();
+        
+        //Relations test
+        hlprelations = new HLPRelations(this);
+        hlprelations.openCon();
+        hlprelations.resetTable();
+        
+        hlprelations.addRelation("lectures", 0, 1, 1);
+        hlprelations.addRelation("exams", 1, 0, 1);
+        hlprelations.addRelation("tasks", 1, 1, 0);
+        hlprelations.allEntriesToLog();
+        hlprelations.closeCon();
         
         
         //Lecture list test
