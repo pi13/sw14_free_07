@@ -127,7 +127,7 @@ public class HLPTasks extends SQLiteOpenHelper {
 			logstr += "ID: " + cursor.getLong(0) + " | ";
 			logstr += "Title: " + cursor.getString(1) + " | ";
 			logstr += "Comment: " + cursor.getString(2) + " | ";
-			logstr += "LectureID: " + cursor.getLong(3) + " | ";	
+			logstr += "LectureID: " + cursor.getLong(3);	
 			
 			Log.i(logtag, logstr);
 			
