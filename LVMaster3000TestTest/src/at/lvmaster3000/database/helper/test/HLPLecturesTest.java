@@ -40,20 +40,6 @@ public class HLPLecturesTest extends AndroidTestCase{
 	}
 	
 	/**
-	 * test if we can read a lecture and its values from the database
-	 */
-	public void testLectureRead(){
-		hlpLectures.resetTable();
-        long id = hlpLectures.addLecture("701.123", "Test LV", "Some Comment...", "LV", 1, 1);
-        Log.i(logtag, "id of new lecture is " + id);
-//        Lecture queryResult = hlpLectures.getLecture(id);
-//        String lecNr = queryResult.getNumber();
-//        
-//        assertNotSame(-1, id);
-//        assertEquals("701.123", lecNr);
-	}
-	
-	/**
 	 * test if deletion of lecture works
 	 */
 	public void testLectureDelete(){
@@ -61,13 +47,13 @@ public class HLPLecturesTest extends AndroidTestCase{
         long id = hlpLectures.addLecture("701.123", "Test LV", "Some Comment...", "LV", 1, 1);
 		hlpLectures.deleteLecture(id);
 		
-//		try{
-//			// should throw exception because lecture has been deleted
-//			hlpLectures.getLecture(id);
-//			assertTrue(false);
-//		}catch(Exception e){
-//			assertNotNull(e);
-//		}
+		try{
+			// should throw exception because lecture has been deleted
+			Cursor cursor = db.rawQuery("SELECT * FROM " + hlpLectures.TABLE_NAME + " WHERE _id = " + id, null);
+			assertEquals(0, cursor.getCount());
+		}catch(Exception e){
+			assertNull(e);
+		}
 	}
 	
 	/**
