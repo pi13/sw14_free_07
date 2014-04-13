@@ -8,28 +8,26 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import at.lvmaster3000.settings.DBsettings;
 
-public class HLPTasks extends SQLiteOpenHelper {
+public class HLPCoworkers extends SQLiteOpenHelper {
 
 	//table name
-	public static final String TABLE_NAME = "tasks";
+	public static final String TABLE_NAME = "coworkers";
 	
 	//table columns
 	public static final String COL_ID = "_id";
-	public static final String COL_TITLE = "title";
-	public static final String COL_COMMENT = "comment";
-	public static final String COL_LECTURE_ID = "lecture_id";
+	public static final String COL_REFID = "refid";
+	public static final String COL_ROLE = "role";
 	
-	private String logtag = DBsettings.LOG_TAG_TASKS;
+	private String logtag = DBsettings.LOG_TAG_COWORKERS;
 	
 	//columns list
-	public static final String[] allColumns = {COL_ID, COL_TITLE, COL_COMMENT, COL_LECTURE_ID};
+	public static final String[] allColumns = {COL_ID, COL_REFID, COL_ROLE};
 	
 	//create string
-	private static final String TASKS_CREATE = "CREATE TABLE " + TABLE_NAME + " (" +
+	private static final String COWORKERS_CREATE = "CREATE TABLE " + TABLE_NAME + " (" +
 												COL_ID + " integer primary key autoincrement, " +
-												COL_TITLE + " text not null, " +
-												COL_COMMENT + " text not null, " +
-												COL_LECTURE_ID + " integer);";
+												COL_REFID + " text not null, " +
+												COL_ROLE + " text not null);";
 	
 	//database adapter
 	private SQLiteDatabase db;
@@ -39,7 +37,7 @@ public class HLPTasks extends SQLiteOpenHelper {
 	 * 
 	 * @param context	Per default "this" in main class
 	 */
-	public HLPTasks(Context context) {
+	public HLPCoworkers(Context context) {
 		super(context, DBsettings.DATABASE_NAME, null, DBsettings.DATABASE_VERSION);
 		Log.i(logtag, TABLE_NAME + " helper created");
 	}
@@ -50,13 +48,13 @@ public class HLPTasks extends SQLiteOpenHelper {
 	 * @return	String
 	 */
 	public String getCreationString() {
-		return TASKS_CREATE;
+		return COWORKERS_CREATE;
 	}
 	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		Log.i(logtag, TASKS_CREATE);
-		db.execSQL(TASKS_CREATE);
+		Log.i(logtag, COWORKERS_CREATE);
+		db.execSQL(COWORKERS_CREATE);
 	}
 
 	@Override
@@ -92,22 +90,20 @@ public class HLPTasks extends SQLiteOpenHelper {
 	 */
 	public void resetTable() {		
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-		db.execSQL(TASKS_CREATE);
+		db.execSQL(COWORKERS_CREATE);
 		Log.i(logtag, "Table '" + TABLE_NAME + "' reseted");
 	}
 	
 	/**
 	 * Function inserts a new record into the table
-	 * @param title
-	 * @param comment
-	 * @param lectureID
+	 * @param refid
+	 * @param role
 	 */
-	public void addTask(String title, String comment, long lectureID) {
+	public void addCoworker(String refid, String role) {
 		ContentValues values = new ContentValues();
 		
-		values.put(COL_TITLE, title);
-		values.put(COL_COMMENT, comment);
-		values.put(COL_LECTURE_ID, lectureID);	
+		values.put(COL_REFID, refid);
+		values.put(COL_ROLE, role);	
 		
 		long insertId = db.insert(TABLE_NAME, null, values);
 		
@@ -125,9 +121,8 @@ public class HLPTasks extends SQLiteOpenHelper {
 			String logstr = "";
 			
 			logstr += "ID: " + cursor.getLong(0) + " | ";
-			logstr += "Title: " + cursor.getString(1) + " | ";
-			logstr += "Comment: " + cursor.getString(2) + " | ";
-			logstr += "LectureID: " + cursor.getLong(3);	
+			logstr += "Ref-ID: " + cursor.getString(1) + " | ";
+			logstr += "Role: " + cursor.getString(2);	
 			
 			Log.i(logtag, logstr);
 			
@@ -142,7 +137,7 @@ public class HLPTasks extends SQLiteOpenHelper {
 	 * 
 	 * @param id	Entry ID
 	 */
-	public void deleteTask(long id) {
+	public void deleteCoworker(long id) {
 		db.delete(TABLE_NAME, COL_ID + " = " + id, null);		
 		Log.i(logtag, "Entry deleted. ID: " + id);
 	}
