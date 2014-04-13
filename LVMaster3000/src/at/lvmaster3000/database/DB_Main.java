@@ -3,6 +3,7 @@ package at.lvmaster3000.database;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import at.lvmaster3000.database.helper.HLPCoworkers;
 import at.lvmaster3000.database.helper.HLPDates;
 import at.lvmaster3000.database.helper.HLPTasks;
 import at.lvmaster3000.database.helper.HLPLectures;
@@ -14,6 +15,7 @@ public class DB_Main extends Activity {
 	private HLPLectures hlpLectures;
 	private HLPTasks hlptasks;
 	
+	private HLPCoworkers hlpcoworkers;
 	private HLPDates hlpdates;
 	
 	/** Called when the activity is first created. */
@@ -40,6 +42,15 @@ public class DB_Main extends Activity {
         hlptasks.addTask("Test TASK", "Some Comment...", id);
         hlptasks.allEntriesToLog();
         hlptasks.closeCon();
+        
+      //Dates test
+        hlpcoworkers = new HLPCoworkers(this);
+        hlpcoworkers.openCon();
+        hlpcoworkers.resetTable();
+        
+        hlpcoworkers.addCoworker("xzy", "Boss");
+        hlpcoworkers.allEntriesToLog();
+        hlpcoworkers.closeCon();
         
         //Dates test
         hlpdates = new HLPDates(this);

@@ -31,7 +31,7 @@ public class HLPDates extends SQLiteOpenHelper {
 												COL_TIMESTAMP + " integer not null, " +
 												COL_LOCATION + " text not null, " +
 												COL_TYPE + " text not null, " +
-												COL_COMMENT + " text not null)";
+												COL_COMMENT + " text not null);";
 	
 	//database adapter
 	private SQLiteDatabase db;
@@ -100,9 +100,10 @@ public class HLPDates extends SQLiteOpenHelper {
 	
 	/**
 	 * Function inserts a new record into the table
-	 * @param title
+	 * @param timestamp
+	 * @param location
+	 * @param type
 	 * @param comment
-	 * @param lectureID
 	 */
 	public void addDate(long timestamp, String location, String type, String comment) {
 		ContentValues values = new ContentValues();
