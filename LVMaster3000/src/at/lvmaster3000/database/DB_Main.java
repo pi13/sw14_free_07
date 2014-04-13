@@ -1,20 +1,25 @@
 package at.lvmaster3000.database;
 
+import java.util.List;
+
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import at.lvmaster3000.database.helper.HLPCoworkers;
 import at.lvmaster3000.database.helper.HLPDates;
 import at.lvmaster3000.database.helper.HLPExams;
+import at.lvmaster3000.database.helper.HLPLectures;
 import at.lvmaster3000.database.helper.HLPResources;
 import at.lvmaster3000.database.helper.HLPTasks;
-import at.lvmaster3000.database.helper.HLPLectures;
+import at.lvmaster3000.database.lists.Lectures;
 import at.lvmaster3000.settings.CMONsettings;
+import at.lvmaster3000.settings.DBsettings;
 
 public class DB_Main extends Activity {
 	
 	/* Helper classes */
-	private HLPLectures hlpLectures;
+	private HLPLectures hlplectures;
 	private HLPTasks hlptasks;
 	private HLPResources hlpresources;
 	private HLPExams hlpexams;
@@ -29,13 +34,13 @@ public class DB_Main extends Activity {
         Log.i(CMONsettings.LOG_TAG, "APP startup..."); 
         
         //Lectures test
-        hlpLectures = new HLPLectures(this);
-        hlpLectures.openCon();
-        hlpLectures.resetTable();
+        hlplectures = new HLPLectures(this);
+        hlplectures.openCon();
+        hlplectures.resetTable();
           
-        long id = hlpLectures.addLecture("701.123", "Test LV", "Some Comment...", "LV", 1, 1);
-        hlpLectures.allEntriesToLog();
-        hlpLectures.closeCon();
+        long id = hlplectures.addLecture("701.123", "Test LV", "Some Comment...", "LV", 1, 1);
+        hlplectures.allEntriesToLog();
+        hlplectures.closeCon();
         
         //Tasks test
         hlptasks = new HLPTasks(this);
@@ -65,7 +70,7 @@ public class DB_Main extends Activity {
         hlpexams.allEntriesToLog();
         hlpexams.closeCon();
         
-      //Coworkers test
+        //Coworkers test
         hlpcoworkers = new HLPCoworkers(this);
         hlpcoworkers.openCon();
         hlpcoworkers.resetTable();
@@ -83,6 +88,19 @@ public class DB_Main extends Activity {
         hlpdates.allEntriesToLog();
         hlpdates.closeCon();
         
+        
+        //Lecture list test
+        Log.w(DBsettings.LOG_TAG_LECTURES, "Lecture list test");
+        String query = "SELECT * FROM " + hlplectures.TABLE_NAME;
+        
+        Lectures lectures = new Lectures();
+        Cursor cursor = hlplectures.openCon().rawQuery(query, null);
+        if(cursor != null) {        	
+        	lectures.cursorToLectureList(cursor);
+        	lectures.printLectureList();
+        } else {
+        	Log.w(DBsettings.LOG_TAG_LECTURES, "Cursor is NULL!!");
+        }
         
         Log.i(CMONsettings.LOG_TAG, "APP done. your brain will be toasted in a few seconds :P"); 
     }
