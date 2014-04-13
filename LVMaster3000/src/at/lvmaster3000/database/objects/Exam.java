@@ -48,7 +48,7 @@ public class Exam {
 		msg += " | Title: " + this.title;
 		msg += " | Comment: " + this.comment;
 		msg += " | Lecture ID: " +  this.lecture_id;
-		Log.d(DBsettings.LOG_TAG_TASKS, msg);
+		Log.d(DBsettings.LOG_TAG_EXAMS, msg);
 	}
 
 }
