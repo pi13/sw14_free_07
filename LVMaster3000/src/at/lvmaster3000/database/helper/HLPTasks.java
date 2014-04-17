@@ -102,7 +102,7 @@ public class HLPTasks extends SQLiteOpenHelper {
 	 * @param comment
 	 * @param lectureID
 	 */
-	public void addTask(String title, String comment, long lectureID) {
+	public long addTask(String title, String comment, long lectureID) {
 		ContentValues values = new ContentValues();
 		
 		values.put(COL_TITLE, title);
@@ -112,6 +112,8 @@ public class HLPTasks extends SQLiteOpenHelper {
 		long insertId = db.insert(TABLE_NAME, null, values);
 		
 		Log.i(logtag, "New entry added. ID: "+ insertId);
+		
+		return insertId;
 	}
 	
 	/**

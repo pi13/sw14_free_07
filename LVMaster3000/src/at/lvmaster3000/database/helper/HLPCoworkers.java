@@ -98,8 +98,9 @@ public class HLPCoworkers extends SQLiteOpenHelper {
 	 * Function inserts a new record into the table
 	 * @param refid
 	 * @param role
+	 * @return 
 	 */
-	public void addCoworker(String refid, String role) {
+	public long addCoworker(String refid, String role) {
 		ContentValues values = new ContentValues();
 		
 		values.put(COL_REFID, refid);
@@ -108,6 +109,8 @@ public class HLPCoworkers extends SQLiteOpenHelper {
 		long insertId = db.insert(TABLE_NAME, null, values);
 		
 		Log.i(logtag, "New entry added. ID: "+ insertId);
+		
+		return insertId;
 	}
 	
 	/**

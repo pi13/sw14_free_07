@@ -104,8 +104,9 @@ public class HLPDates extends SQLiteOpenHelper {
 	 * @param location
 	 * @param type
 	 * @param comment
+	 * @return 
 	 */
-	public void addDate(long timestamp, String location, String type, String comment) {
+	public long addDate(long timestamp, String location, String type, String comment) {
 		ContentValues values = new ContentValues();
 		
 		values.put(COL_TIMESTAMP, timestamp);
@@ -116,6 +117,8 @@ public class HLPDates extends SQLiteOpenHelper {
 		long insertId = db.insert(TABLE_NAME, null, values);
 		
 		Log.i(logtag, "New entry added. ID: "+ insertId);
+		
+		return insertId;
 	}
 	
 	/**
