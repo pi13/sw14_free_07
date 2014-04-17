@@ -13,6 +13,21 @@ public class Lecture {
 	private int required;
 	private int compulsory;
 	
+	public Lecture(long id, String number, String name, String comment,
+			String type, int req, int comp) {
+		this.id = id;
+		this.number = number;
+		this.name = name;
+		this.comment = comment;
+		this.type = type;
+		this.required = req;
+		this.compulsory = comp;
+	}
+
+	public Lecture() {
+		
+	}
+
 	public long getID() {
 		return id;
 	}
