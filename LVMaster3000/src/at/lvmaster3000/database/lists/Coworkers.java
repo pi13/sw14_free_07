@@ -43,6 +43,11 @@ public class Coworkers {
 	public void deleteAllCoworkers() {
 		this.coworkers.clear();		
 	}
+
+	public int nrOfObjects() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	
 }

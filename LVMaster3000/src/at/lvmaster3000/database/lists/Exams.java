@@ -34,4 +34,9 @@ public class Exams {
 			this.exams.get(i).printExam();
 		}
 	}
+
+	public int nrOfExams() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

@@ -42,4 +42,9 @@ public class Dates {
 	public void deleteAllDates() {
 		this.dates.clear();
 	}
+
+	public int nrOfObjects() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
