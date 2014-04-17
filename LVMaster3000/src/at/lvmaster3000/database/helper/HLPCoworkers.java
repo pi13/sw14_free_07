@@ -99,7 +99,7 @@ public class HLPCoworkers extends SQLiteOpenHelper {
 	 * @param refid
 	 * @param role
 	 */
-	public void addCoworker(String refid, String role) {
+	public long addCoworker(String refid, String role) {
 		ContentValues values = new ContentValues();
 		
 		values.put(COL_REFID, refid);
@@ -108,6 +108,8 @@ public class HLPCoworkers extends SQLiteOpenHelper {
 		long insertId = db.insert(TABLE_NAME, null, values);
 		
 		Log.i(logtag, "New entry added. ID: "+ insertId);
+		
+		return insertId;
 	}
 	
 	/**
@@ -137,9 +139,11 @@ public class HLPCoworkers extends SQLiteOpenHelper {
 	 * 
 	 * @param id	Entry ID
 	 */
-	public void deleteCoworker(long id) {
-		db.delete(TABLE_NAME, COL_ID + " = " + id, null);		
+	public int deleteCoworker(long id) {
+		int ret = db.delete(TABLE_NAME, COL_ID + " = " + id, null);		
 		Log.i(logtag, "Entry deleted. ID: " + id);
+		
+		return ret;
 	}
 
 }
