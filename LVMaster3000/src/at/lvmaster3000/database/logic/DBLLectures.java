@@ -1,6 +1,7 @@
 package at.lvmaster3000.database.logic;
 
 import android.content.Context;
+import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.lists.Lectures;
 import at.lvmaster3000.database.lists.Tasks;
 import at.lvmaster3000.database.objects.Lecture;
@@ -43,6 +44,11 @@ public class DBLLectures {
 	}
 
 	public Lectures getLectures() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Exams getExamsForLecture(Lecture lecture) {
 		// TODO Auto-generated method stub
 		return null;
 	}

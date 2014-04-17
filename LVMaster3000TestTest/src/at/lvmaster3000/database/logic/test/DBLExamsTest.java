@@ -11,6 +11,7 @@ import android.test.mock.MockContentResolver;
 import android.test.mock.MockContext;
 import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.lists.Lectures;
+import at.lvmaster3000.database.lists.Tasks;
 import at.lvmaster3000.database.logic.DBLExams;
 import at.lvmaster3000.database.logic.DBLLectures;
 import at.lvmaster3000.database.objects.Coworker;

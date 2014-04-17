@@ -9,6 +9,7 @@ import android.test.IsolatedContext;
 import android.test.RenamingDelegatingContext;
 import android.test.mock.MockContentResolver;
 import android.test.mock.MockContext;
+import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.lists.Lectures;
 import at.lvmaster3000.database.lists.Tasks;
 import at.lvmaster3000.database.logic.DBLLectures;
@@ -46,25 +47,41 @@ public class DBLLecturesTest extends AndroidTestCase{
 		dropAllObjects();
 		createTestObjects();
 		fillTestLecturesInDBL();
-		assertEquals(testObjects.size(), dblObjects.getLectures().nrOfLectures());
 		
-		dblObjects.deleteLecture(testObjects.get(0));
-		
+		assertEquals(testObjects.size(), dblObjects.getLectures().nrOfLectures());		
+		dblObjects.deleteLecture(testObjects.get(0));		
 		assertEquals(testObjects.size()-1, dblObjects.getLectures().nrOfLectures());
+		Lecture remaining = dblObjects.getLectures().getLectures().get(0);
+		assertEquals(testObjects.get(1).getNumber(), remaining.getNumber());
 	}
 	
 	public void testGetLectureByNumber(){
 		dropAllObjects();
 		createTestObjects();
 		fillTestLecturesInDBL();
-		Lecture lec = dblObjects.getLectureByNumber("300.000");
+		
+		Lecture lec = dblObjects.getLectureByNumber(testObjects.get(0).getNumber());
+		assertEquals(lec.getNumber(), testObjects.get(0).getNumber());
 	}
 
 	public void testGetTasksForLecture(){
 		dropAllObjects();
 		createTestObjects();
 		fillTestLecturesInDBL();
+		
 		Tasks tasks = dblObjects.getTasksForLecture(testObjects.get(0));
+		// TODO useful test case
+		assertEquals(true, false);
+	}
+	
+	public void testGetAllExamsOfLecture(){
+		dropAllObjects();
+		createTestObjects();
+		fillTestLecturesInDBL();
+		
+		Exams exams = dblObjects.getExamsForLecture(testObjects.get(0));
+		// TODO useful test case
+		assertEquals(true, false);
 	}
 	
 	public void testGetAllLectures(){
