@@ -1,6 +1,7 @@
 package at.lvmaster3000.database.logic;
 
 import android.content.Context;
+
 import android.database.Cursor;
 import android.util.Log;
 import at.lvmaster3000.database.helper.HLPDates;
@@ -12,6 +13,10 @@ import at.lvmaster3000.database.lists.Lectures;
 import at.lvmaster3000.database.lists.Tasks;
 import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.settings.DBsettings;
+import at.lvmaster3000.database.lists.Exams;
+import at.lvmaster3000.database.lists.Lectures;
+import at.lvmaster3000.database.lists.Tasks;
+import at.lvmaster3000.database.objects.Lecture;
 
 public class DBLLectures {
 
@@ -59,6 +64,10 @@ public class DBLLectures {
 	 */
 	public int deleteLecture(long id) {
 		return this.hlplectures.deleteLecture(id);
+	}
+	
+	public void deleteLecture(Lecture lecture) {
+		
 	}
 	
 	/**
@@ -146,5 +155,10 @@ public class DBLLectures {
         }
 		
 		return dates;
+	}
+
+	public Exams getExamsForLecture(Lecture lecture) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

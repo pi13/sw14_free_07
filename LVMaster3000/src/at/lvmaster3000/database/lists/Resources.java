@@ -35,4 +35,9 @@ public class Resources {
 			this.resources.get(i).printResource();
 		}
 	}
+
+	public int nrOfObjects() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

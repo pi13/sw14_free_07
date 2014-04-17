@@ -104,6 +104,7 @@ public class HLPDates extends SQLiteOpenHelper {
 	 * @param location
 	 * @param type
 	 * @param comment
+	 * @return 
 	 */
 	public long addDate(long timestamp, String location, String type, String comment) {
 		ContentValues values = new ContentValues();
