@@ -9,9 +9,22 @@ public class Exam {
 	private String title;
 	private String comment;
 	private long lecture_id;
+	
+	public Exam(){
+		
+	}
+	
+	public Exam(long id, String title, String comm, long lecId){
+		this.id = id; 
+		this.title = title;
+		this.comment = comm;
+		this.lecture_id = lecId;
+	}
+	
 	public long getId() {
 		return id;
 	}
+	
 	public void setId(long id) {
 		this.id = id;
 	}
