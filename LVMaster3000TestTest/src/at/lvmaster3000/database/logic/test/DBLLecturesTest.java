@@ -43,14 +43,27 @@ public class DBLLecturesTest extends AndroidTestCase{
 	}
 	
 	public void testDeleteLecture(){
+		dropAllObjects();
+		createTestObjects();
+		fillTestLecturesInDBL();
+		assertEquals(testObjects.size(), dblObjects.getLectures().nrOfLectures());
+		
 		dblObjects.deleteLecture(testObjects.get(0));
+		
+		assertEquals(testObjects.size()-1, dblObjects.getLectures().nrOfLectures());
 	}
 	
 	public void testGetLectureByNumber(){
+		dropAllObjects();
+		createTestObjects();
+		fillTestLecturesInDBL();
 		Lecture lec = dblObjects.getLectureByNumber("300.000");
 	}
 
 	public void testGetTasksForLecture(){
+		dropAllObjects();
+		createTestObjects();
+		fillTestLecturesInDBL();
 		Tasks tasks = dblObjects.getTasksForLecture(testObjects.get(0));
 	}
 	

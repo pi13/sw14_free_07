@@ -42,4 +42,9 @@ public class DBLLectures {
 		return null;
 	}
 
+	public Lectures getLectures() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
