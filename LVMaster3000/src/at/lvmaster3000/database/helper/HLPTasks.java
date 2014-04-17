@@ -17,19 +17,18 @@ public class HLPTasks extends SQLiteOpenHelper {
 	public static final String COL_ID = "_id";
 	public static final String COL_TITLE = "title";
 	public static final String COL_COMMENT = "comment";
-	public static final String COL_LECTURE_ID = "lecture_id";
+//	public static final String COL_LECTURE_ID = "lecture_id";
 	
 	private String logtag = DBsettings.LOG_TAG_TASKS;
 	
 	//columns list
-	public static final String[] allColumns = {COL_ID, COL_TITLE, COL_COMMENT, COL_LECTURE_ID};
+	public static final String[] allColumns = {COL_ID, COL_TITLE, COL_COMMENT};
 	
 	//create string
 	private static final String TASKS_CREATE = "CREATE TABLE " + TABLE_NAME + " (" +
 												COL_ID + " integer primary key autoincrement, " +
 												COL_TITLE + " text not null, " +
-												COL_COMMENT + " text not null, " +
-												COL_LECTURE_ID + " integer);";
+												COL_COMMENT + " text not null);";
 	
 	//database adapter
 	private SQLiteDatabase db;
@@ -102,16 +101,18 @@ public class HLPTasks extends SQLiteOpenHelper {
 	 * @param comment
 	 * @param lectureID
 	 */
-	public void addTask(String title, String comment, long lectureID) {
+	public long addTask(String title, String comment) {
 		ContentValues values = new ContentValues();
 		
 		values.put(COL_TITLE, title);
 		values.put(COL_COMMENT, comment);
-		values.put(COL_LECTURE_ID, lectureID);	
+//		values.put(COL_LECTURE_ID, lectureID);	
 		
 		long insertId = db.insert(TABLE_NAME, null, values);
 		
-		Log.i(logtag, "New entry added. ID: "+ insertId);
+		Log.i(logtag, "New entry added. ID: " + insertId);
+		
+		return insertId;
 	}
 	
 	/**
@@ -126,8 +127,7 @@ public class HLPTasks extends SQLiteOpenHelper {
 			
 			logstr += "ID: " + cursor.getLong(0) + " | ";
 			logstr += "Title: " + cursor.getString(1) + " | ";
-			logstr += "Comment: " + cursor.getString(2) + " | ";
-			logstr += "LectureID: " + cursor.getLong(3);	
+			logstr += "Comment: " + cursor.getString(2);	
 			
 			Log.i(logtag, logstr);
 			
@@ -142,9 +142,11 @@ public class HLPTasks extends SQLiteOpenHelper {
 	 * 
 	 * @param id	Entry ID
 	 */
-	public void deleteTask(long id) {
-		db.delete(TABLE_NAME, COL_ID + " = " + id, null);		
+	public int deleteTask(long id) {
+		int ret = db.delete(TABLE_NAME, COL_ID + " = " + id, null);		
 		Log.i(logtag, "Entry deleted. ID: " + id);
+		
+		return ret;
 	}
 
 }

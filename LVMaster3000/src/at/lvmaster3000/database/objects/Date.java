@@ -2,6 +2,8 @@ package at.lvmaster3000.database.objects;
 
 import android.database.Cursor;
 import android.util.Log;
+import at.lvmaster3000.database.helper.HLPDates;
+import at.lvmaster3000.database.helper.HLPRelations;
 import at.lvmaster3000.settings.DBsettings;
 
 public class Date {
@@ -59,12 +61,19 @@ public class Date {
 	}
 	
 	public Date cursorToDate(Cursor cursor) {
-		//COL_ID, COL_TIMESTAMP, COL_LOCATION, COL_TYPE, COL_COMMENT
-		this.id = cursor.getLong(0);
-		this.timestamp = cursor.getLong(1);
-		this.location = cursor.getString(2);
-		this.type = cursor.getString(3);
-		this.comment = cursor.getString(4);
+		//COL_ID, COL_TIMESTAMP, COL_LOCATION, COL_TYPE, COL_COMMENT		
+		int idx = cursor.getColumnIndex(HLPRelations.COL_DATE_ID);
+		
+		if(idx < 0) {
+//			this.id = cursor.getLong(cursor.getColumnIndex(HLPDates.COL_ID));
+		} else {
+			this.id = cursor.getLong(idx);
+		}
+				
+		this.timestamp = cursor.getLong(cursor.getColumnIndex(HLPDates.COL_TIMESTAMP));
+		this.location = cursor.getString(cursor.getColumnIndex(HLPDates.COL_LOCATION));
+		this.type = cursor.getString(cursor.getColumnIndex(HLPDates.COL_TYPE));
+		this.comment = cursor.getString(cursor.getColumnIndex(HLPDates.COL_COMMENT));
 		
 		return this;
 	}
@@ -74,7 +83,7 @@ public class Date {
 		msg += " | Timestamp: " + this.timestamp;
 		msg += " | Location: " + this.location;
 		msg += " | Type: " + this.type;
-		msg += " | Comment" + this.comment;
+		msg += " | Comment: " + this.comment;
 		Log.d(DBsettings.LOG_TAG_DATES, msg);		
 	}
 }

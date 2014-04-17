@@ -105,7 +105,7 @@ public class HLPDates extends SQLiteOpenHelper {
 	 * @param type
 	 * @param comment
 	 */
-	public void addDate(long timestamp, String location, String type, String comment) {
+	public long addDate(long timestamp, String location, String type, String comment) {
 		ContentValues values = new ContentValues();
 		
 		values.put(COL_TIMESTAMP, timestamp);
@@ -116,6 +116,8 @@ public class HLPDates extends SQLiteOpenHelper {
 		long insertId = db.insert(TABLE_NAME, null, values);
 		
 		Log.i(logtag, "New entry added. ID: "+ insertId);
+		
+		return insertId;
 	}
 	
 	/**
@@ -147,9 +149,11 @@ public class HLPDates extends SQLiteOpenHelper {
 	 * 
 	 * @param id	Entry ID
 	 */
-	public void deleteDate(long id) {
-		db.delete(TABLE_NAME, COL_ID + " = " + id, null);		
+	public int deleteDate(long id) {
+		int ret = db.delete(TABLE_NAME, COL_ID + " = " + id, null);		
 		Log.i(logtag, "Entry deleted. ID: " + id);
+		
+		return ret;
 	}
 
 }

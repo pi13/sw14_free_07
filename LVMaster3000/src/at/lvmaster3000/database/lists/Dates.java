@@ -21,7 +21,7 @@ public class Dates {
 		return this.dates;
 	}
 	
-	public void cursorToLectureList(Cursor cursor) {
+	public void cursorToDateList(Cursor cursor) {
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			this.dates.add(new Date().cursorToDate(cursor));
@@ -29,7 +29,7 @@ public class Dates {
 		}
 	}
 	
-	public void printLectureList() {
+	public void printDateList() {
 		for(int i = 0; i < dates.size(); i++) {
 			dates.get(i).printDate();
 		}

@@ -2,6 +2,8 @@ package at.lvmaster3000.database.objects;
 
 import android.database.Cursor;
 import android.util.Log;
+import at.lvmaster3000.database.helper.HLPRelations;
+import at.lvmaster3000.database.helper.HLPTasks;
 import at.lvmaster3000.settings.DBsettings;
 
 public class Task {
@@ -9,7 +11,8 @@ public class Task {
 	private long id;
 	private String title;
 	private String comment;
-	private long lecture_id;
+	private Date date;
+	
 	public long getId() {
 		return id;
 	}
@@ -28,18 +31,26 @@ public class Task {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	public long getLecture_id() {
-		return lecture_id;
+	public Date getDate() {
+		return date;
 	}
-	public void setLecture_id(long lecture_id) {
-		this.lecture_id = lecture_id;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	
 	public Task cursorToTask(Cursor cursor) {
-		this.id = cursor.getLong(0); 
-		this.title = cursor.getString(1);
-		this.comment = cursor.getString(2);
-		this.lecture_id = cursor.getLong(3);
+		//COL_ID, COL_TITLE, COL_COMMENT
+		int idx = cursor.getColumnIndex(HLPRelations.COL_TASK_ID);
+				
+		if(idx < 0) {
+			this.id = cursor.getLong(cursor.getColumnIndex(HLPTasks.COL_ID));
+		} else {
+			this.id = cursor.getLong(idx);
+		}
+		
+		this.title = cursor.getString(cursor.getColumnIndex(HLPTasks.COL_TITLE));
+		this.comment = cursor.getString(cursor.getColumnIndex(HLPTasks.COL_COMMENT));
+		this.date = new Date().cursorToDate(cursor);
 		
 		return this;
 	}
@@ -48,7 +59,10 @@ public class Task {
 		String msg = "ID: " + this.id;
 		msg += " | Title: " + this.title;
 		msg += " | Comment: " + this.comment;
-		msg += " | Lecture ID: " +  this.lecture_id;
 		Log.d(DBsettings.LOG_TAG_TASKS, msg);
+		if(date != null) {
+			date.printDate();
+		}
 	}
+	
 }

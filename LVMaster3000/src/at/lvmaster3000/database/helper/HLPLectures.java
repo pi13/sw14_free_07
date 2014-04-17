@@ -165,9 +165,11 @@ public class HLPLectures extends SQLiteOpenHelper {
 	 * 
 	 * @param id	Lecture ID
 	 */
-	public void deleteLecture(long id) {
-		db.delete(TABLE_NAME, COL_ID + " = " + id, null);		
+	public int deleteLecture(long id) {
+		int ret = db.delete(TABLE_NAME, COL_ID + " = " + id, null);		
 		Log.i(logtag, "Word deleted. ID: " + id);
+		
+		return ret;
 	}
 
 }

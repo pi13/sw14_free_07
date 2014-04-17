@@ -19,11 +19,12 @@ public class HLPRelations extends SQLiteOpenHelper {
 	public static final String COL_LECTURE_ID = "lecture_id";
 	public static final String COL_EXAM_ID = "exam_id";
 	public static final String COL_TASK_ID = "task_id";
+	public static final String COL_DATE_ID = "date_id";
 	
 	private String logtag = DBsettings.LOG_TAG_RELATIONS;
 	
 	//columns list
-	public static final String[] allColumns = {COL_ID, COL_SRCTABLE, COL_LECTURE_ID, COL_EXAM_ID, COL_TASK_ID};
+	public static final String[] allColumns = {COL_ID, COL_SRCTABLE, COL_LECTURE_ID, COL_EXAM_ID, COL_TASK_ID, COL_DATE_ID};
 	
 	//create string
 	private static final String TASKS_CREATE = "CREATE TABLE " + TABLE_NAME + " (" +
@@ -31,7 +32,8 @@ public class HLPRelations extends SQLiteOpenHelper {
 												COL_SRCTABLE + " text not null, " +
 												COL_LECTURE_ID + " integer, " +
 												COL_EXAM_ID + " integer, " +
-												COL_TASK_ID + " integer);";
+												COL_TASK_ID + " integer," +
+												COL_DATE_ID + " integer);";
 	
 	//database adapter
 	private SQLiteDatabase db;
@@ -100,21 +102,27 @@ public class HLPRelations extends SQLiteOpenHelper {
 	
 	/**
 	 * Function inserts a new record into the table
-	 * @param title
-	 * @param comment
+	 * @param srctable
 	 * @param lectureID
+	 * @param examID
+	 * @param taskID
+	 * @param dateID
+	 * @return insertId
 	 */
-	public void addRelation(String srctable, long lectureID, long examID, long taskID) {
+	public long addRelation(String srctable, long lectureID, long examID, long taskID, long dateID) {
 		ContentValues values = new ContentValues();
 		
 		values.put(COL_SRCTABLE, srctable);
 		values.put(COL_LECTURE_ID, lectureID);
 		values.put(COL_EXAM_ID, examID);
 		values.put(COL_TASK_ID, taskID);
+		values.put(COL_DATE_ID, dateID);
 		
 		long insertId = db.insert(TABLE_NAME, null, values);
 		
 		Log.i(logtag, "New entry added. ID: "+ insertId);
+		
+		return insertId;
 	}
 	
 	/**
@@ -131,7 +139,8 @@ public class HLPRelations extends SQLiteOpenHelper {
 			logstr += "SrcTable: " + cursor.getString(1) + " | ";
 			logstr += "LectureID: " + cursor.getLong(2) + " | ";
 			logstr += "ExamID: " + cursor.getLong(3) + " | ";
-			logstr += "TaskID: " + cursor.getLong(4);	
+			logstr += "TaskID: " + cursor.getLong(4) + " | ";
+			logstr += "DateID: " + cursor.getLong(5);
 			
 			Log.i(logtag, logstr);
 			
@@ -146,9 +155,11 @@ public class HLPRelations extends SQLiteOpenHelper {
 	 * 
 	 * @param id	Entry ID
 	 */
-	public void deleteRelation(long id) {
-		db.delete(TABLE_NAME, COL_ID + " = " + id, null);		
+	public int deleteRelation(long id) {
+		int ret = db.delete(TABLE_NAME, COL_ID + " = " + id, null);		
 		Log.i(logtag, "Entry deleted. ID: " + id);
+		
+		return ret;
 	}
 
 }
