@@ -10,6 +10,7 @@ import android.test.RenamingDelegatingContext;
 import android.test.mock.MockContentResolver;
 import android.test.mock.MockContext;
 import at.lvmaster3000.database.lists.Lectures;
+import at.lvmaster3000.database.lists.Tasks;
 import at.lvmaster3000.database.logic.DBLLectures;
 import at.lvmaster3000.database.objects.Coworker;
 import at.lvmaster3000.database.objects.Lecture;
@@ -32,9 +33,25 @@ public class DBLLecturesTest extends AndroidTestCase{
 		dropAllObjects();
 		createTestObjects();
 		
-		long idFromDatabase = dblObjects.add(this.testObjects.get(0));
+		long idFromDatabase = dblObjects.addLecture(this.testObjects.get(0));
 		
 		assertNotSame(-1l, idFromDatabase);
+		
+		idFromDatabase = dblObjects.addLecture("301.000", "sophisticated 1", "good prof","SEM", 1, 1);
+		
+		assertNotSame(-1l, idFromDatabase);
+	}
+	
+	public void testDeleteLecture(){
+		dblObjects.deleteLecture(testObjects.get(0));
+	}
+	
+	public void testGetLectureByNumber(){
+		Lecture lec = dblObjects.getLectureByNumber("300.000");
+	}
+
+	public void testGetTasksForLecture(){
+		Tasks tasks = dblObjects.getTasksForLecture(testObjects.get(0));
 	}
 	
 	public void testGetAllLectures(){
@@ -51,7 +68,7 @@ public class DBLLecturesTest extends AndroidTestCase{
 		}
 		
 		for(Lecture lec : this.testObjects){
-			this.dblObjects.add(lec);
+			this.dblObjects.addLecture(lec);
 		}
 	}
 	
