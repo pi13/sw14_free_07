@@ -37,14 +37,14 @@ public class DDTestsetA {
 	public void FillDb() {
 		//create lecture
 		this.hlplectures.openCon();
-		this.hlplectures.resetTable();          
+//		this.hlplectures.resetTable();          
         long lid = hlplectures.addLecture("701.123", "Test LV", "Some Comment...", "LV", 1, 1);
         this.hlplectures.allEntriesToLog();
         this.hlplectures.closeCon();
         
         //add tasks
         this.hlptasks.openCon();
-        this.hlptasks.resetTable();          
+//        this.hlptasks.resetTable();          
         long tid1 = hlptasks.addTask("Test TASK 1", "Some Comment...");
         long tid2 = hlptasks.addTask("Test TASK 2", "Some Comment...");
         this.hlptasks.allEntriesToLog();
@@ -52,7 +52,7 @@ public class DDTestsetA {
         
         //add dates
         this.hlpdates.openCon();
-        this.hlpdates.resetTable();  
+//        this.hlpdates.resetTable();  
         long unixTime = System.currentTimeMillis() / 1000L;
         long hour = 60;
         long day = hour * 24;
@@ -67,7 +67,7 @@ public class DDTestsetA {
         
         //add relation
         this.hlprelations.openCon();
-        this.hlprelations.resetTable();        
+//        this.hlprelations.resetTable();        
         this.hlprelations.addRelation("lectures", lid, 0, tid1, did5);
         this.hlprelations.addRelation("lectures", lid, 0, tid2, did3);
         this.hlprelations.addRelation("lectures", lid, 0, 0, did1);

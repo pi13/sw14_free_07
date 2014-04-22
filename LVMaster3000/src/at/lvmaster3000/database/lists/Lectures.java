@@ -34,9 +34,4 @@ public class Lectures {
 			lectures.get(i).printLecture();
 		}
 	}
-
-	public int nrOfLectures() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 }
