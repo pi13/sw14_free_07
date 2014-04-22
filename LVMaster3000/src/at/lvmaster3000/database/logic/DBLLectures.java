@@ -1,7 +1,6 @@
 package at.lvmaster3000.database.logic;
 
 import android.content.Context;
-
 import android.database.Cursor;
 import android.util.Log;
 import at.lvmaster3000.database.helper.HLPDates;
@@ -9,19 +8,16 @@ import at.lvmaster3000.database.helper.HLPLectures;
 import at.lvmaster3000.database.helper.HLPRelations;
 import at.lvmaster3000.database.helper.HLPTasks;
 import at.lvmaster3000.database.lists.Dates;
-import at.lvmaster3000.database.lists.Lectures;
-import at.lvmaster3000.database.lists.Tasks;
-import at.lvmaster3000.database.objects.Lecture;
-import at.lvmaster3000.settings.DBsettings;
 import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.lists.Lectures;
 import at.lvmaster3000.database.lists.Tasks;
 import at.lvmaster3000.database.objects.Lecture;
+import at.lvmaster3000.settings.DBsettings;
 
 public class DBLLectures {
 
 	private HLPLectures hlplectures;
-	private HLPTasks hlptasts;
+	private HLPTasks hlptasks;
 	private HLPDates hlpdates;
 	
 	/**
@@ -30,7 +26,7 @@ public class DBLLectures {
 	 */
 	public DBLLectures(Context context) {
 		this.hlplectures = new HLPLectures(context);
-		this.hlptasts = new HLPTasks(context);
+		this.hlptasks = new HLPTasks(context);
 		this.hlpdates = new HLPDates(context);
 	}
 	
@@ -45,7 +41,11 @@ public class DBLLectures {
 	 * @return
 	 */
 	public long addLecture(String number, String name, String comment, String type, int required, int compulsory) {
-		return this.hlplectures.addLecture(number, name, comment, type, required, compulsory);
+		this.hlplectures.openCon();
+		long id = this.hlplectures.addLecture(number, name, comment, type, required, compulsory);
+		this.hlplectures.closeCon();
+		
+		return id; 
 	}
 	
 	/**
@@ -53,8 +53,8 @@ public class DBLLectures {
 	 * @param lecture
 	 * @return
 	 */
-	public long addLecture(Lecture lecture) {		
-		return this.hlplectures.addLecture(lecture.getNumber(), lecture.getName(), lecture.getComment(), lecture.getType(), lecture.getRequired(), lecture.getCompulsory());
+	public long addLecture(Lecture lecture) {
+		return this.addLecture(lecture.getNumber(), lecture.getName(), lecture.getComment(), lecture.getType(), lecture.getRequired(), lecture.getCompulsory());
 	}
 	
 	/**
@@ -63,11 +63,19 @@ public class DBLLectures {
 	 * @return
 	 */
 	public int deleteLecture(long id) {
-		return this.hlplectures.deleteLecture(id);
+		this.hlplectures.openCon();
+		int res = this.hlplectures.deleteLecture(id);		
+		this.hlplectures.closeCon();
+		
+		return res;
 	}
 	
-	public void deleteLecture(Lecture lecture) {
-		
+	/**
+	 * 
+	 * @param lecture
+	 */
+	public int deleteLecture(Lecture lecture) {
+		return this.deleteLecture(lecture.getID());
 	}
 	
 	/**
@@ -93,6 +101,11 @@ public class DBLLectures {
 		return lecture;
 	}
 	
+	/**
+	 * 
+	 * @param limit If 0, no limit is set
+	 * @return
+	 */
 	public Lectures getLectures(int limit) {
 		Lectures lectures = new Lectures();
 		
@@ -125,12 +138,13 @@ public class DBLLectures {
 		
 		Log.i(DBsettings.LOG_TAG_TASKS, query);
 		
-		Cursor cursor = this.hlptasts.openCon().rawQuery(query, null);
+		Cursor cursor = this.hlptasks.openCon().rawQuery(query, null);
 		if(cursor != null) {
 			tasks.cursorToTaskList(cursor);
 		} else {
         	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
         }
+		this.hlptasks.closeCon();
 		
 		return tasks;
 	}
@@ -153,6 +167,7 @@ public class DBLLectures {
 		} else {
         	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
         }
+		this.hlpdates.closeCon();
 		
 		return dates;
 	}

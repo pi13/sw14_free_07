@@ -65,7 +65,7 @@ public class Date {
 		int idx = cursor.getColumnIndex(HLPRelations.COL_DATE_ID);
 		
 		if(idx < 0) {
-//			this.id = cursor.getLong(cursor.getColumnIndex(HLPDates.COL_ID));
+			this.id = cursor.getLong(cursor.getColumnIndex(HLPDates.COL_ID));
 		} else {
 			this.id = cursor.getLong(idx);
 		}

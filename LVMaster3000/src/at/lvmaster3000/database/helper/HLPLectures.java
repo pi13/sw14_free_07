@@ -5,9 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
-import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.settings.DBsettings;
 
 public class HLPLectures extends SQLiteOpenHelper {
@@ -127,7 +125,7 @@ public class HLPLectures extends SQLiteOpenHelper {
 		
 		long insertId = db.insert(TABLE_NAME, null, values);
 		
-		Log.i(logtag, "New lecture added. ID: "+ insertId);
+		Log.i(logtag, "New lecture added. ID: " + insertId);
 		
 		return insertId;
 	}
@@ -165,7 +163,7 @@ public class HLPLectures extends SQLiteOpenHelper {
 	 * 
 	 * @param id	Lecture ID
 	 */
-	public int deleteLecture(long id) {
+	public int deleteLecture(long id) {		
 		int ret = db.delete(TABLE_NAME, COL_ID + " = " + id, null);		
 		Log.i(logtag, "Word deleted. ID: " + id);
 		
