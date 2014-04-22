@@ -3,32 +3,24 @@ package at.lvmaster3000.database.logic.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
 import android.test.AndroidTestCase;
-import android.test.IsolatedContext;
 import android.test.RenamingDelegatingContext;
-import android.test.mock.MockContentResolver;
-import android.test.mock.MockContext;
 import at.lvmaster3000.database.lists.Coworkers;
 import at.lvmaster3000.database.lists.Exams;
-import at.lvmaster3000.database.lists.Lectures;
 import at.lvmaster3000.database.lists.Resources;
-import at.lvmaster3000.database.lists.Tasks;
 import at.lvmaster3000.database.logic.DBLExams;
-import at.lvmaster3000.database.logic.DBLLectures;
-import at.lvmaster3000.database.objects.Coworker;
 import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Exam;
-import at.lvmaster3000.database.objects.Lecture;
 
 public class DBLExamsTest extends AndroidTestCase{
 	private DBLExams dblObjects;
 	private List<Exam> testObjects = null;
 	private int NR_TEST_EXAMS = 0;
+	private int limit = 100;
 	
 	private RenamingDelegatingContext testContext = null;
 	
-	public void startUp(){
+	public void setUp(){
 		testContext = new RenamingDelegatingContext(getContext(), "test_");
 		
 		dblObjects = new DBLExams(testContext);
@@ -52,7 +44,7 @@ public class DBLExamsTest extends AndroidTestCase{
 	public void testGetAllExams(){
 		dropAllObjects();
 		fillTestExamsInDBL();
-		Exams exs = dblObjects.getAllExams();
+		Exams exs = dblObjects.getAllExams(limit);
 		
 		assertEquals(NR_TEST_EXAMS, exs.nrOfExams());		
 	}
@@ -63,11 +55,11 @@ public class DBLExamsTest extends AndroidTestCase{
 		
 		long id = dblObjects.addExam(testObjects.get(0));
 		
-		int size = dblObjects.getAllExams().nrOfExams();
+		int size = dblObjects.getAllExams(limit).nrOfExams();
 		
 		dblObjects.deleteExam(id);
 		
-		assertEquals(size-1, dblObjects.getAllExams().nrOfExams());
+		assertEquals(size-1, dblObjects.getAllExams(limit).nrOfExams());
 	}
 	
 	public void testGetExamById(){
