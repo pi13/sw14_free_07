@@ -10,12 +10,12 @@ public class DBLTasks {
 		// TODO Auto-generated constructor stub
 	}
 
-	public long add(Task task) {
+	public long addTask(Task task) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public Tasks getAll() {
+	public Tasks getAllTasks() {
 		// TODO Auto-generated method stub
 		return null;
 	}

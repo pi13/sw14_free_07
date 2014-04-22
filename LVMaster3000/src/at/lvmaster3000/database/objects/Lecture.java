@@ -13,8 +13,17 @@ public class Lecture {
 	private int required;
 	private int compulsory;
 	
-	public Lecture(long id, String number, String name, String comment,
-			String type, int req, int comp) {
+	/**
+	 * 
+	 * @param id
+	 * @param number
+	 * @param name
+	 * @param comment
+	 * @param type
+	 * @param req
+	 * @param comp
+	 */
+	public Lecture(long id, String number, String name, String comment, String type, int req, int comp) {
 		this.id = id;
 		this.number = number;
 		this.name = name;

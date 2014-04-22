@@ -13,6 +13,24 @@ public class Task {
 	private String comment;
 	private Date date;
 	
+	public Task() {
+		
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @param title
+	 * @param comment
+	 * @param date
+	 */
+	public Task(long id, String title, String comment, Date date) {
+		this.id = id;
+		this.title = title;
+		this.comment = comment;
+		this.date = date;
+	}
+	
 	public long getId() {
 		return id;
 	}
