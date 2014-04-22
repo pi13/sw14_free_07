@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
+import at.lvmaster3000.database.helper.HLPRelations;
 import at.lvmaster3000.database.lists.Coworkers;
 import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.lists.Resources;
@@ -93,6 +94,9 @@ public class DBLExamsTest extends AndroidTestCase{
 		assertEquals(editComment, comment);
 	}
 	
+	/**
+	 * anscheinend wird onCreate für 'relations' nicht ausgeführt, schlägt deshalb fehl
+	 */
 	public void testGetDateOfExam(){
 		dropAllObjects();
 		createTestObjects();

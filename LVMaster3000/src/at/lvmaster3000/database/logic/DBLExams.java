@@ -19,17 +19,17 @@ import at.lvmaster3000.settings.DBsettings;
 public class DBLExams {
 	
 	private HLPExams hlpExams;
-//	private HLPDates hlpDates;
-//	private HLPResources hlpResources;
-//	private HLPCoworkers hlpCoworkers;
+	private HLPDates hlpDates;
+	private HLPResources hlpResources;
+	private HLPCoworkers hlpCoworkers;
 	private HLPRelations hlpRelations;
 	
 	public DBLExams(Context context) {
 		hlpExams = new HLPExams(context);
 		hlpRelations = new HLPRelations(context);
-//		hlpDates = new HLPDates(context);
-//		hlpResources = new HLPResources(context);
-//		hlpCoworkers = new HLPCoworkers(context);
+		hlpDates = new HLPDates(context);
+		hlpResources = new HLPResources(context);
+		hlpCoworkers = new HLPCoworkers(context);
 	}
 
 	public long addExam(Exam exam) {
@@ -96,9 +96,28 @@ public class DBLExams {
 		return exam;
 	}
 
+	/**
+	 * addRelation funzt net, anscheinend wird onCreate für 'relations' nicht ausgeführt
+	 * 
+	 * @param examId
+	 * @param date
+	 * @return
+	 */
 	public boolean setDateToExam(long examId, Date date) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean worked = false;
+		
+		hlpDates.openCon();
+		long dateId = hlpDates.addDate(date.getTimestamp(), date.getLocation(), date.getType(), date.getComment());
+		hlpDates.closeCon();
+		
+		hlpRelations.openCon();
+		long relId = hlpRelations.addRelation(HLPExams.TABLE_NAME, 0, examId, 0, dateId);
+		hlpRelations.closeCon();
+		
+		if(dateId != -1 && relId != -1)
+			worked = true;
+
+		return worked;
 	}
 
 	public Resources getAllResourcesOfExam(long examId) {

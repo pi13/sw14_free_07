@@ -27,7 +27,7 @@ public class HLPRelations extends SQLiteOpenHelper {
 	public static final String[] allColumns = {COL_ID, COL_SRCTABLE, COL_LECTURE_ID, COL_EXAM_ID, COL_TASK_ID, COL_DATE_ID};
 	
 	//create string
-	private static final String TASKS_CREATE = "CREATE TABLE " + TABLE_NAME + " (" +
+	private static final String RELATIONS_CREATE = "CREATE TABLE " + TABLE_NAME + " (" +
 												COL_ID + " integer primary key autoincrement, " +
 												COL_SRCTABLE + " text not null, " +
 												COL_LECTURE_ID + " integer, " +
@@ -54,13 +54,13 @@ public class HLPRelations extends SQLiteOpenHelper {
 	 * @return	String
 	 */
 	public String getCreationString() {
-		return TASKS_CREATE;
+		return RELATIONS_CREATE;
 	}
 	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		Log.i(logtag, TASKS_CREATE);
-		db.execSQL(TASKS_CREATE);
+		Log.i(logtag, RELATIONS_CREATE);
+		db.execSQL(RELATIONS_CREATE);
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class HLPRelations extends SQLiteOpenHelper {
 	 */
 	public void resetTable() {		
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-		db.execSQL(TASKS_CREATE);
+		db.execSQL(RELATIONS_CREATE);
 		Log.i(logtag, "Table '" + TABLE_NAME + "' reseted");
 	}
 	
