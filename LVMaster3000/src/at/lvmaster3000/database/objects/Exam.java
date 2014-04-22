@@ -21,6 +21,12 @@ public class Exam {
 		this.lecture_id = lecId;
 	}
 	
+	public Exam(String title, String comment, long lecture) {
+		this.title = title;
+		this.comment = comment;
+		this.lecture_id = lecture;
+	}
+
 	public long getId() {
 		return id;
 	}
