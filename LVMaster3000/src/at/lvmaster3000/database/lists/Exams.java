@@ -36,7 +36,6 @@ public class Exams {
 	}
 
 	public int nrOfExams() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.exams.size();
 	}
 }

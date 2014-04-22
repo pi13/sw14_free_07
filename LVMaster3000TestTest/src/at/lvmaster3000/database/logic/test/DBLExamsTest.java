@@ -16,7 +16,7 @@ public class DBLExamsTest extends AndroidTestCase{
 	private DBLExams dblObjects;
 	private List<Exam> testObjects = null;
 	private int NR_TEST_EXAMS = 0;
-	private int limit = 100;
+	private int limit = 10000;
 	
 	private RenamingDelegatingContext testContext = null;
 	
@@ -57,7 +57,8 @@ public class DBLExamsTest extends AndroidTestCase{
 		
 		int size = dblObjects.getAllExams(limit).nrOfExams();
 		
-		dblObjects.deleteExam(id);
+		int res = dblObjects.deleteExam(id);
+		assertEquals(1, res);
 		
 		assertEquals(size-1, dblObjects.getAllExams(limit).nrOfExams());
 	}
@@ -97,10 +98,14 @@ public class DBLExamsTest extends AndroidTestCase{
 		createTestObjects();
 		// TODO useful test case
 		long id = 0;
-		Date date = new Date();
+		Date date = new Date(new java.util.Date(2014-1900, 8,1,10,0,0).getTime(), "i 13", "exam", "i need it");
 		boolean worked = dblObjects.setDateToExam(id, date);
 		
 		assertEquals(true, worked);
+		
+		Date fromDBL = dblObjects.getDateOfExam(id);
+		
+		assertEquals(fromDBL.getTimestamp(), date.getTimestamp());
 	}
 	
 	public void testGetAllResourcesOfExam(){

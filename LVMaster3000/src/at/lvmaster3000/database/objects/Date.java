@@ -29,6 +29,13 @@ public class Date {
 		this.comment = comment;
 	}
 
+	public Date(long time, String location, String type, String comment) {
+		this.timestamp = time;
+		this.location = location;
+		this.type = type;
+		this.comment = comment;
+	}
+
 	public long getID() {
 		return id;
 	}

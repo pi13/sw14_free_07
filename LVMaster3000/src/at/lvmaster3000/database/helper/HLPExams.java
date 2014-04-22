@@ -144,8 +144,10 @@ public class HLPExams extends SQLiteOpenHelper{
 	 * Function deletes a word from DB
 	 * @param id
 	 */
-	public void deleteExams(long id) {
-		db.delete(TABLE_NAME, COL_ID + " = " + id, null);		
+	public int deleteExams(long id) {
+		int res = db.delete(TABLE_NAME, COL_ID + " = " + id, null);		
 		Log.i(logtag, "Word deleted. ID: " + id);
+		
+		return res;
 	}
 }

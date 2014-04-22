@@ -19,23 +19,31 @@ import at.lvmaster3000.settings.DBsettings;
 public class DBLExams {
 	
 	private HLPExams hlpExams;
-	private HLPDates hlpDates;
-	private HLPResources hlpResources;
-	private HLPCoworkers hlpCoworkers;
+//	private HLPDates hlpDates;
+//	private HLPResources hlpResources;
+//	private HLPCoworkers hlpCoworkers;
+	private HLPRelations hlpRelations;
 	
 	public DBLExams(Context context) {
 		hlpExams = new HLPExams(context);
-		hlpDates = new HLPDates(context);
-		hlpResources = new HLPResources(context);
-		hlpCoworkers = new HLPCoworkers(context);
+		hlpRelations = new HLPRelations(context);
+//		hlpDates = new HLPDates(context);
+//		hlpResources = new HLPResources(context);
+//		hlpCoworkers = new HLPCoworkers(context);
 	}
 
 	public long addExam(Exam exam) {
-		return this.hlpExams.addExam(exam.getTitle(), exam.getComment(), exam.getLecture_id());
+		hlpExams.openCon();
+		long id = this.hlpExams.addExam(exam.getTitle(), exam.getComment(), exam.getLecture_id());
+		hlpExams.closeCon();
+		return id;
 	}
 
 	public long addExam(String title, String comment, long lectureId){
-		return this.hlpExams.addExam(title, comment, lectureId);
+		hlpExams.openCon();
+		long id = this.hlpExams.addExam(title, comment, lectureId);
+		hlpExams.closeCon();
+		return id;
 	}
 	
 	public Exams getAllExams(int limit) {
@@ -58,8 +66,11 @@ public class DBLExams {
 		return exams;
 	}
 
-	public void deleteExam(long id) {
-		hlpExams.deleteExams(id);
+	public int deleteExam(long id) {
+		hlpExams.openCon();
+		int res = hlpExams.deleteExams(id);
+		hlpExams.closeCon();
+		return res;
 	}
 
 	public void editExam(Exam editedExam) {
@@ -91,24 +102,30 @@ public class DBLExams {
 	}
 
 	public Resources getAllResourcesOfExam(long examId) {
-//		Resources resources = new Resources();
-//		
-//		String query = "SELECT * FROM " + HLPResources.TABLE_NAME;
-//		query += " ";
-//		
-//		Log.i(DBsettings.LOG_TAG_TASKS, query);
-//		
-//		Cursor cursor = this.hlptasts.openCon().rawQuery(query, null);
-//		if(cursor != null) {
-//			tasks.cursorToTaskList(cursor);
-//		} else {
-//        	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
-//        }
-//		
-//		return tasks;
+		Resources resources = new Resources();
+		
+		// TODO
+		String query = "SELECT * FROM " + HLPResources.TABLE_NAME;
+		query += " ";
+		
+		Log.i(DBsettings.LOG_TAG_TASKS, query);
+		
+		Cursor cursor = this.hlpRelations.openCon().rawQuery(query, null);
+		if(cursor != null) {
+			resources.cursorToResourceList(cursor);
+		} else {
+        	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
+        }
+		
+		return null;
 	}
 
 	public Coworkers getAllCoworkersOfExam(long examId){
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Date getDateOfExam(long examId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
