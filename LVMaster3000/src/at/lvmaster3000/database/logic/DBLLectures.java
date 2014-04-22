@@ -51,7 +51,7 @@ public class DBLLectures {
 	/**
 	 * 
 	 * @param lecture
-	 * @return
+	 * @return insert id
 	 */
 	public long addLecture(Lecture lecture) {
 		return this.addLecture(lecture.getNumber(), lecture.getName(), lecture.getComment(), lecture.getType(), lecture.getRequired(), lecture.getCompulsory());

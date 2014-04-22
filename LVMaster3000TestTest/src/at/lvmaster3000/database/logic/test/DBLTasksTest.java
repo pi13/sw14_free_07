@@ -7,7 +7,6 @@ import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 import at.lvmaster3000.database.lists.Tasks;
 import at.lvmaster3000.database.logic.DBLTasks;
-import at.lvmaster3000.database.objects.Coworker;
 import at.lvmaster3000.database.objects.Task;
 
 public class DBLTasksTest extends AndroidTestCase{
@@ -28,7 +27,7 @@ public class DBLTasksTest extends AndroidTestCase{
 		dropAllObjects();
 		createTestObjects();
 		
-		long idFromDatabase = dblObjects.add(this.testObjects.get(0));
+		long idFromDatabase = dblObjects.addTask(this.testObjects.get(0));
 		
 		assertNotSame(-1l, idFromDatabase);
 	}
@@ -36,7 +35,7 @@ public class DBLTasksTest extends AndroidTestCase{
 	public void testGetAll(){
 		dropAllObjects();
 		fillTestObjectsInDBL();
-		Tasks tasks = dblObjects.getAll();
+		Tasks tasks = dblObjects.getAllTasks();
 		
 		assertEquals(NR_TEST_OBJECTS, tasks.nrOfObjects());
 	}
@@ -47,7 +46,7 @@ public class DBLTasksTest extends AndroidTestCase{
 		}
 		
 		for(Task task : this.testObjects){
-			this.dblObjects.add(task);
+			this.dblObjects.addTask(task);
 		}
 	}
 	
