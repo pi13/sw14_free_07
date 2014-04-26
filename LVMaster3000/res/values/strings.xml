@@ -2,12 +2,36 @@
 <resources>
 
     <string name="app_name">LV Master 3000</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    
+    <string name="lectures">Lectures</string>
+    <string name="tasks">Tasks</string>
+    <string name="exams">Exams</string>
+    <string name="resources">Resources</string>
+    
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_example">Example action</string>
+    
     <string name="action_settings">Settings</string>
+    
+        <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item >Lectures</item>
+        <item >Tasks</item>
+        <item >Exams</item>
+        <item >Resources</item>
+    </string-array>
+    
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_home</item>
+        <item>@drawable/ic_people</item>
+        <item>@drawable/ic_photos</item>
+        <item>@drawable/ic_communities</item>
+    </array>
+    
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
+    
 
 </resources>
