@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import at.lvmaster3000.gui.ExamsFragment;
+import at.lvmaster3000.gui.HomeFragment;
 import at.lvmaster3000.gui.LecturesFragment;
 import at.lvmaster3000.gui.NavDrawerItem;
 import at.lvmaster3000.gui.NavDrawerListAdapter;
@@ -63,12 +64,10 @@ public class MainActivity extends Activity {
 		// adding nav drawer items to array
 		//Lectures
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-		// Tasks
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-		// Exams
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
-		// Resources
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));		
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1), true, "22"));	
 
 		// Recycle the typed array
 		navMenuIcons.recycle();
@@ -105,7 +104,7 @@ public class MainActivity extends Activity {
 
 		if (savedInstanceState == null) {
 			// on first time display view for first nav item
-			displayView(-1);
+			displayView(0);
 		}
 	}
 
@@ -162,15 +161,19 @@ public class MainActivity extends Activity {
 		Fragment fragment = null;
 		switch (position) {
 		case 0:
+			fragment = new HomeFragment();
+		break;
+			
+		case 1:
 			fragment = new LecturesFragment();
 			break;
-		case 1:
+		case 2:
 			fragment = new TasksFragment();
 			break;
-		case 2:
+		case 3:
 			fragment = new ExamsFragment();
 			break;
-		case 3:
+		case 4:
 			fragment = new ResourcesFragment();
 			break;
 
