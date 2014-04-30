@@ -136,6 +136,8 @@ public class DBLExams {
         	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
         }
 		
+		this.hlpRelations.closeCon();
+		
 		return null;
 	}
 
