@@ -122,7 +122,7 @@ public class DBLExams {
 		hlpDates.closeCon();
 		
 		hlpRelations.openCon();
-		long relId = hlpRelations.addRelation(HLPExams.TABLE_NAME, 0, examId, 0, dateId);
+		long relId = hlpRelations.addRelation(HLPExams.TABLE_NAME, 0, examId, 0, dateId, 0);
 		hlpRelations.closeCon();
 		
 		if(dateId != -1 && relId != -1)
@@ -134,20 +134,22 @@ public class DBLExams {
 	public Resources getAllResourcesOfExam(long examId) {
 		Resources resources = new Resources();
 		
-		// TODO
-		String query = "SELECT title FROM " + HLPResources.TABLE_NAME;
-		query += " ";
+		String query = "SELECT * FROM " + HLPResources.TABLE_NAME + " res ";
+		query += " INNER JOIN " + HLPRelations.TABLE_NAME + " rel ";
+		query += " ON res." + HLPResources.COL_ID + " = rel." + HLPRelations.COL_RES_ID;
+		query += " WHERE " + HLPRelations.COL_EXAM_ID + " = " + examId;
 		
 		Log.i(DBsettings.LOG_TAG_TASKS, query);
 		
 		Cursor cursor = this.hlpRelations.openCon().rawQuery(query, null);
-		if(cursor != null) {
-			resources.cursorToResourceList(cursor);
-		} else {
-        	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
+		if(cursor != null) {                	
+			resources.cursorToResourceList(cursor);        	
+        } else {
+        	Log.w(DBsettings.LOG_TAG_EXAMS, "Cursor is NULL!!");        	
         }
+		hlpRelations.closeCon();
 		
-		return null;
+		return resources;
 	}
 
 	public Coworkers getAllCoworkersOfExam(long examId){

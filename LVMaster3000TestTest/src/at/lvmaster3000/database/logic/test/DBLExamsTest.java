@@ -14,8 +14,10 @@ import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.lists.Resources;
 import at.lvmaster3000.database.logic.DBLExams;
 import at.lvmaster3000.database.logic.DBLLectures;
+import at.lvmaster3000.database.logic.DBLResources;
 import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Exam;
+import at.lvmaster3000.database.objects.Resource;
 
 public class DBLExamsTest extends AndroidTestCase{
 	private DBLExams dblObjects;
@@ -147,14 +149,15 @@ public class DBLExamsTest extends AndroidTestCase{
 	    
 	    long lecId = new DBLLectures(testContext).getLectures(limit).getLectures().get(0).getID();
 		long exId = dblObjects.addExam("resource test", "want to add resource here", lecId);
-		
-		HLPResources hlpResources = new HLPResources(testContext);
-		hlpResources.openCon();
-		long resId = hlpResources.addResource("test resource");
+
+		long resId = new DBLResources(testContext).addResource(new Resource("test resource"));
 		
 		assertNotSame(-1l, resId);
 		
-		new HLPRelations(testContext).addRelation(HLPResources.TABLE_NAME, 0, exId, 0, 0);
+		HLPRelations hlpRelations = new HLPRelations(testContext);
+		hlpRelations.openCon();
+		hlpRelations.addRelation(HLPResources.TABLE_NAME, 0, exId, 0, 0, resId);
+		hlpRelations.closeCon();
 		
 		Resources resources = dblObjects.getAllResourcesOfExam(exId);
 		

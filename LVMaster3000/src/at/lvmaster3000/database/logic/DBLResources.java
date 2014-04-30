@@ -1,23 +1,49 @@
 package at.lvmaster3000.database.logic;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.test.RenamingDelegatingContext;
+import android.util.Log;
+import at.lvmaster3000.database.helper.HLPExams;
+import at.lvmaster3000.database.helper.HLPResources;
+import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.lists.Resources;
 import at.lvmaster3000.database.objects.Resource;
+import at.lvmaster3000.settings.DBsettings;
 
 public class DBLResources {
 
-	public DBLResources(RenamingDelegatingContext testContext) {
-		// TODO Auto-generated constructor stub
+	private HLPResources hlpResources;
+	
+	public DBLResources(Context context) {
+		this.hlpResources = new HLPResources(context);
 	}
 
-	public long add(Resource resource) {
-		// TODO Auto-generated method stub
-		return 0;
+	public long addResource(Resource resource) {
+		hlpResources.openCon();
+		long id = this.hlpResources.addResource(resource.getTitle());
+		hlpResources.closeCon();
+		return id;
 	}
 
-	public Resources getAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public Resources getAllResources(int limit) {
+		Resources resources = new Resources();
+		
+		String query = "SELECT * FROM " + HLPResources.TABLE_NAME;
+		
+		if(limit > 0) {
+			query += " LIMIT " + limit;
+		}
+		
+        Cursor cursor = hlpResources.openCon().rawQuery(query, null);
+        if(cursor != null) {                	
+        	resources.cursorToResourceList(cursor);        	
+        } else {
+        	Log.w(DBsettings.LOG_TAG_RESOURCES, "Cursor is NULL!!");        	
+        }
+        hlpResources.closeCon();
+		
+		return resources;	
 	}
 
 }

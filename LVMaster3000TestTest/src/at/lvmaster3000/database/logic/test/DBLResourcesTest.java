@@ -14,6 +14,7 @@ public class DBLResourcesTest extends AndroidTestCase{
 	private DBLResources dblObjects;
 	private List<Resource> testObjects = null;
 	private int NR_TEST_OBJECTS = 0;
+	private int limit = 100;
 	
 	private RenamingDelegatingContext testContext = null;
 	
@@ -28,7 +29,7 @@ public class DBLResourcesTest extends AndroidTestCase{
 		dropAllObjects();
 		createTestObjects();
 		
-		long idFromDatabase = dblObjects.add(this.testObjects.get(0));
+		long idFromDatabase = dblObjects.addResource(this.testObjects.get(0));
 		
 		assertNotSame(-1l, idFromDatabase);
 	}
@@ -36,7 +37,7 @@ public class DBLResourcesTest extends AndroidTestCase{
 	public void testGetAll(){
 		dropAllObjects();
 		fillTestObjectsInDBL();
-		Resources objects = dblObjects.getAll();
+		Resources objects = dblObjects.getAllResources(limit);
 		
 		assertEquals(NR_TEST_OBJECTS, objects.nrOfResources());
 	}
@@ -47,7 +48,7 @@ public class DBLResourcesTest extends AndroidTestCase{
 		}
 		
 		for(Resource object : this.testObjects){
-			this.dblObjects.add(object);
+			this.dblObjects.addResource(object);
 		}
 	}
 	

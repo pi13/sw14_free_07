@@ -8,6 +8,12 @@ public class Resource {
 	private long id;
 	private String title;
 	
+	public Resource(String title) {
+		this.title = title;
+	}
+	public Resource() {
+		
+	}
 	public long getId() {
 		return id;
 	}

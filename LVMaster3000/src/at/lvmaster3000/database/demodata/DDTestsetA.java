@@ -98,11 +98,11 @@ public class DDTestsetA {
         //add relation
         this.hlprelations.openCon();
         this.hlprelations.resetTable();        
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid, 0, tid1, did5);
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid, 0, tid2, did3);
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid, 0, 0, did1);
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid, 0, 0, did4);
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, 0, eid1, 0, did2);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid, 0, tid1, did5, 0);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid, 0, tid2, did3, 0);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid, 0, 0, did1, 0);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid, 0, 0, did4, 0);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, 0, eid1, 0, did2, 0);
         this.hlprelations.allEntriesToLog();
         this.hlprelations.closeCon();        
         
