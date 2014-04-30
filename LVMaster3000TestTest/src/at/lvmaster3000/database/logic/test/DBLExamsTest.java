@@ -61,7 +61,7 @@ public class DBLExamsTest extends AndroidTestCase{
 
 		Exams exs = dblObjects.getAllExams(limit);
 		
-		assertEquals(DDTestsetA.NR_TEST_EXAMS, exs.nrOfExams());		
+		assertEquals(TestA.getExamCnt(), exs.nrOfExams());		
 	}
 	
 	public void testDeleteExam(){

@@ -25,10 +25,12 @@ public class DDTestsetA {
 	private HLPDates hlpdates;
 	private HLPRelations hlprelations;
 	private Context context;
-private int lecturecnt;
+	private int lecturecnt;
 	private int taskscnt;
 	private int datescnt;
-public static int NR_TEST_EXAMS;	
+	private int examcnt;
+	private int resourcecnt;
+
 	public DDTestsetA(Context context) {
 		this.hlplectures = new HLPLectures(context);
 		this.hlptasks = new HLPTasks(context);
@@ -41,6 +43,8 @@ public static int NR_TEST_EXAMS;
 		this.lecturecnt = 0;
 		this.taskscnt = 0;
 		this.datescnt = 0;
+		this.examcnt = 0;
+		this.resourcecnt = 0;
 	}
 	
 	public void FillDb() {
@@ -86,6 +90,9 @@ public static int NR_TEST_EXAMS;
         this.hlpexams.openCon();
         this.hlpexams.resetTable();
         long eid1 = hlpexams.addExam("Ex 1 ", "Some comment", lid);
+        this.examcnt++;
+        long eid2 = hlpexams.addExam("1. teilpruefung", "schwerig", lid);
+        this.examcnt++;
         this.hlpexams.closeCon();        
         
         //add relation
@@ -99,15 +106,10 @@ public static int NR_TEST_EXAMS;
         this.hlprelations.allEntriesToLog();
         this.hlprelations.closeCon();        
         
-        this.hlpexams.openCon();
-        this.hlpexams.resetTable();
-        this.hlpexams.addExam("1. teilpruefung", "schwerig", lid);
-        this.hlpexams.closeCon();
-        this.NR_TEST_EXAMS = 1;
-        
         this.hlpresources.openCon();
         this.hlpresources.resetTable();
         this.hlpresources.addResource("C# for Dummies");
+        this.resourcecnt++;
         this.hlpresources.closeCon();
 	}
 	
@@ -121,6 +123,14 @@ public static int NR_TEST_EXAMS;
 	
 	public int getDatesCnt() {
 		return this.datescnt;
+	}
+	
+	public int getExamCnt(){
+		return this.examcnt;
+	}
+	
+	public int getResourceCnt(){
+		return this.resourcecnt;
 	}
 	
 	public void someTest() {
