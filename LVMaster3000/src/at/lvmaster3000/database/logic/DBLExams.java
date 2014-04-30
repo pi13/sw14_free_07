@@ -2,6 +2,7 @@ package at.lvmaster3000.database.logic;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 import at.lvmaster3000.database.helper.HLPCoworkers;
 import at.lvmaster3000.database.helper.HLPDates;
@@ -74,8 +75,18 @@ public class DBLExams {
 	}
 
 	public void editExam(Exam editedExam) {
-		// TODO Auto-generated method stub
+		String query = "UPDATE " + HLPExams.TABLE_NAME + " SET " + HLPExams.COL_LECTURE_ID + " = ?";
+		query += ", " + HLPExams.COL_TITLE   + " = ?";
+		query += ", " + HLPExams.COL_COMMENT + " = ?";
+	    query += " WHERE " + HLPExams.COL_ID + " = ?";
 		
+	    SQLiteStatement stmt = this.hlpExams.openCon().compileStatement(query);
+	    stmt.bindLong(1, editedExam.getLecture_id());
+	    stmt.bindString(2, editedExam.getTitle());
+	    stmt.bindString(3, editedExam.getComment());
+	    stmt.bindLong(4, editedExam.getId());
+	    stmt.execute();
+        hlpExams.closeCon();
 	}
 
 	public Exam getExamById(long id) {
@@ -124,7 +135,7 @@ public class DBLExams {
 		Resources resources = new Resources();
 		
 		// TODO
-		String query = "SELECT * FROM " + HLPResources.TABLE_NAME;
+		String query = "SELECT title FROM " + HLPResources.TABLE_NAME;
 		query += " ";
 		
 		Log.i(DBsettings.LOG_TAG_TASKS, query);

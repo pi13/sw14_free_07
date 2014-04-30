@@ -1,5 +1,7 @@
 package at.lvmaster3000.database.demodata;
 
+import java.util.List;
+
 import android.content.Context;
 import at.lvmaster3000.database.helper.HLPCoworkers;
 import at.lvmaster3000.database.helper.HLPDates;
@@ -9,6 +11,7 @@ import at.lvmaster3000.database.helper.HLPRelations;
 import at.lvmaster3000.database.helper.HLPResources;
 import at.lvmaster3000.database.helper.HLPTasks;
 import at.lvmaster3000.database.logic.DBLLectures;
+import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Lecture;
 
 public class DDTestsetA {
@@ -22,6 +25,7 @@ public class DDTestsetA {
 	private HLPDates hlpdates;
 	private HLPRelations hlprelations;
 	private Context context;
+	public static int NR_TEST_EXAMS;
 	
 	public DDTestsetA(Context context) {
 		this.hlplectures = new HLPLectures(context);
@@ -75,6 +79,17 @@ public class DDTestsetA {
         this.hlprelations.addRelation("lectures", lid, 0, 0, did2);
         this.hlprelations.allEntriesToLog();
         this.hlprelations.closeCon();
+        
+        this.hlpexams.openCon();
+        this.hlpexams.resetTable();
+        this.hlpexams.addExam("1. teilpruefung", "schwerig", lid);
+        this.hlpexams.closeCon();
+        this.NR_TEST_EXAMS = 1;
+        
+        this.hlpresources.openCon();
+        this.hlpresources.resetTable();
+        this.hlpresources.addResource("C# for Dummies");
+        this.hlpresources.closeCon();
 	}
 	
 	public void someTest() {

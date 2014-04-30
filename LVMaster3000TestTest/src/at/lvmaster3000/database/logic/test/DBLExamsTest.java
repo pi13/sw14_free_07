@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
+import at.lvmaster3000.database.demodata.DDTestsetA;
 import at.lvmaster3000.database.helper.HLPRelations;
 import at.lvmaster3000.database.lists.Coworkers;
 import at.lvmaster3000.database.lists.Exams;
@@ -18,6 +19,7 @@ public class DBLExamsTest extends AndroidTestCase{
 	private List<Exam> testObjects = null;
 	private int NR_TEST_EXAMS = 0;
 	private int limit = 10000;
+	//private DDTestsetA TestA = null;
 	
 	private RenamingDelegatingContext testContext = null;
 	
@@ -28,29 +30,44 @@ public class DBLExamsTest extends AndroidTestCase{
 		createTestObjects();
 	}
 	
-	public void testAddNewExam(){
+	public void testTestSet(){
+		DDTestsetA TestA = new DDTestsetA(testContext);
+	    TestA.FillDb();
+	}
+	
+	public void testAddNewExamAndDeleteIt(){
+		DDTestsetA TestA = new DDTestsetA(testContext);
+	    TestA.FillDb();
+		
 		dropAllObjects();
 		createTestObjects();
 		
 		long idFromDatabase = dblObjects.addExam(this.testObjects.get(0));
 		
 		assertNotSame(-1l, idFromDatabase);
+		assertEquals(1,dblObjects.deleteExam(idFromDatabase));
 		
 		Exam fromTest = this.testObjects.get(1);
 		idFromDatabase = dblObjects.addExam(fromTest.getTitle(), fromTest.getComment(), fromTest.getLecture_id());
 		
 		assertNotSame(-1l, idFromDatabase);
+		assertEquals(1,dblObjects.deleteExam(idFromDatabase));	
+		
 	}
 	
 	public void testGetAllExams(){
-		dropAllObjects();
-		fillTestExamsInDBL();
+		DDTestsetA TestA = new DDTestsetA(testContext);
+	    TestA.FillDb();
+
 		Exams exs = dblObjects.getAllExams(limit);
 		
-		assertEquals(NR_TEST_EXAMS, exs.nrOfExams());		
+		assertEquals(DDTestsetA.NR_TEST_EXAMS, exs.nrOfExams());		
 	}
 	
 	public void testDeleteExam(){
+		DDTestsetA TestA = new DDTestsetA(testContext);
+	    TestA.FillDb();
+	    
 		dropAllObjects();
 		createTestObjects();
 		
@@ -65,6 +82,9 @@ public class DBLExamsTest extends AndroidTestCase{
 	}
 	
 	public void testGetExamById(){
+		DDTestsetA TestA = new DDTestsetA(testContext);
+	    TestA.FillDb();
+	    
 		dropAllObjects();
 		createTestObjects();
 		
@@ -78,15 +98,18 @@ public class DBLExamsTest extends AndroidTestCase{
 	}
 	
 	public void testEditExam(){
-		dropAllObjects();
-		createTestObjects();
+		DDTestsetA TestA = new DDTestsetA(testContext);
+	    TestA.FillDb();
+	    
 		String editComment = "edited comment";
 		
-		long id = dblObjects.addExam(testObjects.get(0));
-		testObjects.get(0).setComment(editComment);
-		testObjects.get(0).setId(id);
+		long id = dblObjects.getAllExams(limit).getExam().get(0).getId();
 		
-		dblObjects.editExam(testObjects.get(0));
+		Exam testExam = dblObjects.getExamById(id);
+		
+		testExam.setComment(editComment);
+		
+		dblObjects.editExam(testExam);
 		
 		Exam editedExam = dblObjects.getExamById(id);
 		String comment = editedExam.getComment();
@@ -98,6 +121,9 @@ public class DBLExamsTest extends AndroidTestCase{
 	 * anscheinend wird onCreate für 'relations' nicht ausgeführt, schlägt deshalb fehl
 	 */
 	public void testGetDateOfExam(){
+		DDTestsetA TestA = new DDTestsetA(testContext);
+	    TestA.FillDb();
+	    
 		dropAllObjects();
 		createTestObjects();
 		// TODO useful test case
@@ -113,6 +139,9 @@ public class DBLExamsTest extends AndroidTestCase{
 	}
 	
 	public void testGetAllResourcesOfExam(){
+		DDTestsetA TestA = new DDTestsetA(testContext);
+	    TestA.FillDb();
+	    
 		dropAllObjects();
 		createTestObjects();
 		// TODO useful test case
@@ -123,6 +152,9 @@ public class DBLExamsTest extends AndroidTestCase{
 	}
 	
 	public void testGetCoworkersOfExam(){
+		DDTestsetA TestA = new DDTestsetA(testContext);
+	    TestA.FillDb();
+	    
 		dropAllObjects();
 		createTestObjects();
 		// TODO useful test case
