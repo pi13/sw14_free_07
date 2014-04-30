@@ -20,11 +20,12 @@ public class HLPRelations extends SQLiteOpenHelper {
 	public static final String COL_EXAM_ID = "exam_id";
 	public static final String COL_TASK_ID = "task_id";
 	public static final String COL_DATE_ID = "date_id";
+	public static final String COL_RES_ID = "resource_id";
 	
 	private String logtag = DBsettings.LOG_TAG_RELATIONS;
 	
 	//columns list
-	public static final String[] allColumns = {COL_ID, COL_SRCTABLE, COL_LECTURE_ID, COL_EXAM_ID, COL_TASK_ID, COL_DATE_ID};
+	public static final String[] allColumns = {COL_ID, COL_SRCTABLE, COL_LECTURE_ID, COL_EXAM_ID, COL_TASK_ID, COL_DATE_ID, COL_RES_ID};
 	
 	//create string
 	private static final String RELATIONS_CREATE = "CREATE TABLE " + TABLE_NAME + " (" +
@@ -33,7 +34,8 @@ public class HLPRelations extends SQLiteOpenHelper {
 												COL_LECTURE_ID + " integer, " +
 												COL_EXAM_ID + " integer, " +
 												COL_TASK_ID + " integer," +
-												COL_DATE_ID + " integer);";
+												COL_DATE_ID + " integer," +
+												COL_RES_ID + " integer);";
 	
 	//database adapter
 	private SQLiteDatabase db;
@@ -109,7 +111,7 @@ public class HLPRelations extends SQLiteOpenHelper {
 	 * @param dateID
 	 * @return insertId
 	 */
-	public long addRelation(String srctable, long lectureID, long examID, long taskID, long dateID) {
+	public long addRelation(String srctable, long lectureID, long examID, long taskID, long dateID, long resID) {
 		ContentValues values = new ContentValues();
 		
 		values.put(COL_SRCTABLE, srctable);
@@ -117,6 +119,7 @@ public class HLPRelations extends SQLiteOpenHelper {
 		values.put(COL_EXAM_ID, examID);
 		values.put(COL_TASK_ID, taskID);
 		values.put(COL_DATE_ID, dateID);
+		values.put(COL_RES_ID, resID);
 		
 		long insertId = db.insert(TABLE_NAME, null, values);
 		
@@ -140,7 +143,8 @@ public class HLPRelations extends SQLiteOpenHelper {
 			logstr += "LectureID: " + cursor.getLong(2) + " | ";
 			logstr += "ExamID: " + cursor.getLong(3) + " | ";
 			logstr += "TaskID: " + cursor.getLong(4) + " | ";
-			logstr += "DateID: " + cursor.getLong(5);
+			logstr += "DateID: " + cursor.getLong(5)+ " | ";
+			logstr += "ResourceID: " + cursor.getLong(6);
 			
 			Log.i(logtag, logstr);
 			

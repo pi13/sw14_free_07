@@ -1,5 +1,7 @@
 package at.lvmaster3000.database.demodata;
 
+import java.util.List;
+
 import android.content.Context;
 import at.lvmaster3000.database.helper.HLPCoworkers;
 import at.lvmaster3000.database.helper.HLPDates;
@@ -9,6 +11,7 @@ import at.lvmaster3000.database.helper.HLPRelations;
 import at.lvmaster3000.database.helper.HLPResources;
 import at.lvmaster3000.database.helper.HLPTasks;
 import at.lvmaster3000.database.logic.DBLLectures;
+import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Lecture;
 
 public class DDTestsetA {
@@ -25,7 +28,9 @@ public class DDTestsetA {
 	private int lecturecnt;
 	private int taskscnt;
 	private int datescnt;
-	
+	private int examcnt;
+	private int resourcecnt;
+
 	public DDTestsetA(Context context) {
 		this.hlplectures = new HLPLectures(context);
 		this.hlptasks = new HLPTasks(context);
@@ -38,6 +43,8 @@ public class DDTestsetA {
 		this.lecturecnt = 0;
 		this.taskscnt = 0;
 		this.datescnt = 0;
+		this.examcnt = 0;
+		this.resourcecnt = 0;
 	}
 	
 	public void FillDb() {
@@ -83,18 +90,27 @@ public class DDTestsetA {
         this.hlpexams.openCon();
         this.hlpexams.resetTable();
         long eid1 = hlpexams.addExam("Ex 1 ", "Some comment", lid);
+        this.examcnt++;
+        long eid2 = hlpexams.addExam("1. teilpruefung", "schwerig", lid);
+        this.examcnt++;
         this.hlpexams.closeCon();        
         
         //add relation
         this.hlprelations.openCon();
         this.hlprelations.resetTable();        
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid, 0, tid1, did5);
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid, 0, tid2, did3);
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid, 0, 0, did1);
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid, 0, 0, did4);
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, 0, eid1, 0, did2);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid, 0, tid1, did5, 0);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid, 0, tid2, did3, 0);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid, 0, 0, did1, 0);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid, 0, 0, did4, 0);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, 0, eid1, 0, did2, 0);
         this.hlprelations.allEntriesToLog();
         this.hlprelations.closeCon();        
+        
+        this.hlpresources.openCon();
+        this.hlpresources.resetTable();
+        this.hlpresources.addResource("C# for Dummies");
+        this.resourcecnt++;
+        this.hlpresources.closeCon();
 	}
 	
 	public int getLectureCnt() {
@@ -107,6 +123,14 @@ public class DDTestsetA {
 	
 	public int getDatesCnt() {
 		return this.datescnt;
+	}
+	
+	public int getExamCnt(){
+		return this.examcnt;
+	}
+	
+	public int getResourceCnt(){
+		return this.resourcecnt;
 	}
 	
 	public void someTest() {

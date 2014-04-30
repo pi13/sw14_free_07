@@ -2,6 +2,7 @@ package at.lvmaster3000.database.logic;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 import at.lvmaster3000.database.helper.HLPCoworkers;
 import at.lvmaster3000.database.helper.HLPDates;
@@ -74,8 +75,18 @@ public class DBLExams {
 	}
 
 	public void editExam(Exam editedExam) {
-		// TODO Auto-generated method stub
+		String query = "UPDATE " + HLPExams.TABLE_NAME + " SET " + HLPExams.COL_LECTURE_ID + " = ?";
+		query += ", " + HLPExams.COL_TITLE   + " = ?";
+		query += ", " + HLPExams.COL_COMMENT + " = ?";
+	    query += " WHERE " + HLPExams.COL_ID + " = ?";
 		
+	    SQLiteStatement stmt = this.hlpExams.openCon().compileStatement(query);
+	    stmt.bindLong(1, editedExam.getLecture_id());
+	    stmt.bindString(2, editedExam.getTitle());
+	    stmt.bindString(3, editedExam.getComment());
+	    stmt.bindLong(4, editedExam.getId());
+	    stmt.execute();
+        hlpExams.closeCon();
 	}
 
 	public Exam getExamById(long id) {
@@ -111,7 +122,7 @@ public class DBLExams {
 		hlpDates.closeCon();
 		
 		hlpRelations.openCon();
-		long relId = hlpRelations.addRelation(HLPExams.TABLE_NAME, 0, examId, 0, dateId);
+		long relId = hlpRelations.addRelation(HLPExams.TABLE_NAME, 0, examId, 0, dateId, 0);
 		hlpRelations.closeCon();
 		
 		if(dateId != -1 && relId != -1)
@@ -123,22 +134,23 @@ public class DBLExams {
 	public Resources getAllResourcesOfExam(long examId) {
 		Resources resources = new Resources();
 		
-		// TODO
-		String query = "SELECT * FROM " + HLPResources.TABLE_NAME;
-		query += " ";
+		String query = "SELECT * FROM " + HLPResources.TABLE_NAME + " res ";
+		query += " INNER JOIN " + HLPRelations.TABLE_NAME + " rel ";
+		query += " ON res." + HLPResources.COL_ID + " = rel." + HLPRelations.COL_RES_ID;
+		query += " WHERE " + HLPRelations.COL_EXAM_ID + " = " + examId;
 		
 		Log.i(DBsettings.LOG_TAG_TASKS, query);
 		
 		Cursor cursor = this.hlpRelations.openCon().rawQuery(query, null);
-		if(cursor != null) {
-			resources.cursorToResourceList(cursor);
-		} else {
-        	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
+		if(cursor != null) {                	
+			resources.cursorToResourceList(cursor);        	
+        } else {
+        	Log.w(DBsettings.LOG_TAG_EXAMS, "Cursor is NULL!!");        	
         }
 		
 		this.hlpRelations.closeCon();
 		
-		return null;
+		return resources;
 	}
 
 	public Coworkers getAllCoworkersOfExam(long examId){
