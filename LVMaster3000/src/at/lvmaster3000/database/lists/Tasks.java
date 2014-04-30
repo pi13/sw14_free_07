@@ -18,7 +18,7 @@ public class Tasks {
 		this.tasks.add(task);		
 	}
 	
-	public List<Task> getTask() {
+	public List<Task> getTasks() {
 		return this.tasks;
 	}
 	

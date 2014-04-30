@@ -3,22 +3,20 @@ package at.lvmaster3000.database.logic.test;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 import android.util.Log;
+import at.lvmaster3000.database.demodata.DDTestsetA;
 import at.lvmaster3000.database.logic.DBLLectures;
-import at.lvmaster3000.database.logic.DBLTasks;
 import at.lvmaster3000.database.objects.Lecture;
-import at.lvmaster3000.database.objects.Task;
 
 public class DBLLecturesTest extends AndroidTestCase{
 	
 	private DBLLectures dblLectures;
-	private DBLTasks dblTasks;
+	private RenamingDelegatingContext context;
 	
 	public static final String LOG_TAG_LECTURES_LOGIC_TEST = "TEST_LECTURES_LOGIC";
 	
 	public void setUp(){
-		RenamingDelegatingContext context = new RenamingDelegatingContext(getContext(), "test_");			
+		this.context = new RenamingDelegatingContext(getContext(), "test_");			
 		this.dblLectures = new DBLLectures(context);
-		this.dblTasks = new DBLTasks(context);
 	}
 	
 	public void testAddNewLecture(){
@@ -46,7 +44,15 @@ public class DBLLecturesTest extends AndroidTestCase{
 	}
 
 	public void testGetTasksForLecture(){
+		DDTestsetA a = new DDTestsetA(this.context);
+		a.FillDb();
 		
+		this.dblLectures.getLectures(0).printLectureList();
+		
+		Lecture l = this.dblLectures.getLectures(1).getLectures().get(0);
+		int cnt = this.dblLectures.getTasksForLecture(l).getTasks().size();
+		
+		assertEquals(cnt, a.getTasksCnt());
 	}
 	
 	public void testGetAllExamsOfLecture(){
@@ -54,22 +60,11 @@ public class DBLLecturesTest extends AndroidTestCase{
 	}
 	
 	public void testGetAllLectures(){
-		this.insertTestsetToDb();
-	}
-	
-	private void insertTestsetToDb(){		
-		Lecture l1 = new Lecture(0, "301.000", "sophisticated 1", "good prof", "SE", 1, 1);
-		Lecture l2 = new Lecture(0, "301.001", "sophisticated 1", "good prof", "VO", 1, 0);
+		DDTestsetA a = new DDTestsetA(this.context);
+		a.FillDb();
 		
-		long id1 = this.dblLectures.addLecture(l1);
-		Log.i(DBLLecturesTest.LOG_TAG_LECTURES_LOGIC_TEST, "(insertTestsetToDb) InsertID: " + id1);
-		l1.setID(id1);
+		int cnt = this.dblLectures.getLectures(0).getLectures().size();
 		
-		long id2 = this.dblLectures.addLecture(l2);
-		Log.i(DBLLecturesTest.LOG_TAG_LECTURES_LOGIC_TEST, "(insertTestsetToDb) InsertID: " + id2);
-		l1.setID(id2);	
-		
-		Task t1 = new Task(0, "Task 1", "Some...", null);
-		this.dblTasks.addTask(t1);
+		assertEquals(cnt, a.getLectureCnt());
 	}
 }

@@ -86,8 +86,11 @@ public class Date {
 	}
 	
 	public void printDate() {
+		java.util.Date date = new java.util.Date();
+		date.setTime((long)this.timestamp * 1000);
+		
 		String msg = "ID: " + this.id;
-		msg += " | Timestamp: " + this.timestamp;
+		msg += " | Timestamp: " + this.timestamp + " (" + date.toString() + ")";
 		msg += " | Location: " + this.location;
 		msg += " | Type: " + this.type;
 		msg += " | Comment: " + this.comment;

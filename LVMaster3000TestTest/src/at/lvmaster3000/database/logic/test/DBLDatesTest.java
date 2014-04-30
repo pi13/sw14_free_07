@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
+import at.lvmaster3000.database.demodata.DDTestsetA;
 import at.lvmaster3000.database.lists.Dates;
 import at.lvmaster3000.database.logic.DBLDates;
 import at.lvmaster3000.database.objects.Coworker;
@@ -17,7 +18,7 @@ public class DBLDatesTest extends AndroidTestCase{
 	
 	private RenamingDelegatingContext testContext = null;
 	
-	public void startUp(){
+	public void setUp(){
 		testContext = new RenamingDelegatingContext(getContext(), "test_");
 		
 		dblObjects = new DBLDates(testContext);
@@ -28,17 +29,21 @@ public class DBLDatesTest extends AndroidTestCase{
 		dropAllObjects();
 		createTestObjects();
 		
-		long idFromDatabase = dblObjects.add(this.testObjects.get(0));
+		long idFromDatabase = dblObjects.addDate(this.testObjects.get(0));
 		
 		assertNotSame(-1l, idFromDatabase);
 	}
 	
 	public void testGetAll(){
-		dropAllObjects();
-		fillTestObjectsInDBL();
-		Dates objects = dblObjects.getAll();
+//		dropAllObjects();
+//		fillTestObjectsInDBL();
 		
-		assertEquals(NR_TEST_OBJECTS, objects.nrOfObjects());
+		DDTestsetA a = new DDTestsetA(this.testContext);
+		a.FillDb();
+		
+		int cnt = dblObjects.getDates(0).getDates().size();
+		
+		assertEquals(a.getDatesCnt(), cnt);
 	}
 	
 	private void fillTestObjectsInDBL(){
@@ -47,7 +52,7 @@ public class DBLDatesTest extends AndroidTestCase{
 		}
 		
 		for(Date object : this.testObjects){
-			this.dblObjects.add(object);
+			this.dblObjects.addDate(object);
 		}
 	}
 	
