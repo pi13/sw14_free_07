@@ -28,16 +28,28 @@ public class DB_Main extends Activity {
         
         Date dObj = new Date();
         dObj.setTimestamp(unixTime);
-        dObj.setLocation("Home");
-        dObj.setType("XY");
-        dObj.setComment("Comment ... -.-");    
+        dObj.setLocation("Home 1");
+        dObj.setType("XY 1");
+        dObj.setComment("Comment 1 ... -.-");    
         
         Exam eObj = new Exam();
         eObj.setLecture_id(1);
-        eObj.setTitle("Ex Title");
-        eObj.setComment("Ex commnet");        
+        eObj.setTitle("Ex Title 1");
+        eObj.setComment("Ex commnet 1");        
         
         DBLExams e = new DBLExams(this);
+        eObj.setId(e.addExam(eObj));
+        
+        e.setNewExamDate(eObj.getId(), dObj);
+        
+        dObj.setTimestamp(unixTime);
+        dObj.setLocation("Home 2");
+        dObj.setType("XY 2");
+        dObj.setComment("Comment 2 ... -.-");    
+        
+        eObj.setLecture_id(1);
+        eObj.setTitle("Ex Title 2");
+        eObj.setComment("Ex commnet 2");        
         eObj.setId(e.addExam(eObj));
         
         e.setNewExamDate(eObj.getId(), dObj);

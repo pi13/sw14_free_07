@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 import at.lvmaster3000.database.helper.HLPDates;
+import at.lvmaster3000.database.helper.HLPExams;
 import at.lvmaster3000.database.helper.HLPLectures;
 import at.lvmaster3000.database.helper.HLPRelations;
 import at.lvmaster3000.database.helper.HLPTasks;
@@ -19,6 +20,7 @@ public class DBLLectures {
 	private HLPLectures hlplectures;
 	private HLPTasks hlptasks;
 	private HLPDates hlpdates;
+	private HLPExams hlpexams;
 	
 	/**
 	 * 
@@ -28,6 +30,7 @@ public class DBLLectures {
 		this.hlplectures = new HLPLectures(context);
 		this.hlptasks = new HLPTasks(context);
 		this.hlpdates = new HLPDates(context);
+		this.hlpexams = new HLPExams(context);
 	}
 	
 	/**
@@ -96,7 +99,8 @@ public class DBLLectures {
         } else {
         	Log.w(DBsettings.LOG_TAG_LECTURES, "Cursor is NULL!!");        	
         }
-        hlplectures.closeCon();
+        
+        this.hlplectures.closeCon();
 		
 		return lecture;
 	}
@@ -121,7 +125,8 @@ public class DBLLectures {
         } else {
         	Log.w(DBsettings.LOG_TAG_LECTURES, "Cursor is NULL!!");        	
         }
-        hlplectures.closeCon();
+        
+        this.hlplectures.closeCon();
 		
 		return lectures;
 	}
@@ -144,6 +149,7 @@ public class DBLLectures {
 		} else {
         	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
         }
+		
 		this.hlptasks.closeCon();
 		
 		return tasks;
@@ -167,13 +173,29 @@ public class DBLLectures {
 		} else {
         	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
         }
+		
 		this.hlpdates.closeCon();
 		
 		return dates;
 	}
 
 	public Exams getExamsForLecture(Lecture lecture) {
-		// TODO Auto-generated method stub
-		return null;
+		Exams exams = new Exams();
+		
+		String query = "SELECT * FROM " + HLPExams.TABLE_NAME;
+		//TODO: add join
+		
+		Log.i(DBsettings.LOG_TAG_EXAMS, query);
+		
+		Cursor cursor = this.hlpexams.openCon().rawQuery(query, null);
+		if(cursor != null) {
+			exams.cursorToExamList(cursor);
+		} else {
+        	Log.w(DBsettings.LOG_TAG_EXAMS, "Cursor is NULL!!");        	
+        }
+		
+		this.hlpexams.closeCon();
+		
+		return exams;
 	}
 }
