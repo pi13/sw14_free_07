@@ -36,8 +36,7 @@ public class Resources {
 		}
 	}
 
-	public int nrOfObjects() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int nrOfResources() {
+		return resources.size();
 	}
 }

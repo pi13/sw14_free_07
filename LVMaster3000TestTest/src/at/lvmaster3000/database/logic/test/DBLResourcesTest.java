@@ -38,7 +38,7 @@ public class DBLResourcesTest extends AndroidTestCase{
 		fillTestObjectsInDBL();
 		Resources objects = dblObjects.getAll();
 		
-		assertEquals(NR_TEST_OBJECTS, objects.nrOfObjects());
+		assertEquals(NR_TEST_OBJECTS, objects.nrOfResources());
 	}
 	
 	private void fillTestObjectsInDBL(){

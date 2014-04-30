@@ -6,11 +6,14 @@ import java.util.List;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 import at.lvmaster3000.database.demodata.DDTestsetA;
+import at.lvmaster3000.database.helper.HLPLectures;
 import at.lvmaster3000.database.helper.HLPRelations;
+import at.lvmaster3000.database.helper.HLPResources;
 import at.lvmaster3000.database.lists.Coworkers;
 import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.lists.Resources;
 import at.lvmaster3000.database.logic.DBLExams;
+import at.lvmaster3000.database.logic.DBLLectures;
 import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Exam;
 
@@ -142,13 +145,21 @@ public class DBLExamsTest extends AndroidTestCase{
 		DDTestsetA TestA = new DDTestsetA(testContext);
 	    TestA.FillDb();
 	    
-		dropAllObjects();
-		createTestObjects();
-		// TODO useful test case
-		long id = 0;
-		Resources resources = dblObjects.getAllResourcesOfExam(id);
+	    long lecId = new DBLLectures(testContext).getLectures(limit).getLectures().get(0).getID();
+		long exId = dblObjects.addExam("resource test", "want to add resource here", lecId);
+		
+		HLPResources hlpResources = new HLPResources(testContext);
+		hlpResources.openCon();
+		long resId = hlpResources.addResource("test resource");
+		
+		assertNotSame(-1l, resId);
+		
+		new HLPRelations(testContext).addRelation(HLPResources.TABLE_NAME, 0, exId, 0, 0);
+		
+		Resources resources = dblObjects.getAllResourcesOfExam(exId);
 		
 		assertNotNull(resources);
+		assertEquals(1, resources.nrOfResources());
 	}
 	
 	public void testGetCoworkersOfExam(){
