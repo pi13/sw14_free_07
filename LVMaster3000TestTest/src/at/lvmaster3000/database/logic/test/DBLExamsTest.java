@@ -103,7 +103,7 @@ public class DBLExamsTest extends AndroidTestCase{
 		// TODO useful test case
 		long id = 0;
 		Date date = new Date(new java.util.Date(2014-1900, 8,1,10,0,0).getTime(), "i 13", "exam", "i need it");
-		boolean worked = dblObjects.setDateToExam(id, date);
+		boolean worked = dblObjects.setNewExamDate(id, date);
 		
 		assertEquals(true, worked);
 		

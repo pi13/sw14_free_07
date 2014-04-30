@@ -97,13 +97,13 @@ public class DBLExams {
 	}
 
 	/**
-	 * addRelation funzt net, anscheinend wird onCreate für 'relations' nicht ausgeführt
+	 * 
 	 * 
 	 * @param examId
 	 * @param date
 	 * @return
 	 */
-	public boolean setDateToExam(long examId, Date date) {
+	public boolean setNewExamDate(long examId, Date date) {
 		boolean worked = false;
 		
 		hlpDates.openCon();
