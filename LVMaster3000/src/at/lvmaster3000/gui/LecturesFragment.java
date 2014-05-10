@@ -3,6 +3,7 @@ package at.lvmaster3000.gui;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.LauncherActivity.ListItem;
 import android.app.ListFragment;
 import android.content.DialogInterface;
@@ -35,12 +36,9 @@ public class LecturesFragment extends Fragment implements OnItemClickListener{
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
 	{
-		AlertDialog.Builder dlgAlert = new AlertDialog.Builder(parent.getContext());
-		String label = (String)parent.getItemAtPosition(position);
-		dlgAlert.setTitle(label);
-		dlgAlert.setMessage(label + " has been clicked!");
-		dlgAlert.setPositiveButton("OK", null);
-	    dlgAlert.show();
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.frame_container, new SingleLectureFragment()).commit();
 	}
 	
 	private void attachAdapter(ListView list)
