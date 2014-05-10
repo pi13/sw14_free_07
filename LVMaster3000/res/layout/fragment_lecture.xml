@@ -3,30 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-  <RelativeLayout
-      android:id="@+id/list_header"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_alignParentTop="true"
-      android:background="#FC9"
-      android:gravity="center" >
+    <RelativeLayout
+        android:id="@+id/list_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#FC9"
+        android:gravity="center" >
 
-      <EditText
-          android:id="@+id/lecture_header"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_margin="5dp"
-          android:textColor="#000"
-          android:textSize="20sp" />
-  </RelativeLayout>
+        <EditText
+            android:id="@+id/lecture_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:inputType="text"
+            android:textColor="#000"
+            android:textSize="20sp" />
 
-  <ExpandableListView
-      android:id="@+id/lecture_items"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_alignParentLeft="true"
-      android:layout_below="@+id/list_header" >
+    </RelativeLayout>
 
-  </ExpandableListView>
-  
+    <ExpandableListView
+        android:id="@+id/lecture_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/list_header" >
+    </ExpandableListView>
+
 </RelativeLayout>
