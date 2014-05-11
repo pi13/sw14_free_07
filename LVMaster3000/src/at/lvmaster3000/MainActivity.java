@@ -16,13 +16,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import at.lvmaster3000.gui.ExamsFragment;
-import at.lvmaster3000.gui.HomeFragment;
-import at.lvmaster3000.gui.LecturesFragment;
 import at.lvmaster3000.gui.NavDrawerItem;
-import at.lvmaster3000.gui.NavDrawerListAdapter;
-import at.lvmaster3000.gui.ResourcesFragment;
-import at.lvmaster3000.gui.TasksFragment;
+import at.lvmaster3000.gui.adapters.NavDrawerListAdapter;
+import at.lvmaster3000.gui.fragments.ExamsFragment;
+import at.lvmaster3000.gui.fragments.HomeFragment;
+import at.lvmaster3000.gui.fragments.LecturesFragment;
+import at.lvmaster3000.gui.fragments.ResourcesFragment;
+import at.lvmaster3000.gui.fragments.TasksFragment;
 
 public class MainActivity extends Activity {
 	private DrawerLayout mDrawerLayout;

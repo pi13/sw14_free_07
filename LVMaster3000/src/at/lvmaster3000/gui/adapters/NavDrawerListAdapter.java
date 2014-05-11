@@ -1,4 +1,4 @@
-package at.lvmaster3000.gui;
+package at.lvmaster3000.gui.adapters;
 
 import java.util.ArrayList;
 
@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import at.lvmaster3000.R;
+import at.lvmaster3000.gui.NavDrawerItem;
 
 public class NavDrawerListAdapter extends BaseAdapter{
 

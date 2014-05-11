@@ -1,4 +1,4 @@
-package at.lvmaster3000.gui;
+package at.lvmaster3000.gui.fragments;
 
 
 import android.app.AlertDialog;
