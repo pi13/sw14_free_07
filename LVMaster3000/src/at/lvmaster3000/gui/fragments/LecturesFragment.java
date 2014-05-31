@@ -11,17 +11,18 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.IDBlogic;
+import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.gui.adapters.LectureListAdapter;
 
 public class LecturesFragment extends UIFragmentBase implements OnItemClickListener{
 	
 	private IDBlogic dbLogic;
 	private Context context;
+	private LectureListAdapter adapter;
 	
 	public LecturesFragment() {
 		
 	}
-	
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,7 +32,7 @@ public class LecturesFragment extends UIFragmentBase implements OnItemClickListe
 		this.dbLogic = new IDBlogic(this.context);
         
 		ListView list = (ListView) inflater.inflate(R.layout.fragment_list_layout, container, false);
-        LectureListAdapter adapter = new LectureListAdapter(this.context, this.dbLogic.getLectures(0).getLectures());
+        adapter = new LectureListAdapter(this.context, this.dbLogic.getLectures(0).getLectures());
         attachAdapter(list, adapter);
         
         list.setOnItemClickListener(this);
@@ -42,6 +43,6 @@ public class LecturesFragment extends UIFragmentBase implements OnItemClickListe
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
 	{
-		switchToFragemnt(new SingleLectureFragment());
+		switchToFragemnt(LectureDetailsFragment.newInstance((Lecture)adapter.getItem(position)));
 	}
 }

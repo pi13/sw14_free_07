@@ -201,6 +201,7 @@ public class MainActivity extends Activity {
 			mDrawerList.setSelection(position);
 			setTitle(navMenuTitles[position]);
 			mDrawerLayout.closeDrawer(mDrawerList);
+			
 		} else {
 			// error in creating fragment
 			Log.e("MainActivity", "Error in creating fragment");
