@@ -51,7 +51,10 @@ public class DDTestsetA {
 		//create lecture
 		this.hlplectures.openCon();
 		this.hlplectures.resetTable();          
-        long lid = hlplectures.addLecture("701.123", "Test LV", "Some Comment...", "LV", 1, 1);
+        long lid1 = hlplectures.addLecture("701.123", "Test LV 1", "Some Comment...", "LV", 1, 1);
+        long lid2 = hlplectures.addLecture("702.123", "Test LV 2", "Some Comment...", "LV", 0, 0);
+        long lid3 = hlplectures.addLecture("703.123", "Test LV 3", "Some Comment...", "LV", 0, 1);
+        long lid4 = hlplectures.addLecture("704.123", "Test LV 4", "Some Comment...", "LV", 1, 0);
         this.lecturecnt += 1;
         this.hlplectures.allEntriesToLog();
         this.hlplectures.closeCon();
@@ -89,19 +92,19 @@ public class DDTestsetA {
         //add exams
         this.hlpexams.openCon();
         this.hlpexams.resetTable();
-        long eid1 = hlpexams.addExam("Ex 1 ", "Some comment", lid);
+        long eid1 = hlpexams.addExam("Ex 1 ", "Some comment", lid1);
         this.examcnt++;
-        long eid2 = hlpexams.addExam("1. teilpruefung", "schwerig", lid);
+        long eid2 = hlpexams.addExam("1. teilpruefung", "schwerig", lid1);
         this.examcnt++;
         this.hlpexams.closeCon();        
         
         //add relation
         this.hlprelations.openCon();
         this.hlprelations.resetTable();        
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid, 0, tid1, did5, 0);
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid, 0, tid2, did3, 0);
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid, 0, 0, did1, 0);
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid, 0, 0, did4, 0);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, 0, tid1, did5, 0);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, 0, tid2, did3, 0);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, 0, 0, did1, 0);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, 0, 0, did4, 0);
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, 0, eid1, 0, did2, 0);
         this.hlprelations.allEntriesToLog();
         this.hlprelations.closeCon();        

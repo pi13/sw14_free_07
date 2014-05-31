@@ -20,7 +20,14 @@ public class DB_Main extends Activity {
         
         Log.i(CMONsettings.LOG_TAG, "APP startup..."); 
         
-        DDTestsetA TestA = new DDTestsetA(this);
+        IDBlogic dbl = new IDBlogic(this);
+        dbl.getLectures(0).printLectureList();
+        
+        Log.i(CMONsettings.LOG_TAG, "APP done. your brain will be toasted in a few seconds :P"); 
+    }
+    
+    private void Test1() {
+    	DDTestsetA TestA = new DDTestsetA(this);
         TestA.FillDb();
 //        TestA.someTest();
         
@@ -58,8 +65,6 @@ public class DB_Main extends Activity {
         r.openCon();
         r.allEntriesToLog();
         r.closeCon();
-        
-        Log.i(CMONsettings.LOG_TAG, "APP done. your brain will be toasted in a few seconds :P"); 
     }
 	
 }
