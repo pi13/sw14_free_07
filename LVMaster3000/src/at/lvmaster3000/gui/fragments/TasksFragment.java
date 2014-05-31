@@ -13,8 +13,10 @@ import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.gui.adapters.TaskListAdapter;
 
 public class TasksFragment extends UIFragmentBase{
-	private IDBlogic idbLogic;
+	
+	private IDBlogic dbLogic;
 	private Context context;
+	
 	public TasksFragment() {
 		// TODO Auto-generated constructor stub
 	}
@@ -24,16 +26,13 @@ public class TasksFragment extends UIFragmentBase{
             Bundle savedInstanceState) {
  
 		this.context = getActivity().getApplicationContext();
-		idbLogic = new IDBlogic(this.context);
+		dbLogic = new IDBlogic(this.context);
+		
 		final ListView list = (ListView) inflater.inflate(R.layout.fragment_list_layout, container, false);
-        attachAdapter(list);
-        //list.setOnItemClickListener(this);
+		TaskListAdapter adapter = new TaskListAdapter(this.context, dbLogic.getTasks(0).getTasks());
+        attachAdapter(list, adapter);
+
         return list;
     }
 	
-	private void attachAdapter(ListView list)
-	{
-		TaskListAdapter taskLA = new TaskListAdapter(this.context, idbLogic.getTasks(0).getTasks());												  
-		list.setAdapter(taskLA);
-	}
 }

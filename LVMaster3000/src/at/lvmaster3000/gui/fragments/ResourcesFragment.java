@@ -1,6 +1,7 @@
 package at.lvmaster3000.gui.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,8 @@ import at.lvmaster3000.gui.adapters.ResourceListAdapter;
 
 public class ResourcesFragment extends UIFragmentBase implements OnItemClickListener {
 	
-	private IDBlogic idLogic;
+	private IDBlogic dbLogic;
+	private Context context;
 	
 	public ResourcesFragment() {
 		// TODO Auto-generated constructor stub
@@ -24,19 +26,16 @@ public class ResourcesFragment extends UIFragmentBase implements OnItemClickList
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-		idLogic = new IDBlogic(getActivity().getApplicationContext());
-		final ListView list = (ListView) inflater.inflate(R.layout.fragment_list_layout, container, false);
-        attachAdapter(list);
-        //list.setOnItemClickListener(this);
+		
+		this.context = this.getActivity().getApplicationContext();
+		this.dbLogic = new IDBlogic(this.context);
+		
+		ListView list = (ListView) inflater.inflate(R.layout.fragment_list_layout, container, false);
+		ResourceListAdapter adapter = new ResourceListAdapter(this.context, dbLogic.getResources(0).getResource());
+        attachAdapter(list, adapter);
+
         return list;
     }
-	
-	private void attachAdapter(ListView list)
-	{
-		ResourceListAdapter resourceLA = new ResourceListAdapter(list.getContext().getApplicationContext(), 
-																	idLogic.getResources(0).getResource());
-		list.setAdapter(resourceLA);
-	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
