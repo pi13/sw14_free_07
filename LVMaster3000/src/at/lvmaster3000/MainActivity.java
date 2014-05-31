@@ -24,6 +24,7 @@ import at.lvmaster3000.gui.fragments.HomeFragment;
 import at.lvmaster3000.gui.fragments.LecturesFragment;
 import at.lvmaster3000.gui.fragments.ResourcesFragment;
 import at.lvmaster3000.gui.fragments.TasksFragment;
+import at.lvmaster3000.gui.fragments.TestFragment;
 
 public class MainActivity extends Activity {
 	private DrawerLayout mDrawerLayout;
@@ -68,7 +69,8 @@ public class MainActivity extends Activity {
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1), true, "22"));	
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1), true, "22"));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
 
 		// Recycle the typed array
 		navMenuIcons.recycle();
@@ -177,7 +179,9 @@ public class MainActivity extends Activity {
 		case 4:
 			fragment = new ResourcesFragment();
 			break;
-
+		case 5:
+			fragment = new TestFragment();
+			break;	
 		default:
 			break;
 		}
