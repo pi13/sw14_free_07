@@ -106,6 +106,30 @@ public class DBLLectures {
 	}
 	
 	/**
+	 * Get lecture by lecture id
+	 * @param lectureID
+	 * @return
+	 */
+	public Lecture getLectureByID(long lectureID){
+		Lecture lecture = new Lecture();
+		
+		String query = "SELECT * FROM " + HLPLectures.TABLE_NAME + " WHERE _id = '" + lectureID + "'";
+		
+        Cursor cursor = hlplectures.openCon().rawQuery(query, null);
+        if(cursor != null) {        	
+        	if(cursor.moveToFirst()) {
+        		lecture.cursorToLecture(cursor);
+        	}
+        } else {
+        	Log.w(DBsettings.LOG_TAG_LECTURES, "Cursor is NULL!!");        	
+        }
+        
+        this.hlplectures.closeCon();
+		
+		return lecture;
+	}
+	
+	/**
 	 * 
 	 * @param limit If 0, no limit is set
 	 * @return
