@@ -136,9 +136,9 @@ public class HLPResources extends SQLiteOpenHelper {
 	 * Function deletes a word from DB
 	 * @param id
 	 */
-	public void deleteResource(long id) {
-		db.delete(TABLE_NAME, COL_ID + " = " + id, null);		
+	public int deleteResource(long id) {
 		Log.i(logtag, "Word deleted. ID: " + id);
+		return db.delete(TABLE_NAME, COL_ID + " = " + id, null);
 	}
 
 }

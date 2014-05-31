@@ -25,8 +25,15 @@ public class DBLResources {
 		hlpResources.closeCon();
 		return id;
 	}
+	
+	public int deleteResource(long resourceID){
+		this.hlpResources.openCon();
+		int res = this.hlpResources.deleteResource(resourceID);
+		this.hlpResources.closeCon();
+		return res;
+	}
 
-	public Resources getAllResources(int limit) {
+	public Resources getResources(int limit) {
 		Resources resources = new Resources();
 		
 		String query = "SELECT * FROM " + HLPResources.TABLE_NAME;

@@ -2,16 +2,25 @@ package at.lvmaster3000.database;
 
 import android.content.Context;
 import at.lvmaster3000.database.demodata.DDTestsetA;
+import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.lists.Lectures;
+import at.lvmaster3000.database.lists.Resources;
+import at.lvmaster3000.database.lists.Tasks;
+import at.lvmaster3000.database.logic.DBLExams;
 import at.lvmaster3000.database.logic.DBLLectures;
+import at.lvmaster3000.database.logic.DBLResources;
+import at.lvmaster3000.database.logic.DBLTasks;
+import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Lecture;
+import at.lvmaster3000.database.objects.Resource;
+import at.lvmaster3000.database.objects.Task;
 
 public class IDBlogic {
 
-	/**
-	 * 
-	 */
 	private DBLLectures lectures = null;
+	private DBLTasks tasks = null;
+	private DBLExams exames = null;
+	private DBLResources resources = null;
 	
 	/**
 	 * 
@@ -22,6 +31,9 @@ public class IDBlogic {
         TestA.FillDb();
 		
 		this.lectures = new DBLLectures(context);
+		this.tasks = new DBLTasks(context);
+		this.exames = new DBLExams(context);
+		this.resources = new DBLResources(context);
 	}
 	
 	/**
@@ -60,4 +72,84 @@ public class IDBlogic {
 		return this.lectures.getLectureByID(lectureID);
 	}
 	
+	/**
+	 * 
+	 * @param exam
+	 * @return
+	 */
+	public long addExam(Exam exam){
+		return this.exames.addExam(exam);
+	}
+	
+	/**
+	 * 
+	 * @param exam
+	 * @return
+	 */
+	public int deleteExam(Exam exam){
+		return this.exames.deleteExam(exam);
+	}
+	
+	/**
+	 * 
+	 * @param limit
+	 * @return
+	 */
+	public Exams getExams(int limit) {
+		return this.exames.getExams(limit);
+	}	
+	
+	/**
+	 * 
+	 * @param task
+	 * @return
+	 */
+	public long addTask(Task task){
+		return this.tasks.addTask(task);
+	}
+	
+	/**
+	 * 
+	 * @param task
+	 * @return
+	 */
+	public int deleteTask(Task task){
+		return this.tasks.deleteTask(task);
+	}
+	
+	/**
+	 * 
+	 * @param limit
+	 * @return
+	 */
+	public Tasks getTasks(int limit){
+		return this.tasks.getTasks(limit);
+	}
+	
+	/**
+	 * 
+	 * @param resource
+	 * @return
+	 */
+	public long addResource(Resource resource){
+		return this.resources.addResource(resource);
+	}
+	
+	/**
+	 * 
+	 * @param resource
+	 * @return
+	 */
+	public int deleteResource(Resource resource){
+		return this.resources.deleteResource(resource.getId());
+	}
+	
+	/**
+	 * 
+	 * @param limit
+	 * @return
+	 */
+	public Resources getResources(int limit){
+		return this.resources.getResources(limit);
+	}
 }

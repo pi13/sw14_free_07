@@ -21,7 +21,7 @@ public class DBLCoworkers {
 		return hlpcoworkers.deleteCoworker(id);
 	}
 
-	public Coworkers getAll() {
+	public Coworkers getCoworkers(int limit) {
 		// TODO Auto-generated method stub
 		return null;
 	}

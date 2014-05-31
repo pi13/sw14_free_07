@@ -40,7 +40,7 @@ public class HLPExamsTest extends AndroidTestCase{
 	public void testDelete(){
 		hlpObjects.resetTable();
         long id = hlpObjects.addExam("Ass1", "first assignment", 1);
-		hlpObjects.deleteExams(id);
+		hlpObjects.deleteExam(id);
 		
 		try{
 			// should throw exception because lecture has been deleted

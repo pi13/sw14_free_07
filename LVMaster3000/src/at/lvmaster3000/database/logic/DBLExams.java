@@ -7,7 +7,6 @@ import android.util.Log;
 import at.lvmaster3000.database.helper.HLPCoworkers;
 import at.lvmaster3000.database.helper.HLPDates;
 import at.lvmaster3000.database.helper.HLPExams;
-import at.lvmaster3000.database.helper.HLPLectures;
 import at.lvmaster3000.database.helper.HLPRelations;
 import at.lvmaster3000.database.helper.HLPResources;
 import at.lvmaster3000.database.lists.Coworkers;
@@ -47,7 +46,7 @@ public class DBLExams {
 		return id;
 	}
 	
-	public Exams getAllExams(int limit) {
+	public Exams getExams(int limit) {
 		Exams exams = new Exams();
 		
 		String query = "SELECT * FROM " + HLPExams.TABLE_NAME;
@@ -56,22 +55,26 @@ public class DBLExams {
 			query += " LIMIT " + limit;
 		}
 		
-        Cursor cursor = hlpExams.openCon().rawQuery(query, null);
+        Cursor cursor = this.hlpExams.openCon().rawQuery(query, null);
         if(cursor != null) {                	
         	exams.cursorToExamList(cursor);        	
         } else {
         	Log.w(DBsettings.LOG_TAG_EXAMS, "Cursor is NULL!!");        	
         }
-        hlpExams.closeCon();
+        this.hlpExams.closeCon();
 		
 		return exams;
 	}
 
 	public int deleteExam(long id) {
 		hlpExams.openCon();
-		int res = hlpExams.deleteExams(id);
+		int res = hlpExams.deleteExam(id);
 		hlpExams.closeCon();
 		return res;
+	}
+	
+	public int deleteExam(Exam exam){
+		return this.deleteExam(exam.getId());
 	}
 
 	public void editExam(Exam editedExam) {
