@@ -37,7 +37,7 @@ public class DBLCoworkersTest extends AndroidTestCase{
 	public void testGetAll(){
 		dropAllObjects();
 		fillTestObjectsInDBL();
-		Coworkers objects = dblObjects.getAll();
+		Coworkers objects = dblObjects.getCoworkers(0);
 		
 		assertEquals(NR_TEST_OBJECTS, objects.nrOfObjects());
 	}

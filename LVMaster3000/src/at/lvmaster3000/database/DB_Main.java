@@ -22,6 +22,9 @@ public class DB_Main extends Activity {
         
         IDBlogic dbl = new IDBlogic(this);
         dbl.getLectures(0).printLectureList();
+        dbl.getExams(0).printExamList();
+//        dbl.getTasks(0).printTaskList();
+//        dbl.getResources(0).printResourceList();
         
         Log.i(CMONsettings.LOG_TAG, "APP done. your brain will be toasted in a few seconds :P"); 
     }

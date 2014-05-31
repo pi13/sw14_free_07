@@ -35,7 +35,7 @@ public class DBLTasksTest extends AndroidTestCase{
 	public void testGetAll(){
 		dropAllObjects();
 		fillTestObjectsInDBL();
-		Tasks tasks = dblObjects.getAllTasks();
+		Tasks tasks = dblObjects.getTasks(0);
 		
 		assertEquals(NR_TEST_OBJECTS, tasks.nrOfObjects());
 	}

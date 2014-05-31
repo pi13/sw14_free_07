@@ -64,7 +64,7 @@ public class DBLExamsTest extends AndroidTestCase{
 		DDTestsetA TestA = new DDTestsetA(testContext);
 	    TestA.FillDb();
 
-		Exams exs = dblObjects.getAllExams(limit);
+		Exams exs = dblObjects.getExams(limit);
 		
 		assertEquals(TestA.getExamCnt(), exs.nrOfExams());		
 	}
@@ -78,12 +78,12 @@ public class DBLExamsTest extends AndroidTestCase{
 		
 		long id = dblObjects.addExam(testObjects.get(0));
 		
-		int size = dblObjects.getAllExams(limit).nrOfExams();
+		int size = dblObjects.getExams(limit).nrOfExams();
 		
 		int res = dblObjects.deleteExam(id);
 		assertEquals(1, res);
 		
-		assertEquals(size-1, dblObjects.getAllExams(limit).nrOfExams());
+		assertEquals(size-1, dblObjects.getExams(limit).nrOfExams());
 	}
 	
 	public void testGetExamById(){
@@ -108,7 +108,7 @@ public class DBLExamsTest extends AndroidTestCase{
 	    
 		String editComment = "edited comment";
 		
-		long id = dblObjects.getAllExams(limit).getExam().get(0).getId();
+		long id = dblObjects.getExams(limit).getExam().get(0).getId();
 		
 		Exam testExam = dblObjects.getExamById(id);
 		
