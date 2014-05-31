@@ -10,8 +10,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import at.lvmaster3000.R;
+import at.lvmaster3000.database.IDBlogic;
+import at.lvmaster3000.gui.adapters.ResourceListAdapter;
 
 public class ResourcesFragment extends UIFragmentBase implements OnItemClickListener {
+	
+	private IDBlogic idLogic;
+	
 	public ResourcesFragment() {
 		// TODO Auto-generated constructor stub
 	}
@@ -19,6 +24,7 @@ public class ResourcesFragment extends UIFragmentBase implements OnItemClickList
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
+		idLogic = new IDBlogic(getActivity().getApplicationContext());
 		final ListView list = (ListView) inflater.inflate(R.layout.fragment_list_layout, container, false);
         attachAdapter(list);
         //list.setOnItemClickListener(this);
@@ -27,10 +33,9 @@ public class ResourcesFragment extends UIFragmentBase implements OnItemClickList
 	
 	private void attachAdapter(ListView list)
 	{
-		ArrayAdapter<String> items = new ArrayAdapter<String>(list.getContext().getApplicationContext(), 
-														      R.layout.single_list_item, R.id.list_item_label, 
-														      getResources().getStringArray(R.array.dummy_items));
-		list.setAdapter(items);
+		ResourceListAdapter resourceLA = new ResourceListAdapter(list.getContext().getApplicationContext(), 
+																	idLogic.getResources(0).getResource());
+		list.setAdapter(resourceLA);
 	}
 
 	@Override

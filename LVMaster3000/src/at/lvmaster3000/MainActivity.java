@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.gui.NavDrawerItem;
 import at.lvmaster3000.gui.adapters.NavDrawerListAdapter;
 import at.lvmaster3000.gui.fragments.ExamsFragment;
@@ -30,6 +31,7 @@ public class MainActivity extends Activity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
+	private IDBlogic idLogic;
 
 	// nav drawer title
 	private CharSequence mDrawerTitle;
@@ -48,7 +50,8 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-				
+		
+		idLogic = new IDBlogic(getApplicationContext());
 		mTitle = mDrawerTitle = getTitle();
 
 		// load slide menu items
@@ -66,10 +69,10 @@ public class MainActivity extends Activity {
 		// adding nav drawer items to array
 		//Lectures
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1), true, "22"));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1), true, idLogic.getLectures(0).getLectures().size()));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1), true, idLogic.getTasks(0).getTasks().size()));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, idLogic.getExams(0).getExam().size()));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1), true, idLogic.getResources(0).getResource().size()));
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
 
 		// Recycle the typed array
