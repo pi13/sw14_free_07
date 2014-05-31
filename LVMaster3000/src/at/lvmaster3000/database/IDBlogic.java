@@ -51,5 +51,13 @@ public class IDBlogic {
 		return this.lectures.getLectures(limit);
 	}
 	
+	/**
+	 * 
+	 * @param lectureID
+	 * @return
+	 */
+	public Lecture getLectureByID(long lectureID) {
+		return this.lectures.getLectureByID(lectureID);
+	}
 	
 }
