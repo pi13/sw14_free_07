@@ -35,11 +35,11 @@ public class IDBlogic {
 	
 	/**
 	 * 
-	 * @param lectureId
+	 * @param lecture
 	 * @return int
 	 */
-	public int deleteLecture(long lectureId) {
-		return this.lectures.deleteLecture(lectureId);
+	public int deleteLecture(Lecture lecture) {
+		return this.lectures.deleteLecture(lecture);
 	}
 	
 	/**
