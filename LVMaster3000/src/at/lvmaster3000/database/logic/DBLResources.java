@@ -2,11 +2,8 @@ package at.lvmaster3000.database.logic;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.test.RenamingDelegatingContext;
 import android.util.Log;
-import at.lvmaster3000.database.helper.HLPExams;
 import at.lvmaster3000.database.helper.HLPResources;
-import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.lists.Resources;
 import at.lvmaster3000.database.objects.Resource;
 import at.lvmaster3000.settings.DBsettings;

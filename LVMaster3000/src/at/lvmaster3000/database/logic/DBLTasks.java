@@ -1,28 +1,36 @@
 package at.lvmaster3000.database.logic;
 
 import android.content.Context;
-import android.test.RenamingDelegatingContext;
+import android.database.Cursor;
+import android.util.Log;
 import at.lvmaster3000.database.helper.HLPTasks;
 import at.lvmaster3000.database.lists.Tasks;
 import at.lvmaster3000.database.objects.Task;
+import at.lvmaster3000.settings.DBsettings;
 
 public class DBLTasks {
 	
-	private HLPTasks hlptasks = null;
+	private HLPTasks hlpTasks = null;
 
 	public DBLTasks(Context context) {
-		this.hlptasks = new HLPTasks(context);
+		this.hlpTasks = new HLPTasks(context);
+	}
+	
+	public long addTask(String title, String comment) {
+		this.hlpTasks.openCon();
+		long id = this.hlpTasks.addTask(title, comment);
+		this.hlpTasks.closeCon();
+		return id;
 	}
 
 	public long addTask(Task task) {
-		
-		return 0;
+		return this.addTask(task.getTitle(), task.getComment());
 	}
 	
 	public int deleteTask(long taskID) {
-		this.hlptasks.openCon();
-		int res = this.hlptasks.deleteTask(taskID);
-		this.hlptasks.closeCon();
+		this.hlpTasks.openCon();
+		int res = this.hlpTasks.deleteTask(taskID);
+		this.hlpTasks.closeCon();
 		return res;
 	}
 	
@@ -31,8 +39,22 @@ public class DBLTasks {
 	}
 
 	public Tasks getTasks(int limit) {
+		Tasks tasks = new Tasks();
+		String query = "SELECT * FROM " + HLPTasks.TABLE_NAME;
 		
-		return null;
+		if(limit > 0) {
+			query += " LIMIT " + limit;
+		}
+		
+        Cursor cursor = this.hlpTasks.openCon().rawQuery(query, null);
+        if(cursor != null) {                	
+        	tasks.cursorToTaskList(cursor);    	
+        } else {
+        	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
+        }
+        this.hlpTasks.closeCon();
+		
+		return tasks;
 	}
 
 }
