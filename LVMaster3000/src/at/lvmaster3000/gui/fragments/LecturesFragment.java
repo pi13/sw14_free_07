@@ -16,18 +16,24 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import at.lvmaster3000.R;
+import at.lvmaster3000.database.IDBlogic;
+import at.lvmaster3000.gui.adapters.LectureListAdapter;
 
-public class LecturesFragment extends Fragment implements OnItemClickListener{
+public class LecturesFragment extends UIFragmentBase implements OnItemClickListener{
+	
+	private IDBlogic dbLogic;
 	
 	public LecturesFragment() {
-		// TODO Auto-generated constructor stub
+		
 	}
+	
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
  
-        final ListView list = (ListView) inflater.inflate(R.layout.fragment_list_layout, container, false);
+		this.dbLogic = new IDBlogic(this.getActivity().getApplicationContext());
+        ListView list = (ListView) inflater.inflate(R.layout.fragment_list_layout, container, false);
         attachAdapter(list);
         list.setOnItemClickListener(this);
         return list;
@@ -36,16 +42,12 @@ public class LecturesFragment extends Fragment implements OnItemClickListener{
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
 	{
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction()
-				.replace(R.id.frame_container, new SingleLectureFragment()).commit();
+		switchToFragemnt(new SingleLectureFragment());
 	}
 	
 	private void attachAdapter(ListView list)
 	{
-		ArrayAdapter<String> items = new ArrayAdapter<String>(list.getContext().getApplicationContext(), 
-														      R.layout.single_list_item, R.id.list_item_label, 
-														      getResources().getStringArray(R.array.dummy_items));
-		list.setAdapter(items);
+		LectureListAdapter lectureLA = new LectureListAdapter(list.getContext().getApplicationContext(), this.dbLogic.getLectures(0).getLectures());
+		list.setAdapter(lectureLA);
 	}
 }

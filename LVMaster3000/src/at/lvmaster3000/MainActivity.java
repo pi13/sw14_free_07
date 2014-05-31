@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -46,7 +47,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+				
 		mTitle = mDrawerTitle = getTitle();
 
 		// load slide menu items
@@ -162,7 +163,7 @@ public class MainActivity extends Activity {
 		switch (position) {
 		case 0:
 			fragment = new HomeFragment();
-		break;
+			break;
 			
 		case 1:
 			fragment = new LecturesFragment();
@@ -182,9 +183,11 @@ public class MainActivity extends Activity {
 		}
 
 		if (fragment != null) {
-			FragmentManager fragmentManager = getFragmentManager();
-			fragmentManager.beginTransaction()
-					.replace(R.id.frame_container, fragment).commit();
+			FragmentManager fragManager = getFragmentManager();
+			FragmentTransaction fragTrans =  fragManager.beginTransaction();
+			fragTrans.replace(R.id.frame_container, fragment);
+			fragTrans.addToBackStack(null);
+			fragTrans.commit();
 
 			// update selected item and title, then close the drawer
 			mDrawerList.setItemChecked(position, true);

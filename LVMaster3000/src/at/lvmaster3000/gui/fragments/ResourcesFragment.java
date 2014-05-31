@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import at.lvmaster3000.R;
 
-public class ResourcesFragment extends Fragment {
+public class ResourcesFragment extends UIFragmentBase implements OnItemClickListener {
 	public ResourcesFragment() {
 		// TODO Auto-generated constructor stub
 	}
@@ -29,5 +31,12 @@ public class ResourcesFragment extends Fragment {
 														      R.layout.single_list_item, R.id.list_item_label, 
 														      getResources().getStringArray(R.array.dummy_items));
 		list.setAdapter(items);
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -30,7 +30,7 @@ public class SingleLectureFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View rootView = inflater.inflate(R.layout.fragment_lecture, container,
+		View rootView = inflater.inflate(R.layout.fragment_lecture_detail, container,
 				false);
 		return rootView;
 	}
