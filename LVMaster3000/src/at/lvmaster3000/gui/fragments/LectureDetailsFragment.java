@@ -28,7 +28,7 @@ public class LectureDetailsFragment extends UIFragmentBase {
 	public static LectureDetailsFragment newInstance(Lecture lecture) 
 	{
 		LectureDetailsFragment details = new LectureDetailsFragment();
-		
+
 		details.groups = new SparseArray<Group>();
 		details.lecture = lecture;
 		
