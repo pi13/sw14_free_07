@@ -12,18 +12,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import at.lvmaster3000.R;
+import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.gui.Group;
 import at.lvmaster3000.gui.adapters.GroupExpandableListAdapter;
 
-public class SingleLectureFragment extends Fragment {
+public class LectureDetailsFragment extends UIFragmentBase {
 
 	private SparseArray<Group> groups;
+	private Lecture lecture;
 	
-	public SingleLectureFragment() {
-		this.groups = new SparseArray<Group>();
+	public static LectureDetailsFragment newInstance(Lecture lecture) 
+	{
+		LectureDetailsFragment details = new LectureDetailsFragment();
+
+		details.groups = new SparseArray<Group>();
+		details.lecture = lecture;
+		
+		return details;
 	}
 
 	@Override
@@ -38,6 +47,9 @@ public class SingleLectureFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        
+        EditText lectureName = (EditText) getView().findViewById(R.id.lecture_name);
+        lectureName.setText(this.lecture.getName());
 		CreateDummyData();
 		ExpandableListView listview = (ExpandableListView)getView().findViewById(R.id.lecture_items);
 		GroupExpandableListAdapter adapter = new GroupExpandableListAdapter(this, this.groups);
