@@ -16,9 +16,8 @@ public class DBLTasksTest extends AndroidTestCase{
 	
 	private RenamingDelegatingContext testContext = null;
 	
-	public void startUp(){
-		testContext = new RenamingDelegatingContext(getContext(), "test_");
-		
+	public void setUp(){
+		testContext = new RenamingDelegatingContext(getContext(), "test_");		
 		dblObjects = new DBLTasks(testContext);
 		createTestObjects();
 	}
@@ -52,7 +51,9 @@ public class DBLTasksTest extends AndroidTestCase{
 	
 	private void createTestObjects(){
 		Task o1 = new Task();
+		o1.setTitle("Titel T1");
 		Task o2 = new Task();
+		o2.setTitle("Title T2");
 		
 		this.testObjects = new ArrayList<Task>();
 	

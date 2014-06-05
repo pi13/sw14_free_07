@@ -21,7 +21,7 @@ public class DBLCoworkersTest extends AndroidTestCase{
 	
 	public static final String LOG_TAG_COWORKERS_LOGIC_TEST = "TEST_COWORKERS_LOGIC";
 	
-	public void startUp(){
+	public void setUp(){
 		this.context = new RenamingDelegatingContext(getContext(), "test_");
 				
 		dblCoworkers = new DBLCoworkers(this.context);
@@ -40,9 +40,11 @@ public class DBLCoworkersTest extends AndroidTestCase{
 	public void testGetAll(){
 		dropAllObjects();
 		fillTestObjectsInDBL();
-		Coworkers objects = dblCoworkers.getCoworkers(0);
+		Coworkers coworkers = dblCoworkers.getCoworkers(0);
 		
-		assertEquals(NR_TEST_OBJECTS, objects.nrOfObjects());
+		coworkers.printCoworkerList();
+		
+		assertEquals(NR_TEST_OBJECTS, coworkers.getCoworkers().size());
 	}
 	
 	private void fillTestObjectsInDBL(){

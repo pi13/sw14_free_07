@@ -156,12 +156,12 @@ public class DBLExams {
 		return resources;
 	}
 
-	public Coworkers getAllCoworkersOfExam(long examId){
+	public Coworkers getCoworkers(Exam exam){
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Date getDateOfExam(long examId) {
+	public Date getExamDate(Exam exam) {
 		// TODO Auto-generated method stub
 		return null;
 	}

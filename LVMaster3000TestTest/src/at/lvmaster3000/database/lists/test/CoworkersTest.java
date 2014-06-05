@@ -18,7 +18,7 @@ public class CoworkersTest extends AndroidTestCase{
 		Coworker cw = new Coworker(1l, "reference", "leader");
 		coworkers.addCoworker(cw);
 		
-		assertEquals(1, coworkers.nrOfCoworkers());
+		assertEquals(1, coworkers.getCoworkers().size());
 	}
 	
 	private void clearList(){

@@ -56,7 +56,7 @@ public class DDTestsetA {
         long lid3 = hlplectures.addLecture("703.123", "Test LV 3", "Some Comment...", "LV", 0, 1);
         long lid4 = hlplectures.addLecture("704.123", "Test LV 4", "Some Comment...", "LV", 1, 0);
         this.lecturecnt += 1;
-        this.hlplectures.allEntriesToLog();
+//        this.hlplectures.allEntriesToLog();
         this.hlplectures.closeCon();
         
         //add tasks
@@ -66,7 +66,7 @@ public class DDTestsetA {
         this.taskscnt += 1;
         long tid2 = hlptasks.addTask("Test TASK 2", "Some Comment...");
         this.taskscnt += 1;
-        this.hlptasks.allEntriesToLog();
+//        this.hlptasks.allEntriesToLog();
         this.hlptasks.closeCon();
         
         //add dates
@@ -86,7 +86,7 @@ public class DDTestsetA {
         this.datescnt += 1;
         long did5 = hlpdates.addDate(unixTime + week, "Testlocation 5", "LV", "Thats a comment");
         this.datescnt += 1;
-        this.hlpdates.allEntriesToLog();
+//        this.hlpdates.allEntriesToLog();
         this.hlpdates.closeCon();
         
         //add exams
@@ -107,7 +107,7 @@ public class DDTestsetA {
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, 0, 0, did4, 0);
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, 0, eid1, 0, did2, 0);
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, eid1, 0, 0, 0);
-        this.hlprelations.allEntriesToLog();
+//        this.hlprelations.allEntriesToLog();
         this.hlprelations.closeCon();        
         
         this.hlpresources.openCon();

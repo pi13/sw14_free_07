@@ -1,9 +1,13 @@
 package at.lvmaster3000.database.logic;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.util.Log;
 import at.lvmaster3000.database.helper.HLPCoworkers;
+import at.lvmaster3000.database.helper.HLPLectures;
 import at.lvmaster3000.database.lists.Coworkers;
 import at.lvmaster3000.database.objects.Coworker;
+import at.lvmaster3000.settings.DBsettings;
 
 public class DBLCoworkers {
 
@@ -34,7 +38,23 @@ public class DBLCoworkers {
 	}
 
 	public Coworkers getCoworkers(int limit) {
-		// TODO Auto-generated method stub
-		return null;
+		Coworkers coworkers = new Coworkers();
+				
+		String query = "SELECT * FROM " + HLPCoworkers.TABLE_NAME;
+		
+		if(limit > 0) {
+			query += " LIMIT " + limit;
+		}
+		
+		Cursor cursor = this.hlpCoworkers.openCon().rawQuery(query, null);
+		if(cursor != null) {                	
+			coworkers.cursorToCoworkerList(cursor);        	
+        } else {
+        	Log.w(DBsettings.LOG_TAG_COWORKERS, "Cursor is NULL!!");        	
+        }
+		
+		this.hlpCoworkers.closeCon();
+		
+		return coworkers;
 	}
 }

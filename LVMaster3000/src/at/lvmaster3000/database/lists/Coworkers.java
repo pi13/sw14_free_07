@@ -22,7 +22,7 @@ public class Coworkers {
 		return this.coworkers;
 	}
 	
-	public void cursorToLectureList(Cursor cursor) {
+	public void cursorToCoworkerList(Cursor cursor) {
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			this.coworkers.add(new Coworker().cursorToCoworker(cursor));
@@ -30,24 +30,14 @@ public class Coworkers {
 		}
 	}
 	
-	public void printLectureList() {
+	public void printCoworkerList() {
 		for(int i = 0; i < coworkers.size(); i++) {
 			coworkers.get(i).printCoworker();
 		}
 	}
 
-	public int nrOfCoworkers() {
-		return this.coworkers.size();
-	}
-
 	public void deleteAllCoworkers() {
 		this.coworkers.clear();		
-	}
-
-	public int nrOfObjects() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
+	}	
 	
 }

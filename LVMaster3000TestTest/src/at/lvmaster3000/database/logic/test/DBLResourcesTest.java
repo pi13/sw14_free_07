@@ -18,7 +18,7 @@ public class DBLResourcesTest extends AndroidTestCase{
 	
 	private RenamingDelegatingContext testContext = null;
 	
-	public void startUp(){
+	public void setUp(){
 		testContext = new RenamingDelegatingContext(getContext(), "test_");
 		
 		dblObjects = new DBLResources(testContext);
@@ -54,7 +54,9 @@ public class DBLResourcesTest extends AndroidTestCase{
 	
 	private void createTestObjects(){
 		Resource o1 = new Resource();
+		o1.setTitle("Test T1");
 		Resource o2 = new Resource();
+		o2.setTitle("Test T2");
 	
 		this.testObjects = new ArrayList<Resource>();
 		
