@@ -10,6 +10,13 @@
     <string name="resources">Resources</string>
     <string name="test">Test</string>
     
+    <string name="required">Required</string>
+    <string name="compulsory">Compulsory</string>
+    
+     <string name="hint_lecture_id">123.456</string>
+     <string name="hint_lecture_name">Lecture Name</string>
+     <string name="hint_comment">Comment...</string>
+      
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     
@@ -24,6 +31,14 @@
         <item >Exams</item>
         <item >Resources</item>
         <item >Test</item>
+    </string-array>
+    
+            <!-- Nav Drawer Menu Items -->
+    <string-array name="lecture_types">
+        <item >VO</item>
+        <item >UE</item>
+        <item >KU</item>
+        <item >SE</item>
     </string-array>
     
     <!-- Nav Drawer List Item Icons -->

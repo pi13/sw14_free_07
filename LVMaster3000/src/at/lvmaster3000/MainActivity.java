@@ -3,6 +3,7 @@ package at.lvmaster3000;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -18,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.gui.NavDrawerItem;
@@ -26,14 +28,16 @@ import at.lvmaster3000.gui.adapters.LectureListAdapter;
 import at.lvmaster3000.gui.adapters.NavDrawerListAdapter;
 import at.lvmaster3000.gui.adapters.ResourceListAdapter;
 import at.lvmaster3000.gui.adapters.TaskListAdapter;
+import at.lvmaster3000.gui.fragments.AddLectureFragment;
 import at.lvmaster3000.gui.fragments.ExamsFragment;
 import at.lvmaster3000.gui.fragments.HomeFragment;
 import at.lvmaster3000.gui.fragments.LecturesFragment;
 import at.lvmaster3000.gui.fragments.ResourcesFragment;
 import at.lvmaster3000.gui.fragments.TasksFragment;
 import at.lvmaster3000.gui.fragments.TestFragment;
+import at.lvmaster3000.gui.interfaces.IDialogListener;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements IDialogListener {
 	
 	private IDBlogic dbLogic;
 	private Context context;
@@ -49,6 +53,8 @@ public class MainActivity extends Activity {
 
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
+	
+	private FragmentManager fragManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +72,7 @@ public class MainActivity extends Activity {
 
 		navDrawerItems = new ArrayList<NavDrawerItem>();
 
+		//TODO: update list when new item is added
 		navDrawerItems.add(new NavDrawerItem(navMenuItems[0], navMenuIcons.getResourceId(0, -1)));
 		navDrawerItems.add(new NavDrawerItem(navMenuItems[1], navMenuIcons.getResourceId(1, -1), true, dbLogic.getLectures(0).getLectures().size()));
 		navDrawerItems.add(new NavDrawerItem(navMenuItems[2], navMenuIcons.getResourceId(2, -1), true, dbLogic.getTasks(0).getTasks().size()));
@@ -170,7 +177,8 @@ public class MainActivity extends Activity {
 		case 1:
 	        args = new Bundle();
 	        args.putInt(getResources().getString(R.string.tasks), position);
-			fragment = LecturesFragment.newInstance(context, dbLogic, new LectureListAdapter(context, dbLogic.getLectures(0).getLectures()), args);
+			fragment = LecturesFragment.newInstance(context, dbLogic, args);
+			showFragment(fragment, getResources().getString(R.string.lectures), position);
 			break;
 			
 		case 2:
@@ -201,11 +209,14 @@ public class MainActivity extends Activity {
 		default:
 			break;
 		}
+	}
 
+	private void showFragment(Fragment fragment, String tag, int position)
+	{
 		if (fragment != null) {
-			FragmentManager fragManager = getFragmentManager();
+			fragManager = getFragmentManager();
 			FragmentTransaction fragTrans =  fragManager.beginTransaction();
-			fragTrans.replace(R.id.frame_container, fragment);
+			fragTrans.replace(R.id.frame_container, fragment, tag);
 			fragTrans.addToBackStack(null);
 			fragTrans.commit();
 
@@ -219,8 +230,8 @@ public class MainActivity extends Activity {
 			// error in creating fragment
 			Log.e("MainActivity", "Error in creating fragment");
 		}
+		
 	}
-
 	@Override
 	public void setTitle(CharSequence title) {
 		mTitle = title;
@@ -244,6 +255,24 @@ public class MainActivity extends Activity {
 		super.onConfigurationChanged(newConfig);
 		// Pass any configuration change to the drawer toggls
 		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+
+	@Override
+	public void onLectureAdd(DialogFragment dialog) {
+		Log.i("OK", "positive button clicked");
+		
+		AddLectureFragment temp = (AddLectureFragment)dialog;
+		LecturesFragment lf = (LecturesFragment)fragManager.findFragmentByTag(getResources().getString(R.string.lectures));
+		lf.updateLectureToList(temp.getLecture());
+		dialog.dismiss();
+		
+	}
+
+	@Override
+	public void onDialogNegativeClick(DialogFragment dialog) {
+		Log.i("Cancel", "negative button clicked");
+		dialog.dismiss();
+		
 	}
 
 }
