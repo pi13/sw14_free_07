@@ -9,6 +9,7 @@ import at.lvmaster3000.database.logic.DBLDates;
 import at.lvmaster3000.database.logic.DBLExams;
 import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Exam;
+import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.settings.CMONsettings;
 
 public class DB_Main extends Activity {
@@ -21,10 +22,15 @@ public class DB_Main extends Activity {
         Log.i(CMONsettings.LOG_TAG, "APP startup..."); 
         
         IDBlogic dbl = new IDBlogic(this);
+//        dbl.getLectures(0).printLectureList();
+//        dbl.getExams(0).printExamList();
+//        dbl.getTasks(0).printTaskList();
+//        dbl.getResources(0).printResourceList();
+        
+        Lecture lecture = new Lecture(1, "700.144", "Updated Lecture", "asfasfsdfsaf", "VU", 0, 0);
+        
+        dbl.updateLecture(lecture);
         dbl.getLectures(0).printLectureList();
-        dbl.getExams(0).printExamList();
-        dbl.getTasks(0).printTaskList();
-        dbl.getResources(0).printResourceList();
         
         Log.i(CMONsettings.LOG_TAG, "APP done. your brain will be toasted in a few seconds :P"); 
     }

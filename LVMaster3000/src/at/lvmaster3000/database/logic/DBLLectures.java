@@ -1,5 +1,6 @@
 package at.lvmaster3000.database.logic;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
@@ -79,6 +80,45 @@ public class DBLLectures {
 	 */
 	public int deleteLecture(Lecture lecture) {
 		return this.deleteLecture(lecture.getID());
+	}
+	
+	/**
+	 * 
+	 * @param lecture
+	 * @return
+	 */
+	public int updateLecture(Lecture lecture) {		
+		ContentValues values = new ContentValues();
+		
+		if(!lecture.getNumber().isEmpty()){
+			values.put(HLPLectures.COL_NUMBER, lecture.getNumber());
+		}
+		
+		if(!lecture.getName().isEmpty()) {
+			values.put(HLPLectures.COL_NAME, lecture.getName());
+		}		
+		
+		if(!lecture.getComment().isEmpty()) {
+			values.put(HLPLectures.COL_COMMENT, lecture.getComment());
+		}
+		
+		if(!lecture.getType().isEmpty()) {
+			values.put(HLPLectures.COL_TYPE, lecture.getType());
+		}
+		
+		if(lecture.getRequired() > -1) {
+			values.put(HLPLectures.COL_REQUIRED, lecture.getRequired());
+		}
+		
+		if(lecture.getCompulsory() > -1) {
+			values.put(HLPLectures.COL_COMPULSORY, lecture.getCompulsory());
+		}
+	
+		int ret = hlplectures.openCon().update(HLPLectures.TABLE_NAME, values, "_id = " + lecture.getID(), null);
+		
+		Log.i(DBsettings.LOG_TAG_LECTURES, "Update res.: " + ret);
+		
+		return ret;
 	}
 	
 	/**

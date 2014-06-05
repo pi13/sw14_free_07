@@ -12,16 +12,19 @@ import at.lvmaster3000.database.objects.Coworker;
 import at.lvmaster3000.settings.CMONsettings;
 
 public class DBLCoworkersTest extends AndroidTestCase{
-	private DBLCoworkers dblObjects;
+	
+	private DBLCoworkers dblCoworkers;
 	private List<Coworker> testObjects = null;
 	private int NR_TEST_OBJECTS = 0;
 	
-	private RenamingDelegatingContext testContext = null;
+	private RenamingDelegatingContext context;
+	
+	public static final String LOG_TAG_COWORKERS_LOGIC_TEST = "TEST_COWORKERS_LOGIC";
 	
 	public void startUp(){
-		testContext = new RenamingDelegatingContext(getContext(), "test_");
-		
-		dblObjects = new DBLCoworkers(testContext);
+		this.context = new RenamingDelegatingContext(getContext(), "test_");
+				
+		dblCoworkers = new DBLCoworkers(this.context);
 		createTestObjects();
 	}
 	
@@ -29,7 +32,7 @@ public class DBLCoworkersTest extends AndroidTestCase{
 		dropAllObjects();
 		createTestObjects();
 		
-		long idFromDatabase = dblObjects.addCoworker(this.testObjects.get(0).getRefID(), this.testObjects.get(0).getRole());
+		long idFromDatabase = dblCoworkers.addCoworker(this.testObjects.get(0).getRefID(), this.testObjects.get(0).getRole());
 		
 		assertNotSame(-1l, idFromDatabase);
 	}
@@ -37,7 +40,7 @@ public class DBLCoworkersTest extends AndroidTestCase{
 	public void testGetAll(){
 		dropAllObjects();
 		fillTestObjectsInDBL();
-		Coworkers objects = dblObjects.getCoworkers(0);
+		Coworkers objects = dblCoworkers.getCoworkers(0);
 		
 		assertEquals(NR_TEST_OBJECTS, objects.nrOfObjects());
 	}
@@ -48,13 +51,18 @@ public class DBLCoworkersTest extends AndroidTestCase{
 		}
 		
 		for(Coworker object : this.testObjects){
-			this.dblObjects.addCoworker(object.getRefID(), object.getRole());
+			this.dblCoworkers.addCoworker(object.getRefID(), object.getRole());
 		}
 	}
 	
 	private void createTestObjects(){
 		Coworker o1 = new Coworker();
+		o1.setRefID("x1");
+		o1.setRole("Admin");
+		
 		Coworker o2 = new Coworker();
+		o2.setRefID("x2");
+		o2.setRole("Worker");
 	
 		this.testObjects = new ArrayList<Coworker>();
 		
@@ -65,7 +73,7 @@ public class DBLCoworkersTest extends AndroidTestCase{
 	}
 	
 	private void dropAllObjects(){
-		this.dblObjects = null;
-		this.dblObjects = new DBLCoworkers(testContext);
+		this.dblCoworkers = null;
+		this.dblCoworkers = new DBLCoworkers(this.context);
 	}
 }

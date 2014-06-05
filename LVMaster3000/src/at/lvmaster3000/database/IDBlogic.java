@@ -56,6 +56,15 @@ public class IDBlogic {
 	
 	/**
 	 * 
+	 * @param lecture
+	 * @return
+	 */
+	public long updateLecture(Lecture lecture) {
+		return this.lectures.updateLecture(lecture);
+	}
+	
+	/**
+	 * 
 	 * @param limit	If 0, all lectures are returned
 	 * @return Lectures (Object)
 	 */

@@ -7,18 +7,30 @@ import at.lvmaster3000.database.objects.Coworker;
 
 public class DBLCoworkers {
 
-	private HLPCoworkers hlpcoworkers;
+	private HLPCoworkers hlpCoworkers;
 	
 	public DBLCoworkers(Context context) {
-		hlpcoworkers = new HLPCoworkers(context);
+		this.hlpCoworkers = new HLPCoworkers(context);
+		
+		this.hlpCoworkers.openCon();
+//		hlpCoworkers.resetTable();
+//		this.hlpCoworkers.closeCon();
 	}
 	
 	public long addCoworker(String refid, String role) {
-		return hlpcoworkers.addCoworker(refid, role);
+		this.hlpCoworkers.openCon();
+		long ret = this.hlpCoworkers.addCoworker(refid, role);
+		this.hlpCoworkers.closeCon();
+		
+		return ret;
 	}
 	
 	public int deleteCoworker(long id) {
-		return hlpcoworkers.deleteCoworker(id);
+		this.hlpCoworkers.openCon();
+		int ret = this.hlpCoworkers.deleteCoworker(id);
+		this.hlpCoworkers.closeCon();
+		
+		return ret;
 	}
 
 	public Coworkers getCoworkers(int limit) {
