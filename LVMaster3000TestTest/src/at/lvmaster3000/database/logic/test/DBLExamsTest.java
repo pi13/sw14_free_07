@@ -114,7 +114,7 @@ public class DBLExamsTest extends AndroidTestCase{
 		
 		testExam.setComment(editComment);
 		
-		dblObjects.editExam(testExam);
+		dblObjects.updateExam(testExam);
 		
 		Exam editedExam = dblObjects.getExamById(id);
 		String comment = editedExam.getComment();
@@ -123,24 +123,25 @@ public class DBLExamsTest extends AndroidTestCase{
 	}
 	
 	/**
-	 * anscheinend wird onCreate für 'relations' nicht ausgeführt, schlägt deshalb fehl
+	 * 
 	 */
 	public void testGetDateOfExam(){
 		DDTestsetA TestA = new DDTestsetA(testContext);
 	    TestA.FillDb();
 	    
-		dropAllObjects();
-		createTestObjects();
-		// TODO useful test case
-		long id = 0;
-		Date date = new Date(new java.util.Date(2014-1900, 8,1,10,0,0).getTime(), "i 13", "exam", "i need it");
-		boolean worked = dblObjects.setNewExamDate(id, date);
-		
-		assertEquals(true, worked);
-		
-		//TODO fix it
-//		Date fromDBL = dblObjects.getExamDate(id);		
-//		assertEquals(fromDBL.getTimestamp(), date.getTimestamp());
+	    Exam exam = dblObjects.getExamById(1);	    
+	    exam.printExam();
+	    
+	    long unixTime = System.currentTimeMillis() / 1000L;
+	    Date date = new Date(0, unixTime, "i13", "exam", "what ever ...");
+//	    date.printDate();
+	    
+	    dblObjects.setExamDate(exam, date);
+	    
+	    Date dateRet = dblObjects.getExamDate(exam);
+	    dateRet.printDate();
+	    
+		assertEquals(date.getTimestamp(), dateRet.getTimestamp());
 	}	
 	
 	public void testGetAllResourcesOfExam(){
@@ -159,7 +160,7 @@ public class DBLExamsTest extends AndroidTestCase{
 		hlpRelations.addRelation(HLPResources.TABLE_NAME, 0, exId, 0, 0, resId);
 		hlpRelations.closeCon();
 		
-		Resources resources = dblObjects.getAllResourcesOfExam(exId);
+		Resources resources = dblObjects.getExamResources(exId);
 		
 		assertNotNull(resources);
 		assertEquals(1, resources.nrOfResources());
@@ -189,8 +190,8 @@ public class DBLExamsTest extends AndroidTestCase{
 	}
 	
 	private void createTestObjects(){
-		Exam e1 = new Exam("ex1","comm1",1);
-		Exam e2 = new Exam("ex2","comm2",2);
+		Exam e1 = new Exam(0, "ex1","comm1",1);
+		Exam e2 = new Exam(0, "ex2","comm2",2);
 	
 		this.testObjects = new ArrayList<Exam>();
 		

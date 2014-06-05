@@ -10,7 +10,7 @@ public class Exam {
 	private String comment;
 	private long lecture_id;
 	
-	public Exam(){
+	public Exam() {
 		
 	}
 	
@@ -19,12 +19,6 @@ public class Exam {
 		this.title = title;
 		this.comment = comm;
 		this.lecture_id = lecId;
-	}
-	
-	public Exam(String title, String comment, long lecture) {
-		this.title = title;
-		this.comment = comment;
-		this.lecture_id = lecture;
 	}
 
 	public long getId() {

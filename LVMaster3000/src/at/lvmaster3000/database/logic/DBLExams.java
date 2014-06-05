@@ -1,5 +1,6 @@
 package at.lvmaster3000.database.logic;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
@@ -14,24 +15,40 @@ import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.lists.Resources;
 import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Exam;
+import at.lvmaster3000.database.objects.Relation;
 import at.lvmaster3000.settings.DBsettings;
 
 public class DBLExams {
 	
 	private HLPExams hlpExams;
-	private HLPDates hlpDates;
-	private HLPResources hlpResources;
-	private HLPCoworkers hlpCoworkers;
-	private HLPRelations hlpRelations;
+//	private HLPDates hlpDates;
+//	private HLPResources hlpResources;
+//	private HLPCoworkers hlpCoworkers;
+//	private HLPRelations hlpRelations;
+
+	private DBLRelations dblRelations;
+	private DBLDates dblDates;
 	
+	/**
+	 * 
+	 * @param context
+	 */
 	public DBLExams(Context context) {
 		hlpExams = new HLPExams(context);
-		hlpRelations = new HLPRelations(context);
-		hlpDates = new HLPDates(context);
-		hlpResources = new HLPResources(context);
-		hlpCoworkers = new HLPCoworkers(context);
+//		hlpRelations = new HLPRelations(context);
+//		hlpDates = new HLPDates(context);
+//		hlpResources = new HLPResources(context);
+//		hlpCoworkers = new HLPCoworkers(context);
+		
+		this.dblRelations = new DBLRelations(context);
+		this.dblDates = new DBLDates(context);
 	}
 
+	/**
+	 * 
+	 * @param exam
+	 * @return
+	 */
 	public long addExam(Exam exam) {
 		hlpExams.openCon();
 		long id = this.hlpExams.addExam(exam.getTitle(), exam.getComment(), exam.getLecture_id());
@@ -39,6 +56,13 @@ public class DBLExams {
 		return id;
 	}
 
+	/**
+	 * 
+	 * @param title
+	 * @param comment
+	 * @param lectureId
+	 * @return
+	 */
 	public long addExam(String title, String comment, long lectureId){
 		hlpExams.openCon();
 		long id = this.hlpExams.addExam(title, comment, lectureId);
@@ -46,6 +70,11 @@ public class DBLExams {
 		return id;
 	}
 	
+	/**
+	 * 
+	 * @param limit
+	 * @return
+	 */
 	public Exams getExams(int limit) {
 		Exams exams = new Exams();
 		
@@ -65,7 +94,12 @@ public class DBLExams {
 		
 		return exams;
 	}
-
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public int deleteExam(long id) {
 		hlpExams.openCon();
 		int res = hlpExams.deleteExam(id);
@@ -73,25 +107,47 @@ public class DBLExams {
 		return res;
 	}
 	
+	/**
+	 * 
+	 * @param exam
+	 * @return
+	 */
 	public int deleteExam(Exam exam){
 		return this.deleteExam(exam.getId());
 	}
 
-	public void editExam(Exam editedExam) {
-		String query = "UPDATE " + HLPExams.TABLE_NAME + " SET " + HLPExams.COL_LECTURE_ID + " = ?";
-		query += ", " + HLPExams.COL_TITLE   + " = ?";
-		query += ", " + HLPExams.COL_COMMENT + " = ?";
-	    query += " WHERE " + HLPExams.COL_ID + " = ?";
+	/**
+	 * 
+	 * @param exam
+	 * @return
+	 */
+	public int updateExam(Exam exam) {
+		ContentValues values = new ContentValues();
 		
-	    SQLiteStatement stmt = this.hlpExams.openCon().compileStatement(query);
-	    stmt.bindLong(1, editedExam.getLecture_id());
-	    stmt.bindString(2, editedExam.getTitle());
-	    stmt.bindString(3, editedExam.getComment());
-	    stmt.bindLong(4, editedExam.getId());
-	    stmt.execute();
-        hlpExams.closeCon();
+		if(!exam.getTitle().isEmpty()) {
+			values.put(HLPExams.COL_TITLE, exam.getTitle());
+		}
+		
+		if(!exam.getComment().isEmpty()) {
+			values.put(HLPExams.COL_COMMENT, exam.getComment());
+		}
+		
+		if(exam.getLecture_id() > 0) {
+			values.put(HLPExams.COL_LECTURE_ID, exam.getLecture_id());
+		}
+		
+		int ret = this.hlpExams.openCon().update(HLPExams.TABLE_NAME, values, "_id = " + exam.getId(), null);
+		
+		Log.i(DBsettings.LOG_TAG_EXAMS, "Update res.: " + ret);
+		
+		return ret;
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public Exam getExamById(long id) {
 		Exam exam = new Exam();
 		
@@ -117,24 +173,37 @@ public class DBLExams {
 	 * @param date
 	 * @return
 	 */
-	public boolean setNewExamDate(long examId, Date date) {
+	public boolean setExamDate(Exam exam, Date date) {
 		boolean worked = false;
+				
+		Relation relation = this.dblRelations.getRelationByExamWithDateSet(exam);
+		if(relation != null) {
+			this.dblDates.deleteDate(relation.getDateId());
+			this.dblRelations.deleteRelation(relation);
+		}
 		
-		hlpDates.openCon();
-		long dateId = hlpDates.addDate(date.getTimestamp(), date.getLocation(), date.getType(), date.getComment());
-		hlpDates.closeCon();
+		long dateId = this.dblDates.addDate(date);
+		long relId = this.dblRelations.addRelation(new Relation(0, HLPExams.TABLE_NAME, 0, exam.getId(), 0, dateId, 0));
 		
-		hlpRelations.openCon();
-		long relId = hlpRelations.addRelation(HLPExams.TABLE_NAME, 0, examId, 0, dateId, 0);
-		hlpRelations.closeCon();
+		this.dblRelations.getRelationById(relId).printRelation();
 		
 		if(dateId != -1 && relId != -1)
 			worked = true;
 
 		return worked;
 	}
+	
+	public Date getExamDate(Exam exam) {
+		Relation relation = this.dblRelations.getRelationByExamWithDateSet(exam);
+		return this.dblDates.getDateByRelation(relation);
+	}
 
-	public Resources getAllResourcesOfExam(long examId) {
+	/**
+	 * 
+	 * @param examId
+	 * @return
+	 */
+	public Resources getExamResources(long examId) {
 		Resources resources = new Resources();
 		
 		String query = "SELECT * FROM " + HLPResources.TABLE_NAME + " res ";
@@ -144,27 +213,21 @@ public class DBLExams {
 		
 		Log.i(DBsettings.LOG_TAG_TASKS, query);
 		
-		Cursor cursor = this.hlpRelations.openCon().rawQuery(query, null);
-		if(cursor != null) {                	
-			resources.cursorToResourceList(cursor);        	
-        } else {
-        	Log.w(DBsettings.LOG_TAG_EXAMS, "Cursor is NULL!!");        	
-        }
-		
-		this.hlpRelations.closeCon();
+//		Cursor cursor = this.hlpRelations.openCon().rawQuery(query, null);
+//		if(cursor != null) {                	
+//			resources.cursorToResourceList(cursor);        	
+//        } else {
+//        	Log.w(DBsettings.LOG_TAG_EXAMS, "Cursor is NULL!!");        	
+//        }
+//		
+//		this.hlpRelations.closeCon();
 		
 		return resources;
 	}
 
-	public Coworkers getCoworkers(Exam exam){
+	public Coworkers getExamCoworkers(Exam exam){
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	public Date getExamDate(Exam exam) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 }

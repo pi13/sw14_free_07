@@ -27,12 +27,14 @@ public class DB_Main extends Activity {
 //        dbl.getTasks(0).printTaskList();
 //        dbl.getResources(0).printResourceList();
         
-        Lecture lecture = new Lecture(1, "700.144", "Updated Lecture", "asfasfsdfsaf", "VU", 0, 0);
+//        Lecture lecture = new Lecture(1, "700.144", "Updated Lecture", "asfasfsdfsaf", "VU", 0, 0);
         
-        dbl.updateLecture(lecture);
+//        dbl.updateLecture(lecture);
 //        dbl.getLectures(0).printLectureList();
         
-        dbl.getExamsForLecture(lecture).printExamList();
+//        dbl.getExamsForLecture(lecture).printExamList();
+        
+        
         
         Log.i(CMONsettings.LOG_TAG, "APP done. your brain will be toasted in a few seconds :P"); 
     }
@@ -58,7 +60,7 @@ public class DB_Main extends Activity {
         DBLExams e = new DBLExams(this);
         eObj.setId(e.addExam(eObj));
         
-        e.setNewExamDate(eObj.getId(), dObj);
+        e.setExamDate(eObj, dObj);
         
         dObj.setTimestamp(unixTime);
         dObj.setLocation("Home 2");
@@ -70,7 +72,7 @@ public class DB_Main extends Activity {
         eObj.setComment("Ex commnet 2");        
         eObj.setId(e.addExam(eObj));
         
-        e.setNewExamDate(eObj.getId(), dObj);
+        e.setExamDate(eObj, dObj);
         
         HLPRelations r = new HLPRelations(this);
         r.openCon();
