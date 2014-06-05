@@ -3,33 +3,39 @@ package at.lvmaster3000.gui.fragments;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.gui.Group;
 import at.lvmaster3000.gui.adapters.GroupExpandableListAdapter;
+import at.lvmaster3000.gui.interfaces.IUpdateDBObject;
 
 public class LectureDetailsFragment extends UIFragmentBase implements
-		OnClickListener {
+		OnClickListener{
 
 	private Context context;
 	private SparseArray<Group> groups;
 	private Lecture lecture;
+	private IUpdateDBObject updateLectureListener;
 
 	private EditText lvNumber;
 	private EditText lvName;
@@ -39,6 +45,8 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 
 	int isRequired;
 	int isCompulsory;
+
+	private Boolean initDone;
 
 	public static LectureDetailsFragment newInstance(Lecture lecture,
 			Context context) {
@@ -51,8 +59,26 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 
 		details.groups = new SparseArray<Group>();
 		details.lecture = lecture;
+		details.initDone = false;
 
 		return details;
+	}
+
+	// Override the Fragment.onAttach() method to instantiate the
+	// NoticeDialogListener
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		// Verify that the host activity implements the callback interface
+		try {
+			// Instantiate the NoticeDialogListener so we can send events to the
+			// host
+			updateLectureListener = (IUpdateDBObject) activity;
+		} catch (ClassCastException e) {
+			// The activity doesn't implement the interface, throw exception
+			throw new ClassCastException(activity.toString()
+					+ " must implement NoticeDialogListener");
+		}
 	}
 
 	@Override
@@ -63,8 +89,8 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 				container, false);
 		lvNumber = (EditText) view.findViewById(R.id.details_diag_lect_lectId);
 		lvName = (EditText) view.findViewById(R.id.details_lect_lectName);
-		lvComment = (EditText) view
-				.findViewById(R.id.details_diag_lect_comment);
+		lvComment = (EditText) view.findViewById(R.id.details_diag_lect_comment);
+
 		lvType = (Spinner) view.findViewById(R.id.details_diag_lect_lectType);
 		lvType.setAdapter(lvTypeAdapter);
 
@@ -83,21 +109,7 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		lvNumber.setText(lecture.getNumber());
-		lvName.setText(lecture.getName());
-		lvComment.setText(lecture.getComment());
-		lvType.setSelection(lvTypeAdapter.getPosition(lecture.getType()));
-
-		CheckBox isRequred = (CheckBox) getView().findViewById(
-				R.id.details_dialog_lect_required);
-		CheckBox isCompulsory = (CheckBox) getView().findViewById(
-				R.id.details_dialog_lect_compulsory);
-
-		if (lecture.getRequired() == 1)
-			isRequred.setChecked(true);
-		
-		if (lecture.getCompulsory() == 1)
-			isCompulsory.setChecked(true);
+		updateFileds();
 
 		CreateDummyData();
 		ExpandableListView listview = (ExpandableListView) getView()
@@ -105,8 +117,30 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 		GroupExpandableListAdapter adapter = new GroupExpandableListAdapter(
 				this, this.groups);
 		listview.setAdapter(adapter);
+
+		initDone = true;
 	}
 
+	private void updateFileds()
+	{
+		lvNumber.setText(lecture.getNumber());
+		lvName.setText(lecture.getName());
+		lvComment.setText(lecture.getComment());
+		lvType.setSelection(lvTypeAdapter.getPosition(lecture.getType()));
+
+		CheckBox isRequredChb = (CheckBox) getView().findViewById(R.id.details_dialog_lect_required);
+		CheckBox isCompulsoryChb = (CheckBox) getView().findViewById(R.id.details_dialog_lect_compulsory);
+
+		if (lecture.getRequired() == 1) {
+			isRequired = 1;
+			isRequredChb.setChecked(true);
+		}
+
+		if (lecture.getCompulsory() == 1) {
+			isCompulsory = 1;
+			isCompulsoryChb.setChecked(true);
+		}
+	}
 	private void CreateDummyData() {
 		Group test = new Group("Tasks");
 		test.setChildren(new ArrayList<String>(Arrays.asList(getResources()
@@ -141,20 +175,40 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 		boolean checked = ((CheckBox) view).isChecked();
 
 		switch (view.getId()) {
-		case R.id.add_dialog_lect_compulsory:
+		case R.id.details_dialog_lect_compulsory:
 			if (checked) {
 				isCompulsory = 1;
 			} else {
 				isCompulsory = 0;
 			}
 			break;
-		case R.id.add_dialog_lect_required:
+		case R.id.details_dialog_lect_required:
 			if (checked) {
 				isRequired = 1;
 			} else {
 				isRequired = 0;
+				break;
 			}
-			break;
 		}
+	}
+
+	private void updateLecture() {
+		if(initDone)
+		{
+			lecture.setNumber(lvNumber.getText().toString());
+			lecture.setName(lvName.getText().toString());
+			lecture.setComment(lvComment.getText().toString());
+			lecture.setType(lvType.getSelectedItem().toString());
+			lecture.setRequired(isRequired);
+			lecture.setCompulsory(isCompulsory);
+			updateLectureListener.updateLecture(lecture);
+		}
+
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		updateLecture();
 	}
 }

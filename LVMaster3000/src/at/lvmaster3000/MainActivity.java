@@ -18,10 +18,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebIconDatabase.IconListener;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import at.lvmaster3000.database.IDBlogic;
+import at.lvmaster3000.database.objects.Exam;
+import at.lvmaster3000.database.objects.Lecture;
+import at.lvmaster3000.database.objects.Resource;
+import at.lvmaster3000.database.objects.Task;
 import at.lvmaster3000.gui.NavDrawerItem;
 import at.lvmaster3000.gui.adapters.ExamListAdapter;
 import at.lvmaster3000.gui.adapters.LectureListAdapter;
@@ -36,8 +41,9 @@ import at.lvmaster3000.gui.fragments.ResourcesFragment;
 import at.lvmaster3000.gui.fragments.TasksFragment;
 import at.lvmaster3000.gui.fragments.TestFragment;
 import at.lvmaster3000.gui.interfaces.IDialogListener;
+import at.lvmaster3000.gui.interfaces.IUpdateDBObject;
 
-public class MainActivity extends Activity implements IDialogListener {
+public class MainActivity extends Activity implements IDialogListener, IUpdateDBObject{
 	
 	private IDBlogic dbLogic;
 	private Context context;
@@ -254,7 +260,7 @@ public class MainActivity extends Activity implements IDialogListener {
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		// Pass any configuration change to the drawer toggls
-		mDrawerToggle.onConfigurationChanged(newConfig);
+		//mDrawerToggle.onConfigurationChanged(newConfig);
 	}
 
 	@Override
@@ -272,6 +278,30 @@ public class MainActivity extends Activity implements IDialogListener {
 	public void onDialogNegativeClick(DialogFragment dialog) {
 		Log.i("Cancel", "negative button clicked");
 		dialog.dismiss();
+		
+	}
+
+	@Override
+	public void updateLecture(Lecture lecture) {
+		dbLogic.updateLecture(lecture);
+		
+	}
+
+	@Override
+	public void updateLectureExam(Exam exam) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateTask(Task task) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateResource(Resource resource) {
+		// TODO Auto-generated method stub
 		
 	}
 
