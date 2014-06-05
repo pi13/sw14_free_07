@@ -30,7 +30,9 @@ public class DB_Main extends Activity {
         Lecture lecture = new Lecture(1, "700.144", "Updated Lecture", "asfasfsdfsaf", "VU", 0, 0);
         
         dbl.updateLecture(lecture);
-        dbl.getLectures(0).printLectureList();
+//        dbl.getLectures(0).printLectureList();
+        
+        dbl.getExamsForLecture(lecture).printExamList();
         
         Log.i(CMONsettings.LOG_TAG, "APP done. your brain will be toasted in a few seconds :P"); 
     }

@@ -247,7 +247,11 @@ public class DBLLectures {
 		Exams exams = new Exams();
 		
 		String query = "SELECT * FROM " + HLPExams.TABLE_NAME;
-		//TODO: add join
+		
+		query += " LEFT JOIN " + HLPRelations.TABLE_NAME + " ON (" + HLPExams.TABLE_NAME + "." + HLPExams.COL_ID + " = " + HLPRelations.COL_EXAM_ID + ")";
+		query += " WHERE " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_LECTURE_ID + " = " + lecture.getID() + ";";	
+		query += " AND " + HLPRelations.COL_TASK_ID + " = 0";
+		query += " AND " + HLPRelations.COL_SRCTABLE + " = '" + HLPLectures.TABLE_NAME + "';";
 		
 		Log.i(DBsettings.LOG_TAG_EXAMS, query);
 		

@@ -106,6 +106,7 @@ public class DDTestsetA {
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, 0, 0, did1, 0);
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, 0, 0, did4, 0);
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, 0, eid1, 0, did2, 0);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, eid1, 0, 0, 0);
         this.hlprelations.allEntriesToLog();
         this.hlprelations.closeCon();        
         

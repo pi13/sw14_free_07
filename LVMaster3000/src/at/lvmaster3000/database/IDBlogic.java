@@ -2,6 +2,7 @@ package at.lvmaster3000.database;
 
 import android.content.Context;
 import at.lvmaster3000.database.demodata.DDTestsetA;
+import at.lvmaster3000.database.lists.Dates;
 import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.lists.Lectures;
 import at.lvmaster3000.database.lists.Resources;
@@ -79,6 +80,33 @@ public class IDBlogic {
 	 */
 	public Lecture getLectureByID(long lectureID) {
 		return this.lectures.getLectureByID(lectureID);
+	}
+	
+	/**
+	 * 
+	 * @param lecture
+	 * @return
+	 */
+	public Tasks getTasksForLecture(Lecture lecture) {
+		return this.lectures.getTasksForLecture(lecture);
+	}
+	
+	/**
+	 * 
+	 * @param lecture
+	 * @return
+	 */
+	public Dates getDatesForLecture(Lecture lecture) {
+		return this.lectures.getDatesForLecture(lecture);
+	}
+	
+	/**
+	 * 
+	 * @param lecture
+	 * @return
+	 */
+	public Exams getExamsForLecture(Lecture lecture) {
+		return this.lectures.getExamsForLecture(lecture);
 	}
 	
 	/**
