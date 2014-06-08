@@ -2,6 +2,7 @@ package at.lvmaster3000.gui.fragments;
 
 import java.util.List;
 
+import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -73,7 +74,7 @@ public class ResourcesFragment extends UIFragmentBase implements OnItemClickList
 	}
 	
 	private void showDialog() {
-	    //DialogFragment newFragment = AddLectureFragment.newInstance(context);
-	    //newFragment.show(getFragmentManager(), "add_lecture_dialog");
+	    DialogFragment newFragment = AddResourceFragment.newInstance(context);
+	    newFragment.show(getFragmentManager(), "add_resource_dialog");
 	}
 }

@@ -33,7 +33,10 @@ import at.lvmaster3000.gui.adapters.LectureListAdapter;
 import at.lvmaster3000.gui.adapters.NavDrawerListAdapter;
 import at.lvmaster3000.gui.adapters.ResourceListAdapter;
 import at.lvmaster3000.gui.adapters.TaskListAdapter;
+import at.lvmaster3000.gui.fragments.AddExamFragment;
 import at.lvmaster3000.gui.fragments.AddLectureFragment;
+import at.lvmaster3000.gui.fragments.AddResourceFragment;
+import at.lvmaster3000.gui.fragments.AddTaskFragment;
 import at.lvmaster3000.gui.fragments.ExamsFragment;
 import at.lvmaster3000.gui.fragments.HomeFragment;
 import at.lvmaster3000.gui.fragments.LecturesFragment;
@@ -259,18 +262,41 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 
 	@Override
 	public void onLectureAdd(DialogFragment dialog) {
-		Log.i("OK", "positive button clicked");
-		
 		AddLectureFragment temp = (AddLectureFragment)dialog;
-		LecturesFragment lf = (LecturesFragment)fragManager.findFragmentByTag(getResources().getString(R.string.lectures));
-		lf.updateLectureList(temp.getLecture());
+		LecturesFragment lectFrag = (LecturesFragment)fragManager.findFragmentByTag(getResources().getString(R.string.lectures));
+		lectFrag.updateLectureList(temp.getLecture());
+		dialog.dismiss();
+		
+	}
+	
+	@Override
+	public void onResourceAdd(DialogFragment dialog) {
+		AddResourceFragment temp = (AddResourceFragment)dialog;
+		ResourcesFragment resFrag = (ResourcesFragment)fragManager.findFragmentByTag(getResources().getString(R.string.resources));
+		resFrag.updateResourceList(temp.getResource());
+		dialog.dismiss();
+	}
+
+	@Override
+	public void onExamAdd(DialogFragment dialog) {
+		AddExamFragment temp = (AddExamFragment)dialog;
+		ExamsFragment examFrag = (ExamsFragment)fragManager.findFragmentByTag(getResources().getString(R.string.exams));
+		examFrag.updateExamList(temp.getExam());
+		dialog.dismiss();
+		
+	}
+
+	@Override
+	public void onTaskAdd(DialogFragment dialog) {
+		AddTaskFragment temp = (AddTaskFragment)dialog;
+		TasksFragment taskFrag = (TasksFragment)fragManager.findFragmentByTag(getResources().getString(R.string.tasks));
+		taskFrag.updateTaskList(temp.getTask());
 		dialog.dismiss();
 		
 	}
 
 	@Override
 	public void onDialogNegativeClick(DialogFragment dialog) {
-		Log.i("Cancel", "negative button clicked");
 		dialog.dismiss();
 		
 	}
@@ -298,5 +324,4 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		// TODO Auto-generated method stub
 		
 	}
-
 }

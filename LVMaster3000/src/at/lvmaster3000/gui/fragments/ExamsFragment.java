@@ -74,8 +74,8 @@ public class ExamsFragment extends UIFragmentBase implements OnItemClickListener
 	}
 	
 	private void showDialog() {
-	    //DialogFragment newFragment = AddLectureFragment.newInstance(context);
-	    //newFragment.show(getFragmentManager(), "add_lecture_dialog");
+	    DialogFragment newFragment = AddExamFragment.newInstance(context);
+	    newFragment.show(getFragmentManager(), "add_exam_dialog");
 	}
 
 }

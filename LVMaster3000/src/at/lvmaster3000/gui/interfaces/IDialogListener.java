@@ -9,6 +9,12 @@ public interface IDialogListener {
 	 * passes the DialogFragment in case the host needs to query it.
 	 */
 	public void onLectureAdd(DialogFragment dialog);
+	
+	public void onResourceAdd(DialogFragment dialog);
+	
+	public void onExamAdd(DialogFragment dialog);
+	
+	public void onTaskAdd(DialogFragment dialog);
 
 	public void onDialogNegativeClick(DialogFragment dialog);
 }
