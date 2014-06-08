@@ -47,7 +47,11 @@ public class DBLCoworkers {
 		}
 		
 		Cursor cursor = this.hlpCoworkers.openCon().rawQuery(query, null);
-		if(cursor != null) {                	
+		if(cursor != null) {
+			if(cursor.getCount() < 1) {
+				this.hlpCoworkers.closeCon();
+				return null;
+			}
 			coworkers.cursorToCoworkerList(cursor);        	
         } else {
         	Log.w(DBsettings.LOG_TAG_COWORKERS, "Cursor is NULL!!");        	

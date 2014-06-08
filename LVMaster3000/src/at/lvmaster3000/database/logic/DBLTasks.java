@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
-import at.lvmaster3000.database.helper.HLPLectures;
+import at.lvmaster3000.database.helper.HLPDates;
 import at.lvmaster3000.database.helper.HLPTasks;
 import at.lvmaster3000.database.lists.Tasks;
 import at.lvmaster3000.database.objects.Task;
@@ -13,6 +13,7 @@ import at.lvmaster3000.settings.DBsettings;
 public class DBLTasks {
 	
 	private HLPTasks hlpTasks = null;
+	private DBLDates dblDates = null;
 
 	/**
 	 * 
@@ -20,6 +21,7 @@ public class DBLTasks {
 	 */
 	public DBLTasks(Context context) {
 		this.hlpTasks = new HLPTasks(context);
+		this.dblDates = new DBLDates(context);
 	}
 	
 	/**
@@ -79,7 +81,12 @@ public class DBLTasks {
 		}
 		
         Cursor cursor = this.hlpTasks.openCon().rawQuery(query, null);
-        if(cursor != null) {                	
+        if(cursor != null) {       
+        	if(cursor.getCount() < 1) {
+        		this.hlpTasks.closeCon();
+        		return null;
+        	}
+        	
         	tasks.cursorToTaskList(cursor);    	
         } else {
         	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
@@ -103,6 +110,10 @@ public class DBLTasks {
 		
 		if(!task.getComment().isEmpty()) {
 			values.put(HLPTasks.COL_COMMENT, task.getComment());
+		}
+		
+		if(task.getDate() != null) {
+			this.dblDates.updateDate(task.getDate());
 		}
 		
 		int ret = this.hlpTasks.openCon().update(HLPTasks.TABLE_NAME, values, "_id = " + task.getId(), null);

@@ -85,7 +85,10 @@ public class DBLExams {
 		}
 		
         Cursor cursor = this.hlpExams.openCon().rawQuery(query, null);
-        if(cursor != null) {                	
+        if(cursor != null) {
+        	if(cursor.getCount() < 1) {
+        		return null;
+        	}
         	exams.cursorToExamList(cursor);        	
         } else {
         	Log.w(DBsettings.LOG_TAG_EXAMS, "Cursor is NULL!!");        	
@@ -195,6 +198,10 @@ public class DBLExams {
 	
 	public Date getExamDate(Exam exam) {
 		Relation relation = this.dblRelations.getRelationByExamWithDateSet(exam);
+		if(relation == null) {
+			return null;
+		}
+		
 		return this.dblDates.getDateByRelation(relation);
 	}
 

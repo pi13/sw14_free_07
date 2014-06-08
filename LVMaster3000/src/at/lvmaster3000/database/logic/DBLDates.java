@@ -1,9 +1,11 @@
 package at.lvmaster3000.database.logic;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 import at.lvmaster3000.database.helper.HLPDates;
+import at.lvmaster3000.database.helper.HLPTasks;
 import at.lvmaster3000.database.lists.Dates;
 import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Relation;
@@ -11,16 +13,16 @@ import at.lvmaster3000.settings.DBsettings;
 
 public class DBLDates {
 	
-	private HLPDates hlpdates = null;
+	private HLPDates hlpDates = null;
 
 	public DBLDates(Context context) {
-		this.hlpdates = new HLPDates(context);
+		this.hlpDates = new HLPDates(context);
 	}
 	
 	public long addDate(long timestamp, String location, String type, String comment) {
-		this.hlpdates.openCon();
-		long id = this.hlpdates.addDate(timestamp, location, type, comment);
-		this.hlpdates.closeCon();
+		this.hlpDates.openCon();
+		long id = this.hlpDates.addDate(timestamp, location, type, comment);
+		this.hlpDates.closeCon();
 		
 		return id; 
 	}
@@ -30,9 +32,9 @@ public class DBLDates {
 	}
 	
 	public int deleteDate(long id){
-		this.hlpdates.openCon();
-		int res = hlpdates.deleteDate(id);
-		this.hlpdates.closeCon();
+		this.hlpDates.openCon();
+		int res = hlpDates.deleteDate(id);
+		this.hlpDates.closeCon();
 		
 		return res;
 	}
@@ -50,13 +52,17 @@ public class DBLDates {
 			query += " LIMIT " + limit;
 		}
 		
-        Cursor cursor = this.hlpdates.openCon().rawQuery(query, null);
-        if(cursor != null) {                	
+        Cursor cursor = this.hlpDates.openCon().rawQuery(query, null);
+        if(cursor != null) {              
+        	if(cursor.getCount() < 1) {
+        		this.hlpDates.closeCon();
+        		return null;
+        	}
         	dates.cursorToDateList(cursor);
         } else {
         	Log.w(DBsettings.LOG_TAG_LECTURES, "Cursor is NULL!!");        	
         }
-        this.hlpdates.closeCon();
+        this.hlpDates.closeCon();
 		
 		return dates;
 	}
@@ -67,10 +73,10 @@ public class DBLDates {
 		String query = "SELECT * FROM " + HLPDates.TABLE_NAME;
 		query += " WHERE " + HLPDates.COL_ID + " = " + relation.getDateId();
 		
-        Cursor cursor = hlpdates.openCon().rawQuery(query, null);
+        Cursor cursor = hlpDates.openCon().rawQuery(query, null);
         if(cursor != null) {  
         	if(cursor.getCount() < 1) {
-        		this.hlpdates.closeCon();
+        		this.hlpDates.closeCon();
         		Log.e(DBsettings.LOG_TAG_LECTURES, "Nothing found"); 
         		return null;
         	}
@@ -80,9 +86,35 @@ public class DBLDates {
         } else {
         	Log.w(DBsettings.LOG_TAG_LECTURES, "Cursor is NULL!!");        	
         }
-        this.hlpdates.closeCon();
+        this.hlpDates.closeCon();
 		
 		return date;
 	}
 
+	public int updateDate(Date date) {
+		ContentValues values = new ContentValues();
+		
+		if(date.getTimestamp() > 0) {
+			values.put(HLPDates.COL_TIMESTAMP, date.getTimestamp());
+		}
+		
+		if(!date.getType().isEmpty()) {
+			values.put(HLPDates.COL_TYPE, date.getType());
+		}
+		
+		if(!date.getLocation().isEmpty()) {
+			values.put(HLPDates.COL_TYPE, date.getType());
+		}
+		
+		if(!date.getComment().isEmpty()) {
+			values.put(HLPDates.COL_COMMENT, date.getComment());
+		}
+		
+		int ret = this.hlpDates.openCon().update(HLPDates.TABLE_NAME, values, "_id = " + date.getID(), null);
+		
+		Log.i(DBsettings.LOG_TAG_DATES, "Update res.: " + ret);
+		
+		return ret;
+	}
+	
 }

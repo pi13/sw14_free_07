@@ -41,9 +41,14 @@ public class DBLRelations {
 		Log.i(DBsettings.LOG_TAG_RELATIONS, query);
 		
 		Cursor cursor = this.hlpRelations.openCon().rawQuery(query, null);
-        if(cursor != null) {              
-        	cursor.moveToFirst();
-        	relation.cursorToRelation(cursor);   	
+        if(cursor != null) { 
+        	if(cursor.getCount() < 1) {
+        		return null;
+        	}
+        	
+        	if(cursor.moveToFirst()) {
+        		relation.cursorToRelation(cursor);   
+        	}
         } else {
         	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
         }
@@ -61,9 +66,14 @@ public class DBLRelations {
 		Log.i(DBsettings.LOG_TAG_RELATIONS, query);
 		
 		Cursor cursor = this.hlpRelations.openCon().rawQuery(query, null);
-        if(cursor != null) {              
-        	cursor.moveToFirst();
-        	relation.cursorToRelation(cursor);   	
+        if(cursor != null) {        
+        	if(cursor.getCount() < 1) {
+        		return null;
+        	}
+        	
+        	if(cursor.moveToFirst()){
+        		relation.cursorToRelation(cursor);   
+        	}
         } else {
         	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
         }

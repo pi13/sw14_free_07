@@ -80,7 +80,7 @@ public class Task {
 	public void printTask() {
 		String msg = "ID: " + this.id;
 		msg += " | Title: " + this.title;
-		msg += " | Comment: " + this.comment;
+		msg += " | Comment: " + this.comment;		
 		Log.d(DBsettings.LOG_TAG_TASKS, msg);
 		if(date != null) {
 			date.printDate();

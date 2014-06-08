@@ -18,20 +18,20 @@ import at.lvmaster3000.settings.DBsettings;
 
 public class DBLLectures {
 
-	private HLPLectures hlplectures;
+	private HLPLectures hlpLectures;
 	private HLPTasks hlptasks;
-	private HLPDates hlpdates;
-	private HLPExams hlpexams;
+	private HLPDates hlpDates;
+	private HLPExams hlpExams;
 	
 	/**
 	 * 
 	 * @param context
 	 */
 	public DBLLectures(Context context) {
-		this.hlplectures = new HLPLectures(context);
+		this.hlpLectures = new HLPLectures(context);
 		this.hlptasks = new HLPTasks(context);
-		this.hlpdates = new HLPDates(context);
-		this.hlpexams = new HLPExams(context);
+		this.hlpDates = new HLPDates(context);
+		this.hlpExams = new HLPExams(context);
 	}
 	
 	/**
@@ -45,9 +45,9 @@ public class DBLLectures {
 	 * @return
 	 */
 	public long addLecture(String number, String name, String comment, String type, int required, int compulsory) {
-		this.hlplectures.openCon();
-		long id = this.hlplectures.addLecture(number, name, comment, type, required, compulsory);
-		this.hlplectures.closeCon();
+		this.hlpLectures.openCon();
+		long id = this.hlpLectures.addLecture(number, name, comment, type, required, compulsory);
+		this.hlpLectures.closeCon();
 		
 		return id; 
 	}
@@ -67,9 +67,9 @@ public class DBLLectures {
 	 * @return
 	 */
 	public int deleteLecture(long id) {
-		this.hlplectures.openCon();
-		int res = this.hlplectures.deleteLecture(id);		
-		this.hlplectures.closeCon();
+		this.hlpLectures.openCon();
+		int res = this.hlpLectures.deleteLecture(id);		
+		this.hlpLectures.closeCon();
 		
 		return res;
 	}
@@ -114,7 +114,7 @@ public class DBLLectures {
 			values.put(HLPLectures.COL_COMPULSORY, lecture.getCompulsory());
 		}
 	
-		int ret = hlplectures.openCon().update(HLPLectures.TABLE_NAME, values, "_id = " + lecture.getID(), null);
+		int ret = hlpLectures.openCon().update(HLPLectures.TABLE_NAME, values, "_id = " + lecture.getID(), null);
 		
 		Log.i(DBsettings.LOG_TAG_LECTURES, "Update res.: " + ret);
 		
@@ -131,8 +131,13 @@ public class DBLLectures {
 		
 		String query = "SELECT * FROM " + HLPLectures.TABLE_NAME + " WHERE number = '" + number + "'";
 		
-        Cursor cursor = hlplectures.openCon().rawQuery(query, null);
-        if(cursor != null) {        	
+        Cursor cursor = hlpLectures.openCon().rawQuery(query, null);
+        if(cursor != null) {
+        	if(cursor.getCount() < 1) {
+        		this.hlpLectures.closeCon();
+        		return null;
+        	}
+        	
         	if(cursor.moveToFirst()) {
         		lecture.cursorToLecture(cursor);
         	}
@@ -140,7 +145,7 @@ public class DBLLectures {
         	Log.w(DBsettings.LOG_TAG_LECTURES, "Cursor is NULL!!");        	
         }
         
-        this.hlplectures.closeCon();
+        this.hlpLectures.closeCon();
 		
 		return lecture;
 	}
@@ -155,8 +160,13 @@ public class DBLLectures {
 		
 		String query = "SELECT * FROM " + HLPLectures.TABLE_NAME + " WHERE _id = '" + lectureID + "'";
 		
-        Cursor cursor = hlplectures.openCon().rawQuery(query, null);
-        if(cursor != null) {        	
+        Cursor cursor = hlpLectures.openCon().rawQuery(query, null);
+        if(cursor != null) {
+        	if(cursor.getCount() < 1) {
+        		this.hlpLectures.closeCon();
+        		return null;
+        	}
+        	
         	if(cursor.moveToFirst()) {
         		lecture.cursorToLecture(cursor);
         	}
@@ -164,7 +174,7 @@ public class DBLLectures {
         	Log.w(DBsettings.LOG_TAG_LECTURES, "Cursor is NULL!!");        	
         }
         
-        this.hlplectures.closeCon();
+        this.hlpLectures.closeCon();
 		
 		return lecture;
 	}
@@ -183,14 +193,19 @@ public class DBLLectures {
 			query += " LIMIT " + limit;
 		}
 		
-        Cursor cursor = hlplectures.openCon().rawQuery(query, null);
-        if(cursor != null) {                	
+        Cursor cursor = hlpLectures.openCon().rawQuery(query, null);
+        if(cursor != null) {
+        	if(cursor.getCount() < 1) {
+        		this.hlpLectures.closeCon();
+        		return null;
+        	}
+        	
     		lectures.cursorToLectureList(cursor);        	
         } else {
         	Log.w(DBsettings.LOG_TAG_LECTURES, "Cursor is NULL!!");        	
         }
         
-        this.hlplectures.closeCon();
+        this.hlpLectures.closeCon();
 		
 		return lectures;
 	}
@@ -209,6 +224,11 @@ public class DBLLectures {
 		
 		Cursor cursor = this.hlptasks.openCon().rawQuery(query, null);
 		if(cursor != null) {
+			if(cursor.getCount() < 1) {
+				this.hlptasks.closeCon();
+        		return null;
+        	}
+			
 			tasks.cursorToTaskList(cursor);
 		} else {
         	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
@@ -231,14 +251,19 @@ public class DBLLectures {
 		
 		Log.i(DBsettings.LOG_TAG_DATES, query);
 		
-		Cursor cursor = this.hlpdates.openCon().rawQuery(query, null);
+		Cursor cursor = this.hlpDates.openCon().rawQuery(query, null);
 		if(cursor != null) {
+			if(cursor.getCount() < 1) {
+				this.hlpDates.closeCon();
+        		return null;
+        	}
+			
 			dates.cursorToDateList(cursor);
 		} else {
         	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
         }
 		
-		this.hlpdates.closeCon();
+		this.hlpDates.closeCon();
 		
 		return dates;
 	}
@@ -255,14 +280,19 @@ public class DBLLectures {
 		
 		Log.i(DBsettings.LOG_TAG_EXAMS, query);
 		
-		Cursor cursor = this.hlpexams.openCon().rawQuery(query, null);
+		Cursor cursor = this.hlpExams.openCon().rawQuery(query, null);
 		if(cursor != null) {
+			if(cursor.getCount() < 1) {
+				this.hlpExams.closeCon();
+        		return null;
+        	}
+			
 			exams.cursorToExamList(cursor);
 		} else {
         	Log.w(DBsettings.LOG_TAG_EXAMS, "Cursor is NULL!!");        	
         }
 		
-		this.hlpexams.closeCon();
+		this.hlpExams.closeCon();
 		
 		return exams;
 	}
