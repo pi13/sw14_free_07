@@ -40,7 +40,7 @@ public class HLPTasks extends SQLiteOpenHelper {
 	 */
 	public HLPTasks(Context context) {
 		super(context, DBsettings.DATABASE_NAME, null, DBsettings.DATABASE_VERSION);
-		Log.i(logtag, TABLE_NAME + " helper created");
+		Log.i(logtag, "constructor: Tasks helper created");
 	}
 	
 	/**

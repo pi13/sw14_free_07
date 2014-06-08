@@ -41,7 +41,7 @@ public class HLPExams extends SQLiteOpenHelper{
 	 */
 	public HLPExams(Context context) {
 		super(context, DBsettings.DATABASE_NAME, null, DBsettings.DATABASE_VERSION);
-		Log.i(logtag, "Exams helper created");
+		Log.i(logtag, "constructor: Exams helper created");
 	}
 	
 	/**

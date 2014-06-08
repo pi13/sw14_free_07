@@ -43,7 +43,7 @@ public class HLPDates extends SQLiteOpenHelper {
 	 */
 	public HLPDates(Context context) {
 		super(context, DBsettings.DATABASE_NAME, null, DBsettings.DATABASE_VERSION);
-		Log.i(logtag, TABLE_NAME + " helper created");
+		Log.i(logtag, "constructor: Dates helper created");
 	}
 	
 	/**

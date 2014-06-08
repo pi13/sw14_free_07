@@ -1,73 +1,36 @@
 package at.lvmaster3000.database.logic.test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
-import at.lvmaster3000.database.lists.Resources;
+import at.lvmaster3000.database.demodata.DDTestsetA;
 import at.lvmaster3000.database.logic.DBLResources;
-import at.lvmaster3000.database.objects.Coworker;
 import at.lvmaster3000.database.objects.Resource;
 
 public class DBLResourcesTest extends AndroidTestCase{
-	private DBLResources dblObjects;
-	private List<Resource> testObjects = null;
-	private int NR_TEST_OBJECTS = 0;
-	private int limit = 100;
+	private DBLResources dblResources;	
+	private RenamingDelegatingContext context = null;
 	
-	private RenamingDelegatingContext testContext = null;
+	public static final String LOG_TAG_RESOURCES_LOGIC_TEST = "TEST_RESOURCES_LOGIC";
 	
 	public void setUp(){
-		testContext = new RenamingDelegatingContext(getContext(), "test_");
-		
-		dblObjects = new DBLResources(testContext);
-		createTestObjects();
+		this.context = new RenamingDelegatingContext(getContext(), "test_");		
+		this.dblResources = new DBLResources(this.context);		
 	}
 	
-	public void testAddNew(){
-		dropAllObjects();
-		createTestObjects();
-		
-		long idFromDatabase = dblObjects.addResource(this.testObjects.get(0));
-		
-		assertNotSame(-1l, idFromDatabase);
+	public void testAddResource(){
+		long rid = dblResources.addResource(new Resource("TEST res"));		
+		assertNotSame(-1l, rid);
 	}
 	
-	public void testGetAll(){
-		dropAllObjects();
-		fillTestObjectsInDBL();
-		Resources objects = dblObjects.getResources(limit);
-		
-		assertEquals(NR_TEST_OBJECTS, objects.getResources().size());
+	public void testDeleteResource() {
+		long rid = dblResources.addResource(new Resource("TEST res"));
+		assertSame(1, dblResources.deleteResource(rid));
 	}
 	
-	private void fillTestObjectsInDBL(){
-		if(this.testObjects == null){
-			createTestObjects();
-		}
+	public void testGetAllResources(){
+		DDTestsetA testset = new DDTestsetA(this.context);
+		testset.FillDb();
 		
-		for(Resource object : this.testObjects){
-			this.dblObjects.addResource(object);
-		}
-	}
-	
-	private void createTestObjects(){
-		Resource o1 = new Resource();
-		o1.setTitle("Test T1");
-		Resource o2 = new Resource();
-		o2.setTitle("Test T2");
-	
-		this.testObjects = new ArrayList<Resource>();
-		
-		this.testObjects.add(o1);
-		this.testObjects.add(o2);
-		
-		this.NR_TEST_OBJECTS = this.testObjects.size();
-	}
-	
-	private void dropAllObjects(){
-		this.dblObjects = null;
-		this.dblObjects = new DBLResources(testContext);
+		assertNotSame(0, testset.getResourceCnt());
 	}
 }

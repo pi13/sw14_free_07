@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 import at.lvmaster3000.database.helper.HLPResources;
-import at.lvmaster3000.database.helper.HLPTasks;
 import at.lvmaster3000.database.lists.Resources;
 import at.lvmaster3000.database.objects.Resource;
 import at.lvmaster3000.settings.DBsettings;
@@ -22,29 +21,56 @@ public class DBLResources {
 		this.hlpResources = new HLPResources(context);
 	}
 
+	public void resetTable() {
+		this.hlpResources.openCon();
+		this.hlpResources.resetTable();
+		this.hlpResources.closeCon();
+	}
+	
+	/**
+	 * 
+	 * @param title
+	 * @return
+	 */
+	public long addResource(String title) {
+		hlpResources.openCon();
+		long rid = this.hlpResources.addResource(title);
+		hlpResources.closeCon();
+		return rid;
+	}
+	
 	/**
 	 * 
 	 * @param resource
 	 * @return
 	 */
 	public long addResource(Resource resource) {
-		hlpResources.openCon();
-		long id = this.hlpResources.addResource(resource.getTitle());
-		resource.setId(id);
-		hlpResources.closeCon();
-		return id;
+		long rid = this.addResource(resource.getTitle());
+		resource.setId(rid);
+		
+		return rid;
 	}
 	
 	/**
 	 * 
-	 * @param resourceID
+	 * @param resourceId
+	 * @return
+	 */
+	public int deleteResource(long resourceId) {
+		this.hlpResources.openCon();
+		int res = this.hlpResources.deleteResource(resourceId);
+		this.hlpResources.closeCon();
+		
+		return res;
+	}
+	
+	/**
+	 * 
+	 * @param resource
 	 * @return
 	 */
 	public int deleteResource(Resource resource){
-		this.hlpResources.openCon();
-		int res = this.hlpResources.deleteResource(resource.getId());
-		this.hlpResources.closeCon();
-		return res;
+		return this.deleteResource(resource.getId());
 	}
 
 	/**

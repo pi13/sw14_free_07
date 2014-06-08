@@ -47,7 +47,7 @@ public class HLPRelations extends SQLiteOpenHelper {
 	 */
 	public HLPRelations(Context context) {
 		super(context, DBsettings.DATABASE_NAME, null, DBsettings.DATABASE_VERSION);
-		Log.i(logtag, TABLE_NAME + " helper created");
+		Log.i(logtag, "constructor: Relations helper created");
 	}
 	
 	/**
@@ -67,12 +67,9 @@ public class HLPRelations extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		Log.i(logtag,
-				"Upgrading database from version " + oldVersion + " to "
-						+ newVersion + ", which will destroy all old data");
-		
+		Log.i(logtag, "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");		
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-		onCreate(db);		
+		this.onCreate(db);		
 	}
 	
 	/**
@@ -93,12 +90,17 @@ public class HLPRelations extends SQLiteOpenHelper {
 		db.close();
 	}
 	
+	public void deleteTable() {
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+		Log.i(logtag, "Table '" + TABLE_NAME + "' deleted");
+	}
+	
 	/**
 	 * Function resets table and recreates it
 	 */
 	public void resetTable() {		
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-		db.execSQL(RELATIONS_CREATE);
+		this.deleteTable();
+		this.onCreate(db);
 		Log.i(logtag, "Table '" + TABLE_NAME + "' reseted");
 	}
 	

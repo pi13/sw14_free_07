@@ -39,7 +39,7 @@ public class HLPCoworkers extends SQLiteOpenHelper {
 	 */
 	public HLPCoworkers(Context context) {
 		super(context, DBsettings.DATABASE_NAME, null, DBsettings.DATABASE_VERSION);
-		Log.i(logtag, TABLE_NAME + " helper created");
+		Log.i(logtag, TABLE_NAME + "constructor: Coworker helper created");
 	}
 	
 	/**
