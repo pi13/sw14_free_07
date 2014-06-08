@@ -6,21 +6,26 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.objects.Task;
+import at.lvmaster3000.gui.fragments.TasksFragment;
 
-public class TaskListAdapter extends BaseAdapter {
+public class TaskListAdapter extends BaseAdapter implements OnClickListener{
 
 	private Context context;
 	private List<Task> tasks;
+	private TasksFragment taskFragment;
 	
-	public TaskListAdapter(Context context, List<Task> tasks)
+	public TaskListAdapter(Context context, List<Task> tasks, TasksFragment taskFrag)
 	{
 		this.context = context;
 		this.tasks = tasks;
+		this.taskFragment = taskFrag;
 	}
 	
 	@Override
@@ -50,7 +55,17 @@ public class TaskListAdapter extends BaseAdapter {
 		TextView title = (TextView)convertView.findViewById(R.id.list_item_label);
 		title.setText(tasks.get(position).getTitle());
 		
+		ImageButton imgBtn = (ImageButton)convertView.findViewById(R.id.delete_list_item_btn);
+		imgBtn.setTag(position);
+		imgBtn.setOnClickListener(this);
+		
 		return convertView;
+	}
+
+	@Override
+	public void onClick(View v) {
+		taskFragment.onClick(v);
+		
 	}
 
 }

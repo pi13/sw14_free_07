@@ -3,11 +3,13 @@ package at.lvmaster3000;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -45,8 +47,9 @@ import at.lvmaster3000.gui.fragments.TasksFragment;
 import at.lvmaster3000.gui.fragments.TestFragment;
 import at.lvmaster3000.gui.interfaces.IDialogListener;
 import at.lvmaster3000.gui.interfaces.IUpdateDBObject;
+import at.lvmaster3000.interfaces.IDeleteItems;
 
-public class MainActivity extends Activity implements IDialogListener, IUpdateDBObject{
+public class MainActivity extends Activity implements IDialogListener, IUpdateDBObject, IDeleteItems{
 	
 	private IDBlogic dbLogic;
 	private Context context;
@@ -320,6 +323,93 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 	@Override
 	public void updateResource(Resource resource) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void DeleteLectureItem(final Lecture lecture) {
+		new AlertDialog.Builder(this)
+	    .setTitle("Delete entry")
+	    .setMessage("Are you sure you want to delete this entry?")
+	    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int which) { 
+	    		LecturesFragment fragment = (LecturesFragment)fragManager.findFragmentByTag(getResources().getString(R.string.lectures));
+	    		fragment.deleteLecture(lecture);
+	    		dialog.dismiss();
+	        }
+	     })
+	    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int which) { 
+	            dialog.dismiss();
+	        }
+	     })
+	    .setIcon(android.R.drawable.ic_dialog_alert)
+	     .show();
+	}
+
+	@Override
+	public void DeleteExamItem(final Exam exam) {
+		new AlertDialog.Builder(this)
+	    .setTitle("Delete entry")
+	    .setMessage("Are you sure you want to delete this entry?")
+	    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int which) { 
+	    		ExamsFragment fragment = (ExamsFragment)fragManager.findFragmentByTag(getResources().getString(R.string.exams));
+	    		fragment.deleteExam(exam);
+	    		dialog.dismiss();
+	        }
+	     })
+	    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int which) { 
+	            dialog.dismiss(); 
+	        }
+	     })
+	    .setIcon(android.R.drawable.ic_dialog_alert)
+	     .show();
+		
+	}
+
+	@Override
+	public void DeleteTaskItem(final Task task) {
+		new AlertDialog.Builder(this)
+	    .setTitle("Delete entry")
+	    .setMessage("Are you sure you want to delete this entry?")
+	    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int which) { 
+	    		TasksFragment fragment = (TasksFragment)fragManager.findFragmentByTag(getResources().getString(R.string.tasks));
+	    		fragment.deleteTask(task);
+	    		dialog.dismiss();
+	        }
+	     })
+	    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int which) { 
+	            dialog.dismiss();
+	        }
+	     })
+	    .setIcon(android.R.drawable.ic_dialog_alert)
+	     .show();
+		
+	}
+
+	@Override
+	public void DeleteResourceItem(final Resource resource) {
+		new AlertDialog.Builder(this)
+	    .setTitle("Delete entry")
+	    .setMessage("Are you sure you want to delete this entry?")
+	    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int which) { 
+	    		ResourcesFragment fragment = (ResourcesFragment)fragManager.findFragmentByTag(getResources().getString(R.string.resources));
+	    		fragment.deleteTask(resource);
+	    		dialog.dismiss();
+	        }
+	     })
+	    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int which) { 
+	            dialog.dismiss();
+	        }
+	     })
+	    .setIcon(android.R.drawable.ic_dialog_alert)
+	     .show();
 		
 	}
 }
