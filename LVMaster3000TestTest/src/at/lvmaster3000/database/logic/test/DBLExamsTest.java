@@ -6,6 +6,7 @@ import java.util.List;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 import at.lvmaster3000.database.demodata.DDTestsetA;
+import at.lvmaster3000.database.helper.HLPExams;
 import at.lvmaster3000.database.helper.HLPLectures;
 import at.lvmaster3000.database.helper.HLPRelations;
 import at.lvmaster3000.database.helper.HLPResources;
@@ -20,103 +21,104 @@ import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Resource;
 
 public class DBLExamsTest extends AndroidTestCase{
-	private DBLExams dblObjects;
+	private DBLExams dblExams;
 	private List<Exam> testObjects = null;
 	private int NR_TEST_EXAMS = 0;
 	private int limit = 10000;
 	//private DDTestsetA TestA = null;
 	
-	private RenamingDelegatingContext testContext = null;
+	private RenamingDelegatingContext context = null;
+	
+	public static final String LOG_TAG_EXAMS_LOGIC_TEST = "TEST_EXAMS_LOGIC";
 	
 	public void setUp(){
-		testContext = new RenamingDelegatingContext(getContext(), "test_");
-		
-		dblObjects = new DBLExams(testContext);
+		context = new RenamingDelegatingContext(getContext(), "test_");		
+		dblExams = new DBLExams(context);
 		createTestObjects();
 	}
 	
 	public void testTestSet(){
-		DDTestsetA TestA = new DDTestsetA(testContext);
+		DDTestsetA TestA = new DDTestsetA(context);
 	    TestA.FillDb();
 	}
 	
 	public void testAddNewExamAndDeleteIt(){
-		DDTestsetA TestA = new DDTestsetA(testContext);
+		DDTestsetA TestA = new DDTestsetA(context);
 	    TestA.FillDb();
 		
 		dropAllObjects();
 		createTestObjects();
 		
-		long idFromDatabase = dblObjects.addExam(this.testObjects.get(0));
+		long idFromDatabase = dblExams.addExam(this.testObjects.get(0));
 		
 		assertNotSame(-1l, idFromDatabase);
-		assertEquals(1,dblObjects.deleteExam(idFromDatabase));
+		assertEquals(1,dblExams.deleteExam(idFromDatabase));
 		
 		Exam fromTest = this.testObjects.get(1);
-		idFromDatabase = dblObjects.addExam(fromTest.getTitle(), fromTest.getComment(), fromTest.getLecture_id());
+		idFromDatabase = dblExams.addExam(fromTest.getTitle(), fromTest.getComment(), fromTest.getLecture_id());
 		
 		assertNotSame(-1l, idFromDatabase);
-		assertEquals(1,dblObjects.deleteExam(idFromDatabase));	
+		assertEquals(1,dblExams.deleteExam(idFromDatabase));	
 		
 	}
 	
 	public void testGetAllExams(){
-		DDTestsetA TestA = new DDTestsetA(testContext);
+		DDTestsetA TestA = new DDTestsetA(context);
 	    TestA.FillDb();
 
-		Exams exs = dblObjects.getExams(limit);
+		Exams exs = dblExams.getExams(limit);
 		
 		assertEquals(TestA.getExamCnt(), exs.nrOfExams());		
 	}
 	
 	public void testDeleteExam(){
-		DDTestsetA TestA = new DDTestsetA(testContext);
+		DDTestsetA TestA = new DDTestsetA(context);
 	    TestA.FillDb();
 	    
 		dropAllObjects();
 		createTestObjects();
 		
-		long id = dblObjects.addExam(testObjects.get(0));
+		long id = dblExams.addExam(testObjects.get(0));
 		
-		int size = dblObjects.getExams(limit).nrOfExams();
+		int size = dblExams.getExams(limit).nrOfExams();
 		
-		int res = dblObjects.deleteExam(id);
+		int res = dblExams.deleteExam(id);
 		assertEquals(1, res);
 		
-		assertEquals(size-1, dblObjects.getExams(limit).nrOfExams());
+		assertEquals(size-1, dblExams.getExams(limit).nrOfExams());
 	}
 	
 	public void testGetExamById(){
-		DDTestsetA TestA = new DDTestsetA(testContext);
+		DDTestsetA TestA = new DDTestsetA(context);
 	    TestA.FillDb();
 	    
 		dropAllObjects();
 		createTestObjects();
 		
 		Exam testExam = testObjects.get(0);
-		long id = dblObjects.addExam(testExam);
+		long id = dblExams.addExam(testExam);
 		
-		Exam exam = dblObjects.getExamById(id);
+		Exam exam = dblExams.getExamById(id);
 		
 		assertEquals(testExam.getTitle(), exam.getTitle());
 		
 	}
 	
 	public void testEditExam(){
-		DDTestsetA TestA = new DDTestsetA(testContext);
+		DDTestsetA TestA = new DDTestsetA(context);
 	    TestA.FillDb();
 	    
 		String editComment = "edited comment";
 		
-		long id = dblObjects.getExams(limit).getExam().get(0).getId();
+		long id = dblExams.getExams(limit).getExam().get(0).getId();
 		
-		Exam testExam = dblObjects.getExamById(id);
+		Exam testExam = dblExams.getExamById(id);
 		
 		testExam.setComment(editComment);
 		
-		dblObjects.updateExam(testExam);
+		dblExams.updateExam(testExam);
 		
-		Exam editedExam = dblObjects.getExamById(id);
+		Exam editedExam = dblExams.getExamById(id);
 		String comment = editedExam.getComment();
 		
 		assertEquals(editComment, comment);
@@ -126,55 +128,55 @@ public class DBLExamsTest extends AndroidTestCase{
 	 * 
 	 */
 	public void testGetDateOfExam(){
-		DDTestsetA TestA = new DDTestsetA(testContext);
+		DDTestsetA TestA = new DDTestsetA(context);
 	    TestA.FillDb();
 	    
-	    Exam exam = dblObjects.getExamById(1);	    
+	    Exam exam = dblExams.getExamById(1);	    
 	    exam.printExam();
 	    
 	    long unixTime = System.currentTimeMillis() / 1000L;
 	    Date date = new Date(0, unixTime, "i13", "exam", "what ever ...");
-//	    date.printDate();
 	    
-	    dblObjects.setExamDate(exam, date);
+	    dblExams.setExamDate(exam, date);
 	    
-	    Date dateRet = dblObjects.getExamDate(exam);
+	    Date dateRet = dblExams.getExamDate(exam);
 	    dateRet.printDate();
 	    
 		assertEquals(date.getTimestamp(), dateRet.getTimestamp());
 	}	
 	
 	public void testGetAllResourcesOfExam(){
-		DDTestsetA TestA = new DDTestsetA(testContext);
+		DDTestsetA TestA = new DDTestsetA(context);
 	    TestA.FillDb();
 	    
-	    long lecId = new DBLLectures(testContext).getLectures(limit).getLectures().get(0).getID();
-		long exId = dblObjects.addExam("resource test", "want to add resource here", lecId);
+	    long lecId = new DBLLectures(context).getLectures(0).getLectures().get(0).getID();
+		long exId = dblExams.addExam("resource test", "want to add resource here", lecId);
 
-		long resId = new DBLResources(testContext).addResource(new Resource("test resource"));
+		long resId = new DBLResources(context).addResource(new Resource("test resource"));
 		
 		assertNotSame(-1l, resId);
 		
-		HLPRelations hlpRelations = new HLPRelations(testContext);
+		HLPRelations hlpRelations = new HLPRelations(context);
 		hlpRelations.openCon();
-		hlpRelations.addRelation(HLPResources.TABLE_NAME, 0, exId, 0, 0, resId);
+		hlpRelations.addRelation(HLPExams.TABLE_NAME, 0, exId, 0, 0, resId);
 		hlpRelations.closeCon();
 		
-		Resources resources = dblObjects.getExamResources(exId);
+		Resources resources = dblExams.getExamResources(new Exam(exId, "", "", 0));
 		
 		assertNotNull(resources);
-		assertEquals(1, resources.nrOfResources());
+		assertEquals(1, resources.getResources().size());
 	}
 	
 	public void testGetCoworkersOfExam(){
-		DDTestsetA TestA = new DDTestsetA(testContext);
+		//TODO: feature migth not be added
+		DDTestsetA TestA = new DDTestsetA(context);
 	    TestA.FillDb();
 	    
 		dropAllObjects();
 		createTestObjects();
-		// TODO useful test case
+		
 		long id = 0;
-//		Coworkers coworkers = dblObjects.getCoworkers(id);
+		Coworkers coworkers = null; //dblExams.getCoworkers(id);
 		
 //		assertNotNull(coworkers);
 	}
@@ -185,7 +187,7 @@ public class DBLExamsTest extends AndroidTestCase{
 		}
 		
 		for(Exam ex : this.testObjects){
-			this.dblObjects.addExam(ex);
+			this.dblExams.addExam(ex);
 		}
 	}
 	
@@ -202,7 +204,7 @@ public class DBLExamsTest extends AndroidTestCase{
 	}
 	
 	private void dropAllObjects(){
-		this.dblObjects = null;
-		this.dblObjects = new DBLExams(testContext);
+		this.dblExams = null;
+		this.dblExams = new DBLExams(context);
 	}
 }

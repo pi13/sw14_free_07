@@ -35,9 +35,4 @@ public class Tasks {
 			this.tasks.get(i).printTask();
 		}
 	}
-
-	public int nrOfObjects() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 }

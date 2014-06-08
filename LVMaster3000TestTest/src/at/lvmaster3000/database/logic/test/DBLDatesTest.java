@@ -57,8 +57,19 @@ public class DBLDatesTest extends AndroidTestCase{
 	}
 	
 	private void createTestObjects(){
+		long unixTime = System.currentTimeMillis() / 1000L;
+		
 		Date o1 = new Date();
+		o1.setType("LV");
+		o1.setComment("some d1 comment");
+		o1.setTimestamp(unixTime);
+		o1.setLocation("i13");
+		
 		Date o2 = new Date();
+		o2.setType("VU");
+		o2.setComment("some d2 comment");
+		o2.setTimestamp(unixTime + 3600);
+		o2.setLocation("i12");
 	
 		this.testObjects = new ArrayList<Date>();
 		

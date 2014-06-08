@@ -14,11 +14,11 @@ public class Exam {
 		
 	}
 	
-	public Exam(long id, String title, String comm, long lecId){
+	public Exam(long id, String title, String comment, long lectureId){
 		this.id = id; 
 		this.title = title;
-		this.comment = comm;
-		this.lecture_id = lecId;
+		this.comment = comment;
+		this.lecture_id = lectureId;
 	}
 
 	public long getId() {

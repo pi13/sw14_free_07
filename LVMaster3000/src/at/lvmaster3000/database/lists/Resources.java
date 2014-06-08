@@ -18,7 +18,7 @@ public class Resources {
 		this.resources.add(resource);		
 	}
 	
-	public List<Resource> getResource() {
+	public List<Resource> getResources() {
 		return this.resources;
 	}
 	
@@ -34,9 +34,5 @@ public class Resources {
 		for(int i = 0; i < this.resources.size(); i++) {
 			this.resources.get(i).printResource();
 		}
-	}
-
-	public int nrOfResources() {
-		return resources.size();
 	}
 }

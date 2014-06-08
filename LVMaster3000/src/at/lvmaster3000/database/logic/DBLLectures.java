@@ -8,10 +8,12 @@ import at.lvmaster3000.database.helper.HLPDates;
 import at.lvmaster3000.database.helper.HLPExams;
 import at.lvmaster3000.database.helper.HLPLectures;
 import at.lvmaster3000.database.helper.HLPRelations;
+import at.lvmaster3000.database.helper.HLPResources;
 import at.lvmaster3000.database.helper.HLPTasks;
 import at.lvmaster3000.database.lists.Dates;
 import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.lists.Lectures;
+import at.lvmaster3000.database.lists.Resources;
 import at.lvmaster3000.database.lists.Tasks;
 import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.settings.DBsettings;
@@ -22,6 +24,7 @@ public class DBLLectures {
 	private HLPTasks hlptasks;
 	private HLPDates hlpDates;
 	private HLPExams hlpExams;
+	private HLPResources hlpResources;
 	
 	/**
 	 * 
@@ -32,6 +35,7 @@ public class DBLLectures {
 		this.hlptasks = new HLPTasks(context);
 		this.hlpDates = new HLPDates(context);
 		this.hlpExams = new HLPExams(context);
+		this.hlpResources = new HLPResources(context);
 	}
 	
 	/**
@@ -274,7 +278,7 @@ public class DBLLectures {
 		String query = "SELECT * FROM " + HLPExams.TABLE_NAME;
 		
 		query += " LEFT JOIN " + HLPRelations.TABLE_NAME + " ON (" + HLPExams.TABLE_NAME + "." + HLPExams.COL_ID + " = " + HLPRelations.COL_EXAM_ID + ")";
-		query += " WHERE " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_LECTURE_ID + " = " + lecture.getID() + ";";	
+		query += " WHERE " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_LECTURE_ID + " = " + lecture.getID();	
 		query += " AND " + HLPRelations.COL_TASK_ID + " = 0";
 		query += " AND " + HLPRelations.COL_SRCTABLE + " = '" + HLPLectures.TABLE_NAME + "';";
 		
@@ -295,5 +299,31 @@ public class DBLLectures {
 		this.hlpExams.closeCon();
 		
 		return exams;
+	}
+	
+	public Resources getResourcesForLecture(Lecture lecture) {
+		Resources resources = new Resources();
+		
+		String query = "SELECT * FROM " + HLPResources.TABLE_NAME;
+		query += " LEFT JOIN " + HLPRelations.TABLE_NAME + " ON (" + HLPResources.TABLE_NAME + "." + HLPResources.COL_ID + " = " + HLPRelations.COL_EXAM_ID + ")";
+		query += " WHERE " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_LECTURE_ID + " = " + lecture.getID();
+		query += " AND " + HLPRelations.COL_SRCTABLE + " = '" + HLPLectures.TABLE_NAME + "';";
+		
+		Log.i(DBsettings.LOG_TAG_RESOURCES, query);
+		
+		Cursor cursor = this.hlpResources.openCon().rawQuery(query, null);
+		if(cursor != null) {
+			if(cursor.getCount() < 1) {
+				this.hlpResources.closeCon();
+        		return null;
+        	}
+			
+			resources.cursorToResourceList(cursor);
+		} else {
+        	Log.w(DBsettings.LOG_TAG_RESOURCES, "Cursor is NULL!!");        	
+        }
+		this.hlpResources.closeCon();
+		
+		return resources;
 	}
 }

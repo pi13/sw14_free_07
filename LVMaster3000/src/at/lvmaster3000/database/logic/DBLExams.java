@@ -210,24 +210,29 @@ public class DBLExams {
 	 * @param examId
 	 * @return
 	 */
-	public Resources getExamResources(long examId) {
+	public Resources getExamResources(Exam exam) {
 		Resources resources = new Resources();
 		
-		String query = "SELECT * FROM " + HLPResources.TABLE_NAME + " res ";
-		query += " INNER JOIN " + HLPRelations.TABLE_NAME + " rel ";
-		query += " ON res." + HLPResources.COL_ID + " = rel." + HLPRelations.COL_RES_ID;
-		query += " WHERE " + HLPRelations.COL_EXAM_ID + " = " + examId;
+		String query = "SELECT * FROM " + HLPResources.TABLE_NAME;
+		query += " LEFT JOIN " + HLPRelations.TABLE_NAME + "  ON (" + HLPResources.TABLE_NAME + "." + HLPResources.COL_ID + " = " + HLPRelations.COL_RES_ID + ")";
+		query += " WHERE " + HLPRelations.COL_EXAM_ID + " = " + exam.getId();
+		query += " AND " + HLPRelations.COL_SRCTABLE + " = '" + HLPExams.TABLE_NAME + "';";
 		
 		Log.i(DBsettings.LOG_TAG_TASKS, query);
 		
-//		Cursor cursor = this.hlpRelations.openCon().rawQuery(query, null);
-//		if(cursor != null) {                	
-//			resources.cursorToResourceList(cursor);        	
-//        } else {
-//        	Log.w(DBsettings.LOG_TAG_EXAMS, "Cursor is NULL!!");        	
-//        }
-//		
-//		this.hlpRelations.closeCon();
+		Cursor cursor = this.hlpExams.openCon().rawQuery(query, null);
+		if(cursor != null) {
+			if(cursor.getCount() < 1) {
+				this.hlpExams.closeCon();
+				return null;
+			}
+			
+			resources.cursorToResourceList(cursor);        	
+        } else {
+        	Log.w(DBsettings.LOG_TAG_EXAMS, "Cursor is NULL!!");        	
+        }
+		
+		this.hlpExams.closeCon();
 		
 		return resources;
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
+import android.util.Log;
 import at.lvmaster3000.database.lists.Tasks;
 import at.lvmaster3000.database.logic.DBLTasks;
 import at.lvmaster3000.database.objects.Task;
@@ -15,6 +16,8 @@ public class DBLTasksTest extends AndroidTestCase{
 	private int NR_TEST_OBJECTS = 0;
 	
 	private RenamingDelegatingContext testContext = null;
+	
+	public static final String LOG_TAG_TASKS_LOGIC_TEST = "TEST_TASKS_LOGIC";
 	
 	public void setUp(){
 		testContext = new RenamingDelegatingContext(getContext(), "test_");		
@@ -36,7 +39,9 @@ public class DBLTasksTest extends AndroidTestCase{
 		fillTestObjectsInDBL();
 		Tasks tasks = dblObjects.getTasks(0);
 		
-		assertEquals(NR_TEST_OBJECTS, tasks.nrOfObjects());
+		Log.w(LOG_TAG_TASKS_LOGIC_TEST, "size: " + tasks.getTasks().size());
+		
+		assertEquals(NR_TEST_OBJECTS, tasks.getTasks().size());
 	}
 	
 	private void fillTestObjectsInDBL(){
@@ -44,7 +49,8 @@ public class DBLTasksTest extends AndroidTestCase{
 			createTestObjects();
 		}
 		
-		for(Task task : this.testObjects){
+		for(Task task : this.testObjects) {
+			task.printTask();
 			this.dblObjects.addTask(task);
 		}
 	}
@@ -52,8 +58,11 @@ public class DBLTasksTest extends AndroidTestCase{
 	private void createTestObjects(){
 		Task o1 = new Task();
 		o1.setTitle("Titel T1");
+		o1.setComment("Comment T 1");
+		
 		Task o2 = new Task();
 		o2.setTitle("Title T2");
+		o2.setComment("Comment T2");
 		
 		this.testObjects = new ArrayList<Task>();
 	

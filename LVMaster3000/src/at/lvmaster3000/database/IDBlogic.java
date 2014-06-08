@@ -111,6 +111,15 @@ public class IDBlogic {
 	
 	/**
 	 * 
+	 * @param lecture
+	 * @return
+	 */
+	public Resources getResourcesForLecture(Lecture lecture) {
+		return this.lectures.getResourcesForLecture(lecture);
+	}
+	
+	/**
+	 * 
 	 * @param exam
 	 * @return
 	 */

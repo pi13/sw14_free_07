@@ -83,7 +83,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		navDrawerItems.add(new NavDrawerItem(navMenuItems[1], navMenuIcons.getResourceId(1, -1), true, dbLogic.getLectures(0).getLectures().size()));
 		navDrawerItems.add(new NavDrawerItem(navMenuItems[2], navMenuIcons.getResourceId(2, -1), true, dbLogic.getTasks(0).getTasks().size()));
 		navDrawerItems.add(new NavDrawerItem(navMenuItems[3], navMenuIcons.getResourceId(3, -1), true, dbLogic.getExams(0).getExam().size()));
-		navDrawerItems.add(new NavDrawerItem(navMenuItems[4], navMenuIcons.getResourceId(4, -1), true, dbLogic.getResources(0).getResource().size()));
+		navDrawerItems.add(new NavDrawerItem(navMenuItems[4], navMenuIcons.getResourceId(4, -1), true, dbLogic.getResources(0).getResources().size()));
 		navDrawerItems.add(new NavDrawerItem(navMenuItems[5], navMenuIcons.getResourceId(5, -1)));
 
 		navMenuIcons.recycle();
@@ -202,7 +202,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		case 4:
 	        args = new Bundle();
 	        args.putInt(getResources().getString(R.string.tasks), position);
-			fragment = ResourcesFragment.newInstance(context, dbLogic, new ResourceListAdapter(context, dbLogic.getResources(0).getResource()), args);
+			fragment = ResourcesFragment.newInstance(context, dbLogic, new ResourceListAdapter(context, dbLogic.getResources(0).getResources()), args);
 			break;
 			
 		case 5:

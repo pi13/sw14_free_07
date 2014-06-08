@@ -52,8 +52,11 @@ public class DDTestsetA {
 		this.hlplectures.openCon();
 		this.hlplectures.resetTable();          
         long lid1 = hlplectures.addLecture("701.123", "Test LV 1", "Some Comment...", "VO", 1, 1);
+        this.lecturecnt += 1;
         long lid2 = hlplectures.addLecture("702.123", "Test LV 2", "Some Comment...", "UE", 0, 0);
+        this.lecturecnt += 1;
         long lid3 = hlplectures.addLecture("703.123", "Test LV 3", "Some Comment...", "SE", 0, 1);
+        this.lecturecnt += 1;
         long lid4 = hlplectures.addLecture("704.123", "Test LV 4", "Some Comment...", "KU", 1, 0);
         this.lecturecnt += 1;
 //        this.hlplectures.allEntriesToLog();
