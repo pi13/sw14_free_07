@@ -2,7 +2,7 @@ package at.lvmaster3000.gui.fragments;
 
 import android.content.Context;
 import at.lvmaster3000.database.IDBlogic;
-import at.lvmaster3000.gui.adapters.TaskListAdapter;
+import at.lvmaster3000.database.demodata.DDTestsetA;
 
 public class TestFragment extends UIFragmentBase {
 
@@ -14,6 +14,9 @@ public class TestFragment extends UIFragmentBase {
 		TestFragment base = new TestFragment();
 		base.context = context;		
 		base.dbLogic = dbLogic;
+		
+		DDTestsetA TestA = new DDTestsetA(context);
+		TestA.FillDb();
 
 		return base;
 	}
