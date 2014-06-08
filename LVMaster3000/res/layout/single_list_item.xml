@@ -16,9 +16,10 @@
                  
     <!-- Rightend Arrow -->    
      <ImageView android:layout_width="wrap_content"
-         android:contentDescription="@string/desc_list_item_icon"
+        android:id="@+id/delete_list_item_btn"
+        android:contentDescription="@string/desc_list_item_icon"
      	android:layout_height="wrap_content"
-     	android:src="@drawable/ic_action_next_item"
+     	android:src="@drawable/ic_action_delete"
      	android:layout_alignParentRight="true"
      	android:layout_centerVertical="true"/>
 </RelativeLayout>

@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import at.lvmaster3000.R;
@@ -50,6 +51,7 @@ public class LecturesFragment extends UIFragmentBase implements OnItemClickListe
 		list.setOnItemClickListener(this);
 		Button addButton =(Button) root.findViewById(R.id.add_btn);
 		addButton.setOnClickListener(this);
+		ImageView imgDelete = (ImageView)root.findViewById(R.id.delete_list_item_btn);
 		return root;
 	}
 
