@@ -91,11 +91,6 @@ public class DBLTasks {
 		
         Cursor cursor = this.hlpTasks.openCon().rawQuery(query, null);
         if(cursor != null) {       
-        	if(cursor.getCount() < 1) {
-        		this.hlpTasks.closeCon();
-        		return null;
-        	}
-        	
         	tasks.cursorToTaskList(cursor);    	
         } else {
         	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	

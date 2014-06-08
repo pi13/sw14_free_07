@@ -2,10 +2,8 @@ package at.lvmaster3000.database.logic.test;
 
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
-import at.lvmaster3000.database.demodata.DDTestsetA;
 import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.logic.DBLLectures;
-import at.lvmaster3000.database.logic.DBLResources;
 import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Lecture;
@@ -15,7 +13,6 @@ import at.lvmaster3000.database.objects.Task;
 public class DBLLecturesTest extends AndroidTestCase{
 	
 	private DBLLectures dblLectures;
-	private DBLResources dblResources;
 	
 	private RenamingDelegatingContext context;
 	
@@ -26,8 +23,6 @@ public class DBLLecturesTest extends AndroidTestCase{
 		
 		this.dblLectures = new DBLLectures(this.context);
 		this.dblLectures.resetTablesInvolved();
-		
-		this.dblResources = new DBLResources(this.context);
 	}
 	
 	public void testAddNewLecture(){

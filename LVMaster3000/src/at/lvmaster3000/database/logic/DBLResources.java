@@ -89,11 +89,6 @@ public class DBLResources {
 		
         Cursor cursor = this.hlpResources.openCon().rawQuery(query, null);
         if(cursor != null) { 
-        	if(cursor.getCount() < 1) {
-        		this.hlpResources.closeCon();
-        		return null;
-        	}
-        	
         	resources.cursorToResourceList(cursor);        	
         } else {
         	Log.w(DBsettings.LOG_TAG_RESOURCES, "Cursor is NULL!!");        	

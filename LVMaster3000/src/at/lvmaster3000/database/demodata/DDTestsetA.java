@@ -127,8 +127,8 @@ public class DDTestsetA {
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, eid2, 0, 0, 0);
         this.hlprelations.addRelation(HLPExams.TABLE_NAME, 0, eid3, 0, 0, res1);
         this.hlprelations.addRelation(HLPExams.TABLE_NAME, 0, eid3, 0, 0, res2);
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid4, 0, 0, 0, res3);
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, 0, eid3, 0, 0, res4);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid3, 0, 0, 0, res3);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid4, 0, 0, 0, res4);
 //        this.hlprelations.allEntriesToLog();
         this.hlprelations.closeCon();
 	}
