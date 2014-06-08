@@ -15,10 +15,12 @@ import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.lists.Lectures;
 import at.lvmaster3000.database.lists.Resources;
 import at.lvmaster3000.database.lists.Tasks;
+import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.database.objects.Relation;
 import at.lvmaster3000.database.objects.Resource;
+import at.lvmaster3000.database.objects.Task;
 import at.lvmaster3000.settings.DBsettings;
 
 public class DBLLectures {
@@ -32,6 +34,8 @@ public class DBLLectures {
 	private DBLRelations dblRelations;
 	private DBLResources dblResources;
 	private DBLExams dblExams;
+	private DBLTasks dblTasks;
+	private DBLDates dblDates;
 	
 	/**
 	 * 
@@ -47,6 +51,8 @@ public class DBLLectures {
 		this.dblRelations = new DBLRelations(context);
 		this.dblResources = new DBLResources(context);
 		this.dblExams = new DBLExams(context);
+		this.dblTasks = new DBLTasks(context);
+		this.dblDates = new DBLDates(context);
 	}
 	
 	/**
@@ -65,6 +71,9 @@ public class DBLLectures {
 		this.resetTable();
 		this.dblRelations.resetTable();
 		this.dblResources.resetTable();
+		this.dblExams.resetTable();
+		this.dblDates.resetTable();
+		this.dblTasks.resetTable();
 	}
 	
 	/**
@@ -99,27 +108,52 @@ public class DBLLectures {
 	
 	/**
 	 * 
-	 * @param resource
+	 * @param task
 	 * @param lecture
-	 * @return 
+	 * @return
 	 */
-	public long addResourceToLecture(Resource resource, Lecture lecture) {
-		long rid = 0;
+	public long addTaskToLecture(Task task, Lecture lecture) {
+		long tid = 0;
 		long lid = 0;
 		
-		if(resource.getId() > 0) {
-			rid = resource.getId();
+		if(task.getId() > 0) {
+			tid = task.getId();
 		} else {
-			rid = this.dblResources.addResource(resource);
+			tid = this.dblTasks.addTask(task);
 		}
 		
 		if(lecture.getID() > 0) {
 			lid = lecture.getID();
 		} else {
 			lid = this.addLecture(lecture);
-		}		
+		}
 		
-		return this.dblRelations.addRelation(new Relation(0, HLPLectures.TABLE_NAME, lid, 0, 0, 0, rid));
+		return this.dblRelations.addRelation(new Relation(0, HLPLectures.TABLE_NAME, lid, 0, tid, 0, 0));
+	}
+	
+	/**
+	 * 
+	 * @param date
+	 * @param lecture
+	 * @return
+	 */
+	public long addDateToLecture(Date date, Lecture lecture) {
+		long did = 0;
+		long lid = 0;
+		
+		if(date.getID() > 0) {
+			did = date.getID();
+		} else {
+			did = this.dblDates.addDate(date);
+		}
+		
+		if(lecture.getID() > 0) {
+			lid = lecture.getID();
+		} else {
+			lid = this.addLecture(lecture);
+		}
+		
+		return this.dblRelations.addRelation(new Relation(0, HLPLectures.TABLE_NAME, lid, 0, 0, did, 0));
 	}
 	
 	/**
@@ -145,6 +179,31 @@ public class DBLLectures {
 		}
 		
 		return this.dblRelations.addRelation(new Relation(0, HLPLectures.TABLE_NAME, lid, eid, 0, 0, 0));
+	}
+	
+	/**
+	 * 
+	 * @param resource
+	 * @param lecture
+	 * @return 
+	 */
+	public long addResourceToLecture(Resource resource, Lecture lecture) {
+		long rid = 0;
+		long lid = 0;
+		
+		if(resource.getId() > 0) {
+			rid = resource.getId();
+		} else {
+			rid = this.dblResources.addResource(resource);
+		}
+		
+		if(lecture.getID() > 0) {
+			lid = lecture.getID();
+		} else {
+			lid = this.addLecture(lecture);
+		}		
+		
+		return this.dblRelations.addRelation(new Relation(0, HLPLectures.TABLE_NAME, lid, 0, 0, 0, rid));
 	}
 	
 	/**
