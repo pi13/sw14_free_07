@@ -3,7 +3,6 @@ package at.lvmaster3000.database.logic;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
-import at.lvmaster3000.database.helper.HLPDates;
 import at.lvmaster3000.database.helper.HLPRelations;
 import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Exam;
@@ -16,6 +15,12 @@ public class DBLRelations {
 	
 	public DBLRelations(Context context) {
 		this.hlpRelations = new HLPRelations(context);
+	}
+	
+	public void resetTable() {
+		this.hlpRelations.openCon();
+		this.hlpRelations.resetTable();
+		this.hlpRelations.closeCon();
 	}
 	
 	public long addRelation(Relation relation) {

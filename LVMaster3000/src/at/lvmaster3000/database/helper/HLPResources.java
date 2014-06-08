@@ -38,7 +38,7 @@ public class HLPResources extends SQLiteOpenHelper {
 	 */
 	public HLPResources(Context context) {
 		super(context, DBsettings.DATABASE_NAME, null, DBsettings.DATABASE_VERSION);
-		Log.i(logtag, "Resources helper created");
+		Log.i(logtag, "constructor: Resources helper created");
 	}
 	
 	/**
@@ -58,12 +58,9 @@ public class HLPResources extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		Log.i(logtag,
-				"Upgrading database from version " + oldVersion + " to "
-						+ newVersion + ", which will destroy all old data");
-		
+		Log.i(logtag, "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");		
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-		onCreate(db);		
+		this.onCreate(db);		
 	}
 	
 	/**
@@ -85,11 +82,19 @@ public class HLPResources extends SQLiteOpenHelper {
 	}
 	
 	/**
+	 * 
+	 */
+	public void deleteTable() {
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+		Log.i(logtag, "Table '" + TABLE_NAME + "' deleted");
+	}
+	
+	/**
 	 * Function resets resources table and recreates it
 	 */
 	public void resetTable() {		
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-		db.execSQL(RESOURCES_CREATE);
+		this.deleteTable();
+		this.onCreate(db);
 		Log.i(logtag, "Table '" + TABLE_NAME + "' reseted");
 	}
 	

@@ -23,7 +23,7 @@ import at.lvmaster3000.settings.DBsettings;
 public class DBLLectures {
 
 	private HLPLectures hlpLectures;
-	private HLPTasks hlptasks;
+	private HLPTasks hlpTasks;
 	private HLPDates hlpDates;
 	private HLPExams hlpExams;
 	private HLPResources hlpResources;
@@ -37,12 +37,31 @@ public class DBLLectures {
 	 */
 	public DBLLectures(Context context) {
 		this.hlpLectures = new HLPLectures(context);
-		this.hlptasks = new HLPTasks(context);
+		this.hlpTasks = new HLPTasks(context);
 		this.hlpDates = new HLPDates(context);
-		this.hlpExams = new HLPExams(context);
+		this.hlpExams = new HLPExams(context);		
 		this.hlpResources = new HLPResources(context);
+		
 		this.dblRelations = new DBLRelations(context);
 		this.dblResources = new DBLResources(context);
+	}
+	
+	/**
+	 * 
+	 */
+	public void resetTable() {
+		this.hlpLectures.openCon();
+		this.hlpLectures.resetTable();
+		this.hlpLectures.closeCon();
+	}
+	
+	/**
+	 * 
+	 */
+	public void resetTablesInvolved() {
+		this.resetTable();
+		this.dblRelations.resetTable();
+		this.dblResources.resetTable();
 	}
 	
 	/**
@@ -95,7 +114,6 @@ public class DBLLectures {
 			lid = lecture.getID();
 		} else {
 			lid = this.addLecture(lecture);
-			lecture.setID(lid);
 		}		
 		
 		return this.dblRelations.addRelation(new Relation(0, HLPLectures.TABLE_NAME, lid, 0, 0, 0, rid));
@@ -257,14 +275,14 @@ public class DBLLectures {
 		
 		Log.i(DBsettings.LOG_TAG_TASKS, query);
 		
-		Cursor cursor = this.hlptasks.openCon().rawQuery(query, null);
+		Cursor cursor = this.hlpTasks.openCon().rawQuery(query, null);
 		if(cursor != null) {
 			tasks.cursorToTaskList(cursor);
 		} else {
         	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
         }
 		
-		this.hlptasks.closeCon();
+		this.hlpTasks.closeCon();
 		
 		return tasks;
 	}
