@@ -161,7 +161,7 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 	}
 	private void addGroups(IDBlogic dbLogic) {
 		ExamGroup exam = new ExamGroup(getResources().getString(R.string.exams));
-		exam.setChildren(dbLogic.getExamsForLecture(lecture).getExam());
+		exam.setChildren(dbLogic.getExamsForLecture(lecture).getExams());
 		examsGroup.append(0, exam);
 
 		TaskGroup task = new TaskGroup(getResources().getString(R.string.tasks));

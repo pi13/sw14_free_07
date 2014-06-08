@@ -17,7 +17,7 @@ public class Exams {
 		this.exams.add(exam);		
 	}
 	
-	public List<Exam> getExam() {
+	public List<Exam> getExams() {
 		return this.exams;
 	}
 	

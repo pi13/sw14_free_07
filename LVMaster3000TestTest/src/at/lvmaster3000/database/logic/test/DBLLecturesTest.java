@@ -112,6 +112,6 @@ public class DBLLecturesTest extends AndroidTestCase{
 		
 		Exams exams = this.dblLectures.getExamsForLecture(lecture);
 		
-		assertSame(1, exams.getExam().size());
+		assertSame(1, exams.getExams().size());
 	}
 }

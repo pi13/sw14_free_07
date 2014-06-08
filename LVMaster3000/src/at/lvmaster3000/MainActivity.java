@@ -85,7 +85,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		navDrawerItems.add(new NavDrawerItem(navMenuItems[0], navMenuIcons.getResourceId(0, -1)));
 		navDrawerItems.add(new NavDrawerItem(navMenuItems[1], navMenuIcons.getResourceId(1, -1), true, dbLogic.getLectures(0).getLectures().size()));
 		navDrawerItems.add(new NavDrawerItem(navMenuItems[2], navMenuIcons.getResourceId(2, -1), true, dbLogic.getTasks(0).getTasks().size()));
-		navDrawerItems.add(new NavDrawerItem(navMenuItems[3], navMenuIcons.getResourceId(3, -1), true, dbLogic.getExams(0).getExam().size()));
+		navDrawerItems.add(new NavDrawerItem(navMenuItems[3], navMenuIcons.getResourceId(3, -1), true, dbLogic.getExams(0).getExams().size()));
 		navDrawerItems.add(new NavDrawerItem(navMenuItems[4], navMenuIcons.getResourceId(4, -1), true, dbLogic.getResources(0).getResources().size()));
 		navDrawerItems.add(new NavDrawerItem(navMenuItems[5], navMenuIcons.getResourceId(5, -1)));
 

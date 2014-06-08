@@ -110,7 +110,7 @@ public class DBLExamsTest extends AndroidTestCase{
 	    
 		String editComment = "edited comment";
 		
-		long id = dblExams.getExams(limit).getExam().get(0).getId();
+		long id = dblExams.getExams(limit).getExams().get(0).getId();
 		
 		Exam testExam = dblExams.getExamById(id);
 		
