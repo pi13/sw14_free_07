@@ -171,8 +171,11 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// if nav drawer is opened, hide the action items
-		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-		menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+		
+		//TODO: need 2 fix
+//		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+//		menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+		
 		return super.onPrepareOptionsMenu(menu);
 	}
 
