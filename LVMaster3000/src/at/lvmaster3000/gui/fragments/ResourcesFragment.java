@@ -2,6 +2,7 @@ package at.lvmaster3000.gui.fragments;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -16,7 +17,9 @@ import android.widget.ListView;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.database.objects.Resource;
+import at.lvmaster3000.database.objects.Task;
 import at.lvmaster3000.gui.adapters.ResourceListAdapter;
+import at.lvmaster3000.interfaces.IDeleteItems;
 
 public class ResourcesFragment extends UIFragmentBase implements OnItemClickListener, OnClickListener {
 	
@@ -25,6 +28,7 @@ public class ResourcesFragment extends UIFragmentBase implements OnItemClickList
 	private List<Resource> resources;
 	private Context context;
 	private IDBlogic dbLogic;
+	private IDeleteItems deleteResourceListener;
 	
 	public static ResourcesFragment newInstance(Context context, IDBlogic dbLogic) 
 	{
@@ -32,10 +36,28 @@ public class ResourcesFragment extends UIFragmentBase implements OnItemClickList
 		base.context = context;		
 		base.dbLogic = dbLogic;
 		base.resources = dbLogic.getResources(0).getResources();
-		base.adapter = new ResourceListAdapter(context, base.resources);
+		base.adapter = new ResourceListAdapter(context, base.resources, base);
 
 
 		return base;
+	}
+	
+	
+	// Override the Fragment.onAttach() method to instantiate the
+	// NoticeDialogListener
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		// Verify that the host activity implements the callback interface
+		try {
+			// Instantiate the NoticeDialogListener so we can send events to the
+			// host
+			deleteResourceListener = (IDeleteItems) activity;
+		} catch (ClassCastException e) {
+			// The activity doesn't implement the interface, throw exception
+			throw new ClassCastException(activity.toString()
+					+ " must implement NoticeDialogListener");
+		}
 	}
 	
 	@Override
@@ -63,6 +85,9 @@ public class ResourcesFragment extends UIFragmentBase implements OnItemClickList
 		case R.id.add_btn:
 			showDialog();
 			break;
+		case R.id.delete_list_item_btn:
+			deleteResourceListener.DeleteResourceItem((Resource)adapter.getItem((Integer)v.getTag()));		
+			break;
 		}
 	}
 	
@@ -70,6 +95,13 @@ public class ResourcesFragment extends UIFragmentBase implements OnItemClickList
 	{
 		resources.add(resource);
 		dbLogic.addResource(resource);
+		adapter.notifyDataSetChanged();
+	}
+	
+	public void deleteTask(Resource resource)
+	{
+		resources.remove(resource);
+		dbLogic.deleteResource(resource);
 		adapter.notifyDataSetChanged();
 	}
 	
