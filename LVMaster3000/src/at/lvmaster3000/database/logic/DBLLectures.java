@@ -15,6 +15,7 @@ import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.lists.Lectures;
 import at.lvmaster3000.database.lists.Resources;
 import at.lvmaster3000.database.lists.Tasks;
+import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.database.objects.Relation;
 import at.lvmaster3000.database.objects.Resource;
@@ -30,6 +31,7 @@ public class DBLLectures {
 	
 	private DBLRelations dblRelations;
 	private DBLResources dblResources;
+	private DBLExams dblExams;
 	
 	/**
 	 * 
@@ -44,6 +46,7 @@ public class DBLLectures {
 		
 		this.dblRelations = new DBLRelations(context);
 		this.dblResources = new DBLResources(context);
+		this.dblExams = new DBLExams(context);
 	}
 	
 	/**
@@ -107,7 +110,7 @@ public class DBLLectures {
 		if(resource.getId() > 0) {
 			rid = resource.getId();
 		} else {
-			this.dblResources.addResource(resource);
+			rid = this.dblResources.addResource(resource);
 		}
 		
 		if(lecture.getID() > 0) {
@@ -117,6 +120,31 @@ public class DBLLectures {
 		}		
 		
 		return this.dblRelations.addRelation(new Relation(0, HLPLectures.TABLE_NAME, lid, 0, 0, 0, rid));
+	}
+	
+	/**
+	 * 
+	 * @param exam
+	 * @param lecture
+	 * @return
+	 */
+	public long addExamToLecture(Exam exam, Lecture lecture) {
+		long eid = 0;
+		long lid = 0;
+		
+		if(exam.getId() > 0) {
+			eid = exam.getId();
+		} else {
+			eid = this.dblExams.addExam(exam);
+		}
+		
+		if(lecture.getID() > 0) {
+			lid = lecture.getID();
+		} else {
+			lid = this.addLecture(lecture);
+		}
+		
+		return this.dblRelations.addRelation(new Relation(0, HLPLectures.TABLE_NAME, lid, eid, 0, 0, 0));
 	}
 	
 	/**
@@ -339,7 +367,7 @@ public class DBLLectures {
 		Resources resources = new Resources();
 		
 		String query = "SELECT * FROM " + HLPResources.TABLE_NAME;
-		query += " LEFT JOIN " + HLPRelations.TABLE_NAME + " ON (" + HLPResources.TABLE_NAME + "." + HLPResources.COL_ID + " = " + HLPRelations.COL_EXAM_ID + ")";
+		query += " LEFT JOIN " + HLPRelations.TABLE_NAME + " ON (" + HLPResources.TABLE_NAME + "." + HLPResources.COL_ID + " = " + HLPRelations.COL_RES_ID + ")";
 		query += " WHERE " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_LECTURE_ID + " = " + lecture.getID();
 		query += " AND " + HLPRelations.COL_SRCTABLE + " = '" + HLPLectures.TABLE_NAME + "';";
 		

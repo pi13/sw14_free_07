@@ -50,9 +50,8 @@ public class DBLExams {
 	 * @return
 	 */
 	public long addExam(Exam exam) {
-		hlpExams.openCon();
-		long id = this.hlpExams.addExam(exam.getTitle(), exam.getComment(), exam.getLecture_id());
-		hlpExams.closeCon();
+		long id = this.addExam(exam.getTitle(), exam.getComment(), exam.getLecture_id());
+		exam.setId(id);
 		return id;
 	}
 
@@ -64,9 +63,9 @@ public class DBLExams {
 	 * @return
 	 */
 	public long addExam(String title, String comment, long lectureId){
-		hlpExams.openCon();
+		this.hlpExams.openCon();
 		long id = this.hlpExams.addExam(title, comment, lectureId);
-		hlpExams.closeCon();
+		this.hlpExams.closeCon();
 		return id;
 	}
 	
@@ -101,9 +100,9 @@ public class DBLExams {
 	 * @return
 	 */
 	public int deleteExam(long id) {
-		hlpExams.openCon();
+		this.hlpExams.openCon();
 		int res = hlpExams.deleteExam(id);
-		hlpExams.closeCon();
+		this.hlpExams.closeCon();
 		return res;
 	}
 	

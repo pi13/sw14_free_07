@@ -125,7 +125,7 @@ public class HLPRelations extends SQLiteOpenHelper {
 		
 		long insertId = db.insert(TABLE_NAME, null, values);
 		
-		Log.i(logtag, "New entry added. ID: "+ insertId);
+		Log.i(logtag, "New entry added. ID: " + insertId);
 		
 		return insertId;
 	}

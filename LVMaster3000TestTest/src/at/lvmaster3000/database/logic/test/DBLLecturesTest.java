@@ -2,10 +2,11 @@ package at.lvmaster3000.database.logic.test;
 
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
-import android.util.Log;
 import at.lvmaster3000.database.demodata.DDTestsetA;
+import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.logic.DBLLectures;
 import at.lvmaster3000.database.logic.DBLResources;
+import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.database.objects.Resource;
 
@@ -85,14 +86,32 @@ public class DBLLecturesTest extends AndroidTestCase{
 	public void testGetResourcesForLecture() {
 		Lecture lecture = new Lecture(0, "705.001", "LV with res test", "some res added", "LV", 0, 0);
 		this.dblLectures.addLecture(lecture);
+						
+		this.dblLectures.addResourceToLecture(new Resource("Some res 1"), lecture);
+		this.dblLectures.addResourceToLecture(new Resource("Some res 2"), lecture);
 		
-		Resource resource = new Resource("Some res");		
-		this.dblResources.addResource(resource);
-				
-		long rid = this.dblLectures.addResourceToLecture(resource, lecture);
+		int cnt = dblLectures.getResourcesForLecture(lecture).getResources().size();
 		
-		Log.i(LOG_TAG_LECTURES_LOGIC_TEST, "rid: " + rid);
+		assertSame(2, cnt);
+	}
+	
+	public void testAddLectureWithExam() {
+		Lecture lecture = new Lecture(0, "705.001", "LV with exam", "some text ...", "LV", 0, 0);
+		this.dblLectures.addLecture(lecture);
 		
-		assertNotSame(-1L, rid);
+		long eid = this.dblLectures.addExamToLecture(new Exam(0, "Ex1", "Ex1 comment", 0), lecture);
+		
+		assertNotSame(-1L, eid);
+	}
+	
+	public void testGetExamsForLecture() {
+		Lecture lecture = new Lecture(0, "705.001", "LV with exam", "some text ...", "LV", 0, 0);
+		this.dblLectures.addLecture(lecture);
+		
+		this.dblLectures.addExamToLecture(new Exam(0, "Ex1", "Ex1 comment", 0), lecture);
+		
+		Exams exams = this.dblLectures.getExamsForLecture(lecture);
+		
+		assertSame(1, exams.getExam().size());
 	}
 }
