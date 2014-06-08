@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import at.lvmaster3000.database.demodata.DDTestsetA;
 import at.lvmaster3000.database.lists.Dates;
 import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.lists.Lectures;
@@ -36,7 +37,7 @@ public class IDBlogic {
 	 */
 	public IDBlogic(Context context) {
 //		DDTestsetA TestA = new DDTestsetA(context);
-//      TestA.FillDb();
+//		TestA.FillDb();
 		
 		this.lectures = new DBLLectures(context);
 		this.tasks = new DBLTasks(context);

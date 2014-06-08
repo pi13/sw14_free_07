@@ -24,7 +24,11 @@ public class DDTestsetA {
 	private HLPCoworkers hlpcoworkers;
 	private HLPDates hlpdates;
 	private HLPRelations hlprelations;
+	
+	private DBLLectures dblLectures;
+	
 	private Context context;
+	
 	private int lecturecnt;
 	private int taskscnt;
 	private int datescnt;
@@ -39,7 +43,11 @@ public class DDTestsetA {
 		this.hlpcoworkers = new HLPCoworkers(context);
 		this.hlpdates = new HLPDates(context);
 		this.hlprelations = new HLPRelations(context);
+		
+		this.dblLectures = new DBLLectures(context);
+		
 		this.context = context;
+		
 		this.lecturecnt = 0;
 		this.taskscnt = 0;
 		this.datescnt = 0;
@@ -128,7 +136,7 @@ public class DDTestsetA {
         this.hlprelations.addRelation(HLPExams.TABLE_NAME, 0, eid3, 0, 0, res1);
         this.hlprelations.addRelation(HLPExams.TABLE_NAME, 0, eid3, 0, 0, res2);
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid3, 0, 0, 0, res3);
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid4, 0, 0, 0, res4);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, 0, 0, 0, res4);
 //        this.hlprelations.allEntriesToLog();
         this.hlprelations.closeCon();
 	}
@@ -153,13 +161,14 @@ public class DDTestsetA {
 		return this.resourcecnt;
 	}
 	
-	public void someTest() {
-		DBLLectures ll = new DBLLectures(this.context);
-		Lecture lecture = ll.getLectureByNumber("701.123");
-//		l.getLectures(0).printLectureList();
+	public void getStuffForLecture() {
+		Lecture lecture = this.dblLectures.getLectureByNumber("701.123");
+		lecture.printLecture();
 		
-		ll.getTasksForLecture(lecture).printTaskList();
-		ll.getDatesForLecture(lecture).printDateList();
+		this.dblLectures.getExamsForLecture(lecture).printExamList();
+		this.dblLectures.getTasksForLecture(lecture).printTaskList();
+		this.dblLectures.getDatesForLecture(lecture).printDateList();
+		this.dblLectures.getResourcesForLecture(lecture).printResourceList();
 	}
 	
 }

@@ -1,11 +1,8 @@
 package at.lvmaster3000.gui.fragments;
 
-import java.util.zip.Inflater;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.IDBlogic;
+import at.lvmaster3000.database.demodata.DDTestsetA;
 import at.lvmaster3000.gui.adapters.NavDrawerListAdapter;
 
 public class TestFragment extends UIFragmentBase {
@@ -30,8 +28,11 @@ public class TestFragment extends UIFragmentBase {
 		base.dbLogic = dbLogic;
 		base.activity = activity;
 		
-//		DDTestsetA TestA = new DDTestsetA(context);
-//		TestA.FillDb();
+		DDTestsetA TestA = new DDTestsetA(context);
+		TestA.FillDb();
+		TestA.getStuffForLecture();
+		
+		
 //		
 //		Log.e("TEST_", "adapter count: " + adapter.getCount());
 //		
