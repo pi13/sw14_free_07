@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="at.lvmaster3000.MainActivity" >
+    
+    <item 
+	    android:id="@+id/action_add"
+	    android:orderInCategory="101"
+	    android:title="@string/action_add"
+	    android:icon="@drawable/ic_action_new"
+	    android:showAsAction="never"/>
+    
+    <item 
+	    android:id="@+id/action_search"
+	    android:orderInCategory="102"
+	    android:title="Search"
+	    android:icon="@drawable/ic_action_search"
+	    android:showAsAction="ifRoom"/>
+
+</menu>
