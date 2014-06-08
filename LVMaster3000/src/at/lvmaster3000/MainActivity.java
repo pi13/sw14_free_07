@@ -203,10 +203,8 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 			break;
 			
 		case 5:
-			fragment = new TestFragment();
-	        args = new Bundle();
-	        args.putInt(getResources().getString(R.string.test), position);
-	        fragment.setArguments(args);
+			fragment =  TestFragment.newInstance(context, dbLogic);
+			showFragment(fragment, getResources().getString(R.string.test), position);
 			break;	
 			
 		default:
