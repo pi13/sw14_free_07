@@ -6,9 +6,11 @@ import at.lvmaster3000.database.demodata.DDTestsetA;
 import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.logic.DBLLectures;
 import at.lvmaster3000.database.logic.DBLResources;
+import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.database.objects.Resource;
+import at.lvmaster3000.database.objects.Task;
 
 public class DBLLecturesTest extends AndroidTestCase{
 	
@@ -55,16 +57,6 @@ public class DBLLecturesTest extends AndroidTestCase{
 		Lecture lecture = this.dblLectures.getLectureByNumber(number);
 		
 		assertEquals(lecture.getNumber(), number);
-	}
-
-	public void testGetTasksForLecture(){
-		DDTestsetA testset = new DDTestsetA(this.context);
-		testset.FillDb();		
-		
-		Lecture l = this.dblLectures.getLectures(1).getLectures().get(0);
-		int cnt = this.dblLectures.getTasksForLecture(l).getTasks().size();
-		
-		assertEquals(cnt, testset.getTasksCnt());
 	}
 	
 	public void testGetAllLectures(){
@@ -113,5 +105,46 @@ public class DBLLecturesTest extends AndroidTestCase{
 		Exams exams = this.dblLectures.getExamsForLecture(lecture);
 		
 		assertSame(1, exams.getExams().size());
+	}
+	
+	public void testAddLectureWithTaks() {
+		Lecture lecture = new Lecture(0, "705.001", "LV with exam", "some text ...", "LV", 0, 0);
+		this.dblLectures.addLecture(lecture);
+		
+		long tid = this.dblLectures.addTaskToLecture(new Task(0, "T1", "T1 comment", null), lecture);
+		
+		assertNotSame(-1L, tid);
+	}
+	
+	public void testGetTasksForLecture() {
+		Lecture lecture = new Lecture(0, "705.001", "LV with exam", "some text ...", "LV", 0, 0);
+		this.dblLectures.addLecture(lecture);
+		
+		this.dblLectures.addTaskToLecture(new Task(0, "T1", "T1 comment", null), lecture);
+		this.dblLectures.addTaskToLecture(new Task(0, "T2", "T2 comment", null), lecture);
+		this.dblLectures.addTaskToLecture(new Task(0, "T3", "T3 comment", null), lecture);
+		
+		assertSame(3, this.dblLectures.getTasksForLecture(lecture).getTasks().size());
+	}
+	
+	public void testAddLectureWithDate() {
+		Lecture lecture = new Lecture(0, "705.001", "LV with exam", "some text ...", "LV", 0, 0);
+		this.dblLectures.addLecture(lecture);
+		
+		long unixTime = System.currentTimeMillis() / 1000L;
+		long did = this.dblLectures.addDateToLecture(new Date(0, unixTime, "i13", "none", "Date comment"), lecture);
+		
+		assertNotSame(-1L, did);
+	}
+	
+	public void testGetDatesForLecture() {
+		Lecture lecture = new Lecture(0, "705.001", "LV with exam", "some text ...", "LV", 0, 0);
+		this.dblLectures.addLecture(lecture);
+		
+		long unixTime = System.currentTimeMillis() / 1000L;
+		this.dblLectures.addDateToLecture(new Date(0, unixTime, "i13", "none", "Date comment"), lecture);
+		this.dblLectures.addDateToLecture(new Date(0, unixTime + 3600, "i13", "none", "Date comment"), lecture);
+		
+		assertSame(2, this.dblLectures.getDatesForLecture(lecture).getDates().size());
 	}
 }

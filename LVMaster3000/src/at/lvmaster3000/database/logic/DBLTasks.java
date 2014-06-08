@@ -24,6 +24,12 @@ public class DBLTasks {
 		this.dblDates = new DBLDates(context);
 	}
 	
+	public void resetTable() {
+		this.hlpTasks.openCon();
+		this.hlpTasks.resetTable();
+		this.hlpTasks.closeCon();
+	}
+	
 	/**
 	 * 
 	 * @param title
@@ -43,7 +49,10 @@ public class DBLTasks {
 	 * @return
 	 */
 	public long addTask(Task task) {
-		return this.addTask(task.getTitle(), task.getComment());
+		long tid = this.addTask(task.getTitle(), task.getComment());
+		task.setId(tid);
+		
+		return tid;
 	}
 	
 	/**

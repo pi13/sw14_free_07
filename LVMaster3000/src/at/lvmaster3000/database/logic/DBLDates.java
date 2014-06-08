@@ -19,6 +19,12 @@ public class DBLDates {
 		this.hlpDates = new HLPDates(context);
 	}
 	
+	public void resetTable() {
+		this.hlpDates.openCon();
+		this.hlpDates.resetTable();
+		this.hlpDates.closeCon();
+	}
+	
 	public long addDate(long timestamp, String location, String type, String comment) {
 		this.hlpDates.openCon();
 		long id = this.hlpDates.addDate(timestamp, location, type, comment);

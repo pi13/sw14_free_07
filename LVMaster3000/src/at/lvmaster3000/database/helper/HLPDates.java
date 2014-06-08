@@ -89,12 +89,17 @@ public class HLPDates extends SQLiteOpenHelper {
 		db.close();
 	}
 	
+	public void deleteTable() {
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+		Log.i(logtag, "Table '" + TABLE_NAME + "' deleted");
+	}
+	
 	/**
 	 * Function resets table and recreates it
 	 */
 	public void resetTable() {		
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-		db.execSQL(DATES_CREATE);
+		this.deleteTable();
+		this.onCreate(db);
 		Log.i(logtag, "Table '" + TABLE_NAME + "' reseted");
 	}
 	

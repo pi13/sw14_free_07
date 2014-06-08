@@ -43,6 +43,12 @@ public class DBLExams {
 		this.dblRelations = new DBLRelations(context);
 		this.dblDates = new DBLDates(context);
 	}
+	
+	public void resetTable() {
+		this.hlpExams.openCon();
+		this.hlpExams.resetTable();
+		this.hlpExams.closeCon();
+	}
 
 	/**
 	 * 
