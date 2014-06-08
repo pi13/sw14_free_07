@@ -89,7 +89,6 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		navMenuIcons.recycle();
 
 		mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
-
 		adapter = new NavDrawerListAdapter(getApplicationContext(),	navDrawerItems);
 		mDrawerList.setAdapter(adapter);
 
@@ -181,28 +180,23 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 			break;
 			
 		case 1:
-	        args = new Bundle();
-	        args.putInt(getResources().getString(R.string.tasks), position);
-			fragment = LecturesFragment.newInstance(context, dbLogic, args);
+			fragment = LecturesFragment.newInstance(context, dbLogic);
 			showFragment(fragment, getResources().getString(R.string.lectures), position);
 			break;
 			
 		case 2:
-	        args = new Bundle();
-	        args.putInt(getResources().getString(R.string.tasks), position);
-			fragment = TasksFragment.newInstance(context, dbLogic, new TaskListAdapter(context, dbLogic.getTasks(0).getTasks()), args);
+			fragment = TasksFragment.newInstance(context, dbLogic);
+			showFragment(fragment, getResources().getString(R.string.tasks), position);			
 			break;
 			
 		case 3:
-	        args = new Bundle();
-	        args.putInt(getResources().getString(R.string.tasks), position);
-			fragment = ExamsFragment.newInstance(context, dbLogic, new ExamListAdapter(context, dbLogic.getExams(0).getExam()), args);
+			fragment = ExamsFragment.newInstance(context, dbLogic);
+			showFragment(fragment, getResources().getString(R.string.exams), position);
 			break;
 			
 		case 4:
-	        args = new Bundle();
-	        args.putInt(getResources().getString(R.string.tasks), position);
-			fragment = ResourcesFragment.newInstance(context, dbLogic, new ResourceListAdapter(context, dbLogic.getResources(0).getResources()), args);
+			fragment = ResourcesFragment.newInstance(context, dbLogic);
+			showFragment(fragment, getResources().getString(R.string.resources), position);
 			break;
 			
 		case 5:
@@ -269,7 +263,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		
 		AddLectureFragment temp = (AddLectureFragment)dialog;
 		LecturesFragment lf = (LecturesFragment)fragManager.findFragmentByTag(getResources().getString(R.string.lectures));
-		lf.updateLectureToList(temp.getLecture());
+		lf.updateLectureList(temp.getLecture());
 		dialog.dismiss();
 		
 	}
@@ -284,7 +278,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 	@Override
 	public void updateLecture(Lecture lecture) {
 		dbLogic.updateLecture(lecture);
-		
+		navDrawerItems.get(1).setCount(dbLogic.getLectures(0).getLectures().size());
 	}
 
 	@Override

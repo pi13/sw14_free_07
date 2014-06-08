@@ -29,11 +29,10 @@ public class LecturesFragment extends UIFragmentBase implements OnItemClickListe
 	private Context context;
 	private IDBlogic dbLogic;
 	
-	public static LecturesFragment newInstance(Context context, IDBlogic dbLogic, Bundle fragment_args) 
+	public static LecturesFragment newInstance(Context context, IDBlogic dbLogic) 
 	{
 		LecturesFragment base = new LecturesFragment();
 		base.context = context;		
-		base.setArguments(fragment_args);
 		base.dbLogic = dbLogic;
 		base.lectures = dbLogic.getLectures(0).getLectures();
 		base.adapter = new LectureListAdapter(context, base.lectures);
@@ -70,7 +69,7 @@ public class LecturesFragment extends UIFragmentBase implements OnItemClickListe
 		}
 	}
 	
-	public void updateLectureToList(Lecture lecture)
+	public void updateLectureList(Lecture lecture)
 	{
 		lectures.add(lecture);
 		dbLogic.addLecture(lecture);
@@ -81,6 +80,4 @@ public class LecturesFragment extends UIFragmentBase implements OnItemClickListe
 	    DialogFragment newFragment = AddLectureFragment.newInstance(context);
 	    newFragment.show(getFragmentManager(), "add_lecture_dialog");
 	}
-
-
 }
