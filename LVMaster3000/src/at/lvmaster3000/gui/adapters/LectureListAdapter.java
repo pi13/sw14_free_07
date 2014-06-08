@@ -1,6 +1,5 @@
 package at.lvmaster3000.gui.adapters;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;

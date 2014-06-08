@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.util.Log;
+import at.lvmaster3000.database.objects.Resource;
 
-public class Group {
-
+public class ResourceGroup {
 	public String groupName;
-	private List<String> children = new ArrayList<String>();
+	private List<Resource> children = new ArrayList<Resource>();
 	private String log_tag = "GROUP_ITEM";
 
-	public Group(String string) {
+	public ResourceGroup(String string) {
 		if (string == null) {
 			this.groupName = "Unknown";
 			Log.w(log_tag, "The provided group name was null");
@@ -29,11 +29,11 @@ public class Group {
 		return this.groupName;
 	}
 	
-	public String getChild(int position){
+	public Resource getChild(int position){
 		return this.children.get(position);
 	}
 	
-	public void setChildren(List<String> children){
+	public void setChildren(List<Resource> children){
 		this.children = children;
 	}
 }

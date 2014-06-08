@@ -1,55 +1,56 @@
 package at.lvmaster3000.gui.fragments;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
 import at.lvmaster3000.R;
+import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.database.objects.Lecture;
-import at.lvmaster3000.gui.Group;
-import at.lvmaster3000.gui.adapters.GroupExpandableListAdapter;
+import at.lvmaster3000.gui.ExamGroup;
+import at.lvmaster3000.gui.ResourceGroup;
+import at.lvmaster3000.gui.TaskGroup;
+import at.lvmaster3000.gui.adapters.ExamExpandableListAdapter;
+import at.lvmaster3000.gui.adapters.ResourceExpandableListAdapter;
+import at.lvmaster3000.gui.adapters.TaskExpandableListAdapter;
 import at.lvmaster3000.gui.interfaces.IUpdateDBObject;
 
 public class LectureDetailsFragment extends UIFragmentBase implements
 		OnClickListener{
 
 	private Context context;
-	private SparseArray<Group> groups;
+	private SparseArray<ExamGroup> examsGroup;
+	private SparseArray<TaskGroup> tasksGroup;
+	private SparseArray<ResourceGroup> resourcesGroup;
+	
 	private Lecture lecture;
 	private IUpdateDBObject updateLectureListener;
+	private IDBlogic dbLogic;
 
 	private EditText lvNumber;
 	private EditText lvName;
 	private EditText lvComment;
 	private Spinner lvType;
+	
 	private ArrayAdapter<CharSequence> lvTypeAdapter;
+	ExamExpandableListAdapter examsAdapter;
+	TaskExpandableListAdapter tasksAdapter;
+	ResourceExpandableListAdapter resourcesAdapter;
 
 	int isRequired;
 	int isCompulsory;
 
 	private Boolean initDone;
 
-	public static LectureDetailsFragment newInstance(Lecture lecture,
-			Context context) {
+	public static LectureDetailsFragment newInstance(Lecture lecture, Context context, IDBlogic dbLogic) {
 		LectureDetailsFragment details = new LectureDetailsFragment();
 
 		details.context = context;
@@ -57,8 +58,13 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 				details.context, R.array.lecture_types, R.layout.spinner_item);
 		details.lvTypeAdapter.setDropDownViewResource(R.layout.spinner_item);
 
-		details.groups = new SparseArray<Group>();
+		details.examsGroup = new SparseArray<ExamGroup>();
+		details.tasksGroup = new SparseArray<TaskGroup>();
+		details.resourcesGroup = new SparseArray<ResourceGroup>();
+		
 		details.lecture = lecture;
+		details.dbLogic = dbLogic;
+		
 		details.initDone = false;
 
 		return details;
@@ -87,19 +93,19 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 
 		View view = inflater.inflate(R.layout.fragment_lecture_detail,
 				container, false);
-		lvNumber = (EditText) view.findViewById(R.id.details_diag_lect_lectId);
+		lvNumber = (EditText) view.findViewById(R.id.details_lect_lectId);
 		lvName = (EditText) view.findViewById(R.id.details_lect_lectName);
-		lvComment = (EditText) view.findViewById(R.id.details_diag_lect_comment);
+		lvComment = (EditText) view.findViewById(R.id.details_lect_comment);
 
-		lvType = (Spinner) view.findViewById(R.id.details_diag_lect_lectType);
+		lvType = (Spinner) view.findViewById(R.id.details_lect_lectType);
 		lvType.setAdapter(lvTypeAdapter);
 
 		CheckBox isRequred = (CheckBox) view
-				.findViewById(R.id.details_dialog_lect_required);
+				.findViewById(R.id.details_lect_required);
 		isRequred.setOnClickListener(this);
 
 		CheckBox isCompulsory = (CheckBox) view
-				.findViewById(R.id.details_dialog_lect_compulsory);
+				.findViewById(R.id.details_lect_compulsory);
 		isCompulsory.setOnClickListener(this);
 
 		return view;
@@ -110,14 +116,26 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 		super.onActivityCreated(savedInstanceState);
 
 		updateFileds();
-
-		CreateDummyData();
-		ExpandableListView listview = (ExpandableListView) getView()
-				.findViewById(R.id.lecture_items);
-		GroupExpandableListAdapter adapter = new GroupExpandableListAdapter(
-				this, this.groups);
-		listview.setAdapter(adapter);
-
+		
+		ExpandableListView listviewExams = (ExpandableListView) getView()
+				.findViewById(R.id.details_lect_exams);
+		
+		ExpandableListView listviewTasks = (ExpandableListView) getView()
+				.findViewById(R.id.details_lect_tasks);
+		
+		ExpandableListView listviewResources = (ExpandableListView) getView()
+				.findViewById(R.id.details_lect_resources);
+		
+		addGroups(dbLogic);
+		
+		examsAdapter = new ExamExpandableListAdapter(this, examsGroup);
+		tasksAdapter = new TaskExpandableListAdapter(this, tasksGroup);
+		resourcesAdapter = new ResourceExpandableListAdapter(this, resourcesGroup);
+		
+		listviewExams.setAdapter(examsAdapter);
+		listviewTasks.setAdapter(tasksAdapter);
+		listviewResources.setAdapter(resourcesAdapter);
+		
 		initDone = true;
 	}
 
@@ -128,8 +146,8 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 		lvComment.setText(lecture.getComment());
 		lvType.setSelection(lvTypeAdapter.getPosition(lecture.getType()));
 
-		CheckBox isRequredChb = (CheckBox) getView().findViewById(R.id.details_dialog_lect_required);
-		CheckBox isCompulsoryChb = (CheckBox) getView().findViewById(R.id.details_dialog_lect_compulsory);
+		CheckBox isRequredChb = (CheckBox) getView().findViewById(R.id.details_lect_required);
+		CheckBox isCompulsoryChb = (CheckBox) getView().findViewById(R.id.details_lect_compulsory);
 
 		if (lecture.getRequired() == 1) {
 			isRequired = 1;
@@ -141,31 +159,28 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 			isCompulsoryChb.setChecked(true);
 		}
 	}
-	private void CreateDummyData() {
-		Group test = new Group("Tasks");
-		test.setChildren(new ArrayList<String>(Arrays.asList(getResources()
-				.getStringArray(R.array.dummy_items))));
-		this.groups.append(0, test);
+	private void addGroups(IDBlogic dbLogic) {
+		ExamGroup exam = new ExamGroup(getResources().getString(R.string.exams));
+		exam.setChildren(dbLogic.getExamsForLecture(lecture).getExam());
+		examsGroup.append(0, exam);
 
-		test = new Group("Exams");
-		test.setChildren(new ArrayList<String>(Arrays.asList(getResources()
-				.getStringArray(R.array.dummy_items))));
-		this.groups.append(1, test);
+		TaskGroup task = new TaskGroup(getResources().getString(R.string.tasks));
+		task.setChildren(dbLogic.getTasksForLecture(lecture).getTasks());
+		tasksGroup.append(0, task);
 
-		test = new Group("Resources");
-		test.setChildren(new ArrayList<String>(Arrays.asList(getResources()
-				.getStringArray(R.array.dummy_items))));
-		this.groups.append(2, test);
+		ResourceGroup res = new ResourceGroup(getResources().getString(R.string.resources));
+		res.setChildren(dbLogic.getResourcesForLecture(lecture).getResources());
+		resourcesGroup.append(0, res);
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.details_dialog_lect_compulsory:
+		case R.id.details_lect_compulsory:
 			onCheckboxClicked(v);
 			break;
 
-		case R.id.details_dialog_lect_required:
+		case R.id.details_lect_required:
 			onCheckboxClicked(v);
 			break;
 		}
@@ -175,14 +190,14 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 		boolean checked = ((CheckBox) view).isChecked();
 
 		switch (view.getId()) {
-		case R.id.details_dialog_lect_compulsory:
+		case R.id.details_lect_compulsory:
 			if (checked) {
 				isCompulsory = 1;
 			} else {
 				isCompulsory = 0;
 			}
 			break;
-		case R.id.details_dialog_lect_required:
+		case R.id.details_lect_required:
 			if (checked) {
 				isRequired = 1;
 			} else {

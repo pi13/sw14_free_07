@@ -56,6 +56,10 @@
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="add">Add</string>
     
+    <string name="add_exam">Add Exam</string>
+    <string name="add_task">Add Task</string>
+    <string name="add_resource">Add Resource</string>
+    
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
