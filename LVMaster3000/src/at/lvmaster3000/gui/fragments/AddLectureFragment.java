@@ -16,7 +16,6 @@ import android.widget.Spinner;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.database.objects.Lecture;
-import at.lvmaster3000.gui.DBObject;
 import at.lvmaster3000.gui.adapters.LectureListAdapter;
 import at.lvmaster3000.gui.interfaces.IDialogListener;
 

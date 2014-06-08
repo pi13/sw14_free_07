@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -71,4 +73,5 @@ public class LectureListAdapter extends BaseAdapter implements OnClickListener{
 	public void onClick(View v) {
 		lectFragment.onClick(v);
 	}
+
 }

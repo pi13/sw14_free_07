@@ -1,5 +1,6 @@
 package at.lvmaster3000;
 
+import java.io.PipedOutputStream;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -50,6 +51,11 @@ import at.lvmaster3000.gui.interfaces.IUpdateDBObject;
 import at.lvmaster3000.interfaces.IDeleteItems;
 
 public class MainActivity extends Activity implements IDialogListener, IUpdateDBObject, IDeleteItems{
+	
+	private final int POS_LECTURES = 1;
+	private final int POS_TASKS = 2;
+	private final int POS_EXAMS = 3;
+	private final int POS_RESOURCES = 4;
 	
 	private IDBlogic dbLogic;
 	private Context context;
@@ -266,6 +272,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		AddLectureFragment temp = (AddLectureFragment)dialog;
 		LecturesFragment lectFrag = (LecturesFragment)fragManager.findFragmentByTag(getResources().getString(R.string.lectures));
 		lectFrag.updateLectureList(temp.getLecture());
+		updateElemetnCount(POS_LECTURES);
 		dialog.dismiss();
 		
 	}
@@ -275,6 +282,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		AddResourceFragment temp = (AddResourceFragment)dialog;
 		ResourcesFragment resFrag = (ResourcesFragment)fragManager.findFragmentByTag(getResources().getString(R.string.resources));
 		resFrag.updateResourceList(temp.getResource());
+		updateElemetnCount(POS_RESOURCES);
 		dialog.dismiss();
 	}
 
@@ -283,6 +291,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		AddExamFragment temp = (AddExamFragment)dialog;
 		ExamsFragment examFrag = (ExamsFragment)fragManager.findFragmentByTag(getResources().getString(R.string.exams));
 		examFrag.updateExamList(temp.getExam());
+		updateElemetnCount(POS_EXAMS);
 		dialog.dismiss();
 		
 	}
@@ -292,6 +301,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		AddTaskFragment temp = (AddTaskFragment)dialog;
 		TasksFragment taskFrag = (TasksFragment)fragManager.findFragmentByTag(getResources().getString(R.string.tasks));
 		taskFrag.updateTaskList(temp.getTask());
+		updateElemetnCount(POS_TASKS);
 		dialog.dismiss();
 		
 	}
@@ -305,7 +315,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 	@Override
 	public void updateLecture(Lecture lecture) {
 		dbLogic.updateLecture(lecture);
-		navDrawerItems.get(1).setCount(dbLogic.getLectures(0).getLectures().size());
+		
 	}
 
 	@Override
@@ -335,6 +345,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 	        public void onClick(DialogInterface dialog, int which) { 
 	    		LecturesFragment fragment = (LecturesFragment)fragManager.findFragmentByTag(getResources().getString(R.string.lectures));
 	    		fragment.deleteLecture(lecture);
+	    		updateElemetnCount(POS_LECTURES);
 	    		dialog.dismiss();
 	        }
 	     })
@@ -356,6 +367,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 	        public void onClick(DialogInterface dialog, int which) { 
 	    		ExamsFragment fragment = (ExamsFragment)fragManager.findFragmentByTag(getResources().getString(R.string.exams));
 	    		fragment.deleteExam(exam);
+	    		updateElemetnCount(POS_EXAMS);
 	    		dialog.dismiss();
 	        }
 	     })
@@ -378,6 +390,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 	        public void onClick(DialogInterface dialog, int which) { 
 	    		TasksFragment fragment = (TasksFragment)fragManager.findFragmentByTag(getResources().getString(R.string.tasks));
 	    		fragment.deleteTask(task);
+	    		updateElemetnCount(POS_TASKS);
 	    		dialog.dismiss();
 	        }
 	     })
@@ -400,6 +413,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 	        public void onClick(DialogInterface dialog, int which) { 
 	    		ResourcesFragment fragment = (ResourcesFragment)fragManager.findFragmentByTag(getResources().getString(R.string.resources));
 	    		fragment.deleteTask(resource);
+	    		updateElemetnCount(POS_RESOURCES);
 	    		dialog.dismiss();
 	        }
 	     })
@@ -411,5 +425,28 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 	    .setIcon(android.R.drawable.ic_dialog_alert)
 	     .show();
 		
+	}
+	
+	private void updateElemetnCount(int position)
+	{
+		switch (position) {
+		case POS_LECTURES:
+			navDrawerItems.get(position).setCount(dbLogic.getLectures(0).getLectures().size());
+			break;
+		case POS_TASKS:
+			navDrawerItems.get(position).setCount(dbLogic.getTasks(0).getTasks().size());
+			break;
+		case POS_EXAMS:
+			navDrawerItems.get(position).setCount(dbLogic.getExams(0).getExams().size());
+			break;
+		case POS_RESOURCES:
+			navDrawerItems.get(position).setCount(dbLogic.getResources(0).getResources().size());
+			break;
+		default:
+			break;
+		}
+		
+		adapter.notifyDataSetChanged();
+	
 	}
 }
