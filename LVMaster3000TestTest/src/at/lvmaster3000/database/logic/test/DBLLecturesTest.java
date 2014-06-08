@@ -6,17 +6,20 @@ import android.util.Log;
 import at.lvmaster3000.database.demodata.DDTestsetA;
 import at.lvmaster3000.database.logic.DBLLectures;
 import at.lvmaster3000.database.objects.Lecture;
+import at.lvmaster3000.database.objects.Resource;
 
 public class DBLLecturesTest extends AndroidTestCase{
 	
 	private DBLLectures dblLectures;
 	private RenamingDelegatingContext context;
+	private DDTestsetA testset;
 	
 	public static final String LOG_TAG_LECTURES_LOGIC_TEST = "TEST_LECTURES_LOGIC";
 	
 	public void setUp(){
 		this.context = new RenamingDelegatingContext(getContext(), "test_");			
-		this.dblLectures = new DBLLectures(context);
+		this.dblLectures = new DBLLectures(this.context);
+		this.testset = new DDTestsetA(this.context);
 	}
 	
 	public void testAddNewLecture(){
@@ -44,15 +47,13 @@ public class DBLLecturesTest extends AndroidTestCase{
 	}
 
 	public void testGetTasksForLecture(){
-		DDTestsetA a = new DDTestsetA(this.context);
-		a.FillDb();
-		
+		this.testset.FillDb();		
 		this.dblLectures.getLectures(0).printLectureList();
 		
 		Lecture l = this.dblLectures.getLectures(1).getLectures().get(0);
 		int cnt = this.dblLectures.getTasksForLecture(l).getTasks().size();
 		
-		assertEquals(cnt, a.getTasksCnt());
+		assertEquals(cnt, this.testset.getTasksCnt());
 	}
 	
 	public void testGetAllExamsOfLecture(){
@@ -60,11 +61,30 @@ public class DBLLecturesTest extends AndroidTestCase{
 	}
 	
 	public void testGetAllLectures(){
-		DDTestsetA a = new DDTestsetA(this.context);
-		a.FillDb();
-		
+		this.testset.FillDb();		
 		int cnt = this.dblLectures.getLectures(0).getLectures().size();
 		
-		assertEquals(cnt, a.getLectureCnt());
+		assertEquals(cnt, this.testset.getLectureCnt());
+	}
+	
+	public void voidAddLectureWithResources() {
+		Lecture lecture = new Lecture(0, "705.001", "LV with res test", "some res added", "LV", 0, 0);
+		Resource resource = new Resource("Some res");
+		
+		long rid = this.dblLectures.addResourceToLecture(resource, lecture);
+		
+		assertNotSame(-1L, rid);
+	}
+	
+	public void testGetResourcesForLecture() {
+		Lecture lecture = new Lecture(0, "705.001", "LV with res test", "some res added", "LV", 0, 0);
+		this.dblLectures.addLecture(lecture);
+		
+		Resource resource = new Resource("Some res");		
+		long rid = this.dblLectures.addResourceToLecture(resource, lecture);
+		
+		Log.i(LOG_TAG_LECTURES_LOGIC_TEST, "rid: " + rid);
+		
+		assertNotSame(-1L, rid);
 	}
 }

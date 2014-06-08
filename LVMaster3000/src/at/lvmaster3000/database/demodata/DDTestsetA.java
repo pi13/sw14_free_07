@@ -57,7 +57,7 @@ public class DDTestsetA {
         this.lecturecnt += 1;
         long lid3 = hlplectures.addLecture("703.123", "Test LV 3", "Some Comment...", "SE", 0, 1);
         this.lecturecnt += 1;
-        long lid4 = hlplectures.addLecture("704.123", "Test LV 4", "Some Comment...", "KU", 1, 0);
+        long lid4 = hlplectures.addLecture("704.123", "Test LV 4 with resources", "Some Comment...", "KU", 1, 0);
         this.lecturecnt += 1;
 //        this.hlplectures.allEntriesToLog();
         this.hlplectures.closeCon();
@@ -99,9 +99,24 @@ public class DDTestsetA {
         this.examcnt++;
         long eid2 = hlpexams.addExam("1. teilpruefung", "schwerig", lid1);
         this.examcnt++;
-        this.hlpexams.closeCon();        
+        long eid3 = hlpexams.addExam("Exam with res attatched", "schwerig", lid1);
+        this.examcnt++;
+        this.hlpexams.closeCon();                      
         
-        //add relation
+        //add resources
+        this.hlpresources.openCon();
+        this.hlpresources.resetTable();
+        long res1 = this.hlpresources.addResource("C# for Dummies");
+        this.resourcecnt++;
+        long res2 = this.hlpresources.addResource("C++ for Dummies");
+        this.resourcecnt++;
+        long res3 = this.hlpresources.addResource("Java for Dummies");
+        this.resourcecnt++;
+        long res4 = this.hlpresources.addResource("PHP for Dummies");
+        this.resourcecnt++;
+        this.hlpresources.closeCon();
+        
+      //add relation
         this.hlprelations.openCon();
         this.hlprelations.resetTable();        
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, 0, tid1, did5, 0);
@@ -110,14 +125,12 @@ public class DDTestsetA {
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, 0, 0, did4, 0);
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, 0, eid1, 0, did2, 0);
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, eid2, 0, 0, 0);
+        this.hlprelations.addRelation(HLPExams.TABLE_NAME, 0, eid3, 0, 0, res1);
+        this.hlprelations.addRelation(HLPExams.TABLE_NAME, 0, eid3, 0, 0, res2);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid4, 0, 0, 0, res3);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, 0, eid3, 0, 0, res4);
 //        this.hlprelations.allEntriesToLog();
-        this.hlprelations.closeCon();        
-        
-        this.hlpresources.openCon();
-        this.hlpresources.resetTable();
-        this.hlpresources.addResource("C# for Dummies");
-        this.resourcecnt++;
-        this.hlpresources.closeCon();
+        this.hlprelations.closeCon();
 	}
 	
 	public int getLectureCnt() {

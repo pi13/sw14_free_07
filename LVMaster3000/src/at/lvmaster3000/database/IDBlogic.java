@@ -187,7 +187,7 @@ public class IDBlogic {
 	 * @return
 	 */
 	public int deleteResource(Resource resource){
-		return this.resources.deleteResource(resource.getId());
+		return this.resources.deleteResource(resource);
 	}
 	
 	/**

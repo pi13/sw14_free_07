@@ -23,10 +23,17 @@ public class DBLCoworkers {
 	
 	public long addCoworker(String refid, String role) {
 		this.hlpCoworkers.openCon();
-		long ret = this.hlpCoworkers.addCoworker(refid, role);
+		long cid = this.hlpCoworkers.addCoworker(refid, role);
 		this.hlpCoworkers.closeCon();
 		
-		return ret;
+		return cid;
+	}
+	
+	public long addCoworker(Coworker coworker) {
+		long cid = this.addCoworker(coworker.getRefID(), coworker.getRole());
+		coworker.setID(cid);
+		
+		return cid;
 	}
 	
 	public int deleteCoworker(long id) {
@@ -48,10 +55,6 @@ public class DBLCoworkers {
 		
 		Cursor cursor = this.hlpCoworkers.openCon().rawQuery(query, null);
 		if(cursor != null) {
-			if(cursor.getCount() < 1) {
-				this.hlpCoworkers.closeCon();
-				return null;
-			}
 			coworkers.cursorToCoworkerList(cursor);        	
         } else {
         	Log.w(DBsettings.LOG_TAG_COWORKERS, "Cursor is NULL!!");        	

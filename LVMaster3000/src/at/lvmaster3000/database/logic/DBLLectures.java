@@ -16,6 +16,8 @@ import at.lvmaster3000.database.lists.Lectures;
 import at.lvmaster3000.database.lists.Resources;
 import at.lvmaster3000.database.lists.Tasks;
 import at.lvmaster3000.database.objects.Lecture;
+import at.lvmaster3000.database.objects.Relation;
+import at.lvmaster3000.database.objects.Resource;
 import at.lvmaster3000.settings.DBsettings;
 
 public class DBLLectures {
@@ -25,6 +27,9 @@ public class DBLLectures {
 	private HLPDates hlpDates;
 	private HLPExams hlpExams;
 	private HLPResources hlpResources;
+	
+	private DBLRelations dblRelations;
+	private DBLResources dblResources;
 	
 	/**
 	 * 
@@ -36,6 +41,8 @@ public class DBLLectures {
 		this.hlpDates = new HLPDates(context);
 		this.hlpExams = new HLPExams(context);
 		this.hlpResources = new HLPResources(context);
+		this.dblRelations = new DBLRelations(context);
+		this.dblResources = new DBLResources(context);
 	}
 	
 	/**
@@ -62,7 +69,36 @@ public class DBLLectures {
 	 * @return insert id
 	 */
 	public long addLecture(Lecture lecture) {
-		return this.addLecture(lecture.getNumber(), lecture.getName(), lecture.getComment(), lecture.getType(), lecture.getRequired(), lecture.getCompulsory());
+		long lid = this.addLecture(lecture.getNumber(), lecture.getName(), lecture.getComment(), lecture.getType(), lecture.getRequired(), lecture.getCompulsory());
+		lecture.setID(lid);
+		
+		return lid;
+	}
+	
+	/**
+	 * 
+	 * @param resource
+	 * @param lecture
+	 * @return 
+	 */
+	public long addResourceToLecture(Resource resource, Lecture lecture) {
+		long rid = 0;
+		long lid = 0;
+		
+		if(resource.getId() > 0) {
+			rid = resource.getId();
+		} else {
+			this.dblResources.addResource(resource);
+		}
+		
+		if(lecture.getID() > 0) {
+			lid = lecture.getID();
+		} else {
+			lid = this.addLecture(lecture);
+			lecture.setID(lid);
+		}		
+		
+		return this.dblRelations.addRelation(new Relation(0, HLPLectures.TABLE_NAME, lid, 0, 0, 0, rid));
 	}
 	
 	/**
@@ -198,12 +234,7 @@ public class DBLLectures {
 		}
 		
         Cursor cursor = hlpLectures.openCon().rawQuery(query, null);
-        if(cursor != null) {
-        	if(cursor.getCount() < 1) {
-        		this.hlpLectures.closeCon();
-        		return null;
-        	}
-        	
+        if(cursor != null) {        	
     		lectures.cursorToLectureList(cursor);        	
         } else {
         	Log.w(DBsettings.LOG_TAG_LECTURES, "Cursor is NULL!!");        	
@@ -228,11 +259,6 @@ public class DBLLectures {
 		
 		Cursor cursor = this.hlptasks.openCon().rawQuery(query, null);
 		if(cursor != null) {
-			if(cursor.getCount() < 1) {
-				this.hlptasks.closeCon();
-        		return null;
-        	}
-			
 			tasks.cursorToTaskList(cursor);
 		} else {
         	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
@@ -257,11 +283,6 @@ public class DBLLectures {
 		
 		Cursor cursor = this.hlpDates.openCon().rawQuery(query, null);
 		if(cursor != null) {
-			if(cursor.getCount() < 1) {
-				this.hlpDates.closeCon();
-        		return null;
-        	}
-			
 			dates.cursorToDateList(cursor);
 		} else {
         	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
@@ -286,11 +307,6 @@ public class DBLLectures {
 		
 		Cursor cursor = this.hlpExams.openCon().rawQuery(query, null);
 		if(cursor != null) {
-			if(cursor.getCount() < 1) {
-				this.hlpExams.closeCon();
-        		return null;
-        	}
-			
 			exams.cursorToExamList(cursor);
 		} else {
         	Log.w(DBsettings.LOG_TAG_EXAMS, "Cursor is NULL!!");        	
@@ -313,11 +329,6 @@ public class DBLLectures {
 		
 		Cursor cursor = this.hlpResources.openCon().rawQuery(query, null);
 		if(cursor != null) {
-			if(cursor.getCount() < 1) {
-				this.hlpResources.closeCon();
-        		return null;
-        	}
-			
 			resources.cursorToResourceList(cursor);
 		} else {
         	Log.w(DBsettings.LOG_TAG_RESOURCES, "Cursor is NULL!!");        	

@@ -28,7 +28,10 @@ public class DBLDates {
 	}
 	
 	public long addDate(Date date) {
-		return this.addDate(date.getTimestamp(), date.getLocation(), date.getType(), date.getComment());
+		long did = this.addDate(date.getTimestamp(), date.getLocation(), date.getType(), date.getComment());
+		date.setID(did);
+		
+		return did;
 	}
 	
 	public int deleteDate(long id){
@@ -53,11 +56,7 @@ public class DBLDates {
 		}
 		
         Cursor cursor = this.hlpDates.openCon().rawQuery(query, null);
-        if(cursor != null) {              
-        	if(cursor.getCount() < 1) {
-        		this.hlpDates.closeCon();
-        		return null;
-        	}
+        if(cursor != null) {
         	dates.cursorToDateList(cursor);
         } else {
         	Log.w(DBsettings.LOG_TAG_LECTURES, "Cursor is NULL!!");        	
@@ -77,7 +76,6 @@ public class DBLDates {
         if(cursor != null) {  
         	if(cursor.getCount() < 1) {
         		this.hlpDates.closeCon();
-        		Log.e(DBsettings.LOG_TAG_LECTURES, "Nothing found"); 
         		return null;
         	}
         	

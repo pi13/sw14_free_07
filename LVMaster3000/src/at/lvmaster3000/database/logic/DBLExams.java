@@ -86,9 +86,6 @@ public class DBLExams {
 		
         Cursor cursor = this.hlpExams.openCon().rawQuery(query, null);
         if(cursor != null) {
-        	if(cursor.getCount() < 1) {
-        		return null;
-        	}
         	exams.cursorToExamList(cursor);        	
         } else {
         	Log.w(DBsettings.LOG_TAG_EXAMS, "Cursor is NULL!!");        	
@@ -156,15 +153,20 @@ public class DBLExams {
 		
 		String query = "SELECT * FROM " + HLPExams.TABLE_NAME + " WHERE _id = '" + id + "'";
 		
-        Cursor cursor = hlpExams.openCon().rawQuery(query, null);
-        if(cursor != null) {        	
+        Cursor cursor = this.hlpExams.openCon().rawQuery(query, null);
+        if(cursor != null) {
+        	if(cursor.getCount() < 1) {
+        		this.hlpExams.closeCon();
+        		return null;
+        	}
+        	
         	if(cursor.moveToFirst()) {
         		exam.cursorToExam(cursor);
         	}
         } else {
         	Log.w(DBsettings.LOG_TAG_LECTURES, "Cursor is NULL!!");        	
         }
-        hlpExams.closeCon();
+        this.hlpExams.closeCon();
 		
 		return exam;
 	}
@@ -221,12 +223,7 @@ public class DBLExams {
 		Log.i(DBsettings.LOG_TAG_TASKS, query);
 		
 		Cursor cursor = this.hlpExams.openCon().rawQuery(query, null);
-		if(cursor != null) {
-			if(cursor.getCount() < 1) {
-				this.hlpExams.closeCon();
-				return null;
-			}
-			
+		if(cursor != null) {			
 			resources.cursorToResourceList(cursor);        	
         } else {
         	Log.w(DBsettings.LOG_TAG_EXAMS, "Cursor is NULL!!");        	

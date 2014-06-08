@@ -8,6 +8,10 @@ public class Resource {
 	private long id;
 	private String title;
 	
+	/**
+	 * 
+	 * @param title
+	 */
 	public Resource(String title) {
 		this.title = title;
 	}

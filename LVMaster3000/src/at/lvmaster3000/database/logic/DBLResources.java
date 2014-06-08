@@ -30,6 +30,7 @@ public class DBLResources {
 	public long addResource(Resource resource) {
 		hlpResources.openCon();
 		long id = this.hlpResources.addResource(resource.getTitle());
+		resource.setId(id);
 		hlpResources.closeCon();
 		return id;
 	}
@@ -39,9 +40,9 @@ public class DBLResources {
 	 * @param resourceID
 	 * @return
 	 */
-	public int deleteResource(long resourceID){
+	public int deleteResource(Resource resource){
 		this.hlpResources.openCon();
-		int res = this.hlpResources.deleteResource(resourceID);
+		int res = this.hlpResources.deleteResource(resource.getId());
 		this.hlpResources.closeCon();
 		return res;
 	}
