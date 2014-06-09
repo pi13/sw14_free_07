@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import at.lvmaster3000.R;
@@ -94,7 +95,7 @@ public class ExamExpandableListAdapter extends BaseExpandableListAdapter{
 //						Toast.LENGTH_SHORT).show();
 			}
 		});
-		
+				
 		return convertView;
 	}
 

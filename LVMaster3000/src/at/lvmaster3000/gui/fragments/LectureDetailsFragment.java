@@ -115,6 +115,8 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 		CheckBox isCompulsory = (CheckBox) view
 				.findViewById(R.id.details_lect_compulsory);
 		isCompulsory.setOnClickListener(this);		
+		
+		
 
 		return view;
 	}
@@ -125,13 +127,13 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 
 		updateFileds();
 		
-		ExpandableListView listviewExams = (ExpandableListView) getView()
+		final ExpandableListView listviewExams = (ExpandableListView) getView()
 				.findViewById(R.id.details_lect_exams);
 		
-		ExpandableListView listviewTasks = (ExpandableListView) getView()
+		final ExpandableListView listviewTasks = (ExpandableListView) getView()
 				.findViewById(R.id.details_lect_tasks);
 		
-		ExpandableListView listviewResources = (ExpandableListView) getView()
+		final ExpandableListView listviewResources = (ExpandableListView) getView()
 				.findViewById(R.id.details_lect_resources);
 		
 		addGroups(dbLogic);
@@ -143,6 +145,57 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 		listviewExams.setAdapter(examsAdapter);
 		listviewTasks.setAdapter(tasksAdapter);
 		listviewResources.setAdapter(resourcesAdapter);
+		
+		listviewExams.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+	        public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+	        	Log.w("TEST_", "Exams click");
+	        	
+	        	if(inputContainer.getVisibility() == View.VISIBLE) {
+	        		inputContainer.setVisibility(View.GONE);	        		
+	        	} else {
+	        		inputContainer.setVisibility(View.VISIBLE);
+	        	}
+	        	
+	        	listviewTasks.collapseGroup(0);
+        		listviewResources.collapseGroup(0);
+	        	
+	        	return false;
+	        }
+	    });
+		
+		listviewTasks.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+	        public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+	        	Log.w("TEST_", "Tasks click");
+	        	
+	        	if(inputContainer.getVisibility() == View.VISIBLE) {
+	        		inputContainer.setVisibility(View.GONE);	        		
+	        	} else {
+	        		inputContainer.setVisibility(View.VISIBLE);
+	        	}
+	        	
+	        	listviewExams.collapseGroup(0);
+        		listviewResources.collapseGroup(0);
+	        	
+	        	return false;
+	        }
+	    });
+		
+		listviewResources.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+	        public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {	        	
+	        	Log.w("TEST_", "Resources click");
+	        	
+	        	if(inputContainer.getVisibility() == View.VISIBLE) {
+	        		inputContainer.setVisibility(View.GONE);	        		
+	        	} else {
+	        		inputContainer.setVisibility(View.VISIBLE);
+	        	}
+	        	
+	        	listviewExams.collapseGroup(0);
+        		listviewTasks.collapseGroup(0);
+	        	
+	        	return false;
+	        }
+	    });		
 		
 		initDone = true;
 	}
