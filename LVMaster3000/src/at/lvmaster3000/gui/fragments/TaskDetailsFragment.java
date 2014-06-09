@@ -57,7 +57,7 @@ public class TaskDetailsFragment extends UIFragmentBase{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View view = inflater.inflate(R.layout.fragment_exam_details, container, false);
+		View view = inflater.inflate(R.layout.fragment_task_details, container, false);
 		taskTitle = (EditText) view.findViewById(R.id.detail_task_title);
 		taskComment = (EditText) view.findViewById(R.id.detail_task_comment);
 
