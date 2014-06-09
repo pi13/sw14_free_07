@@ -182,10 +182,8 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		Bundle args = null;
 		switch (position) {
 		case 0:
-			fragment = new HomeFragment();
-	        args = new Bundle();
-	        args.putInt(getResources().getString(R.string.home), position);
-	        fragment.setArguments(args);
+			fragment = HomeFragment.newInstance(context, dbLogic);
+			showFragment(fragment, getResources().getString(R.string.home), position);
 			break;
 			
 		case 1:
