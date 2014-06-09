@@ -1,106 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
     <RelativeLayout
+        android:id="@+id/details_lecture_fields"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/white"
+        android:gravity="center" >
 
-        <RelativeLayout
-            android:id="@+id/details_lecture_fields"
+        <EditText
+            android:id="@+id/details_lect_lectId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:background="#FC9"
-            android:gravity="center" >
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="16dp"
+            android:gravity="top"
+            android:hint="@string/hint_lecture_id"
+            android:inputType="numberDecimal" />
 
-            <EditText
-                android:id="@+id/details_lect_lectId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginTop="16dp"
-                android:gravity="top"
-                android:hint="@string/hint_lecture_id"
-                android:inputType="numberDecimal" />
-
-            <EditText
-                android:id="@+id/details_lect_lectName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/details_lect_lectId"
-                android:layout_marginBottom="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginTop="16dp"
-                android:hint="@string/hint_lecture_name"
-                android:inputType="text" />
-
-            <EditText
-                android:id="@+id/details_lect_comment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/details_lect_lectName"
-                android:layout_marginBottom="4dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginTop="16dp"
-                android:hint="@string/hint_comment"
-                android:inputType="text" />
-
-            <Spinner
-                android:id="@+id/details_lect_lectType"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/details_lect_comment" />
-
-            <CheckBox
-                android:id="@+id/details_lect_required"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/details_lect_lectType"
-                android:text="@string/required" />
-
-            <CheckBox
-                android:id="@+id/details_lect_compulsory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/details_lect_required"
-                android:text="@string/compulsory" />
-        </RelativeLayout>
-
-        <ExpandableListView
-            android:id="@+id/details_lect_exams"
+        <EditText
+            android:id="@+id/details_lect_lectName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/details_lecture_fields"
-            android:divider="@color/white"
-            android:groupIndicator="@drawable/expandable_list_selector" >
-        </ExpandableListView>
+            android:layout_below="@id/details_lect_lectId"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="16dp"
+            android:hint="@string/hint_lecture_name"
+            android:inputType="text" />
 
-        <ExpandableListView
-            android:id="@+id/details_lect_tasks"
+        <EditText
+            android:id="@+id/details_lect_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/details_lect_exams"
-            android:divider="@color/white"
-            android:groupIndicator="@drawable/expandable_list_selector" >
-        </ExpandableListView>
+            android:layout_below="@id/details_lect_lectName"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="16dp"
+            android:hint="@string/hint_comment"
+            android:inputType="text" />
 
-        <ExpandableListView
-            android:id="@+id/details_lect_resources"
-            android:layout_width="match_parent"
+        <Spinner
+            android:id="@+id/details_lect_lectType"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/details_lect_tasks"
-            android:divider="@color/white"
-            android:groupIndicator="@drawable/expandable_list_selector" >
-        </ExpandableListView>
+            android:layout_below="@id/details_lect_comment" />
+
+        <CheckBox
+            android:id="@+id/details_lect_required"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/details_lect_lectType"
+            android:text="@string/required" />
+
+        <CheckBox
+            android:id="@+id/details_lect_compulsory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/details_lect_required"
+            android:text="@string/compulsory" />
     </RelativeLayout>
 
-</ScrollView>
+    <ExpandableListView
+        android:id="@+id/details_lect_dates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/details_lecture_fields"
+        android:divider="@color/white"
+        android:groupIndicator="@drawable/expandable_list_selector" >
+    </ExpandableListView>
+
+    <ExpandableListView
+        android:id="@+id/details_lect_exams"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/details_lect_dates"
+        android:divider="@color/white"
+        android:groupIndicator="@drawable/expandable_list_selector" >
+    </ExpandableListView>
+
+    <ExpandableListView
+        android:id="@+id/details_lect_tasks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/details_lect_exams"
+        android:divider="@color/white"
+        android:groupIndicator="@drawable/expandable_list_selector" >
+    </ExpandableListView>
+
+    <ExpandableListView
+        android:id="@+id/details_lect_resources"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/details_lect_tasks"
+        android:divider="@color/white"
+        android:groupIndicator="@drawable/expandable_list_selector" >
+    </ExpandableListView>
+
+</RelativeLayout>
