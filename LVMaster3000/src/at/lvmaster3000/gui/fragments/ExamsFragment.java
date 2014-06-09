@@ -75,7 +75,7 @@ public class ExamsFragment extends UIFragmentBase implements OnItemClickListener
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		//switchToFragemnt(LectureDetailsFragment.newInstance((Lecture) adapter.getItem(position), context, dbLogic));
+		switchToFragemnt(ExamDetailsFragment.newInstance((Exam) adapter.getItem(position), context, dbLogic), getResources().getString(R.string.exam_details_frag));
 	}
 	
 	@Override

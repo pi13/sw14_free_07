@@ -276,14 +276,14 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {		
 		menu.clear();
-	    inflater.inflate(R.menu.fragment_details, menu);
+	    inflater.inflate(R.menu.logic_fragment_details, menu);
 	}
 	
 	@Override
 	public void onPrepareOptionsMenu(Menu menu) {	
 		menu.clear();
 		MenuInflater inflater = getActivity().getMenuInflater();
-	    inflater.inflate(R.menu.fragment_details, menu);
+	    inflater.inflate(R.menu.logic_fragment_details, menu);
 	}
 	
 	@Override
