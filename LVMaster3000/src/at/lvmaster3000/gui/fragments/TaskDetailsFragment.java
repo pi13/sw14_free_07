@@ -74,7 +74,7 @@ public class TaskDetailsFragment extends UIFragmentBase{
 	
 	private void updateFileds()
 	{
-		taskTitle.setText(task.getTitle());
+		taskTitle.setText(task.getTitle()); 
 		taskComment.setText(task.getComment());
 		//taskLocation.setText(task.ge);
 		//examDate.setText(lecture.getComment());
