@@ -10,6 +10,9 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -112,4 +115,34 @@ public class LecturesFragment extends UIFragmentBase implements OnItemClickListe
 	    DialogFragment newFragment = AddLectureFragment.newInstance(context);
 	    newFragment.show(getFragmentManager(), "add_lecture_dialog");
 	}
+	
+//	@Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setHasOptionsMenu(true);
+//        getActivity().invalidateOptionsMenu();
+//    }
+//	
+//	@Override
+//	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {		
+//		menu.clear();
+//	    inflater.inflate(R.menu.actions, menu);
+//	}
+//	
+//	@Override
+//	public void onPrepareOptionsMenu(Menu menu) {	
+//		menu.clear();
+//		MenuInflater inflater = getActivity().getMenuInflater();
+//	    inflater.inflate(R.menu.actions, menu);
+//	}
+//	
+//	@Override
+//	public boolean onOptionsItemSelected(MenuItem item) {
+//		switch (item.getItemId()) {
+//			case R.id.action_settings:
+//				return true;
+//			default:
+//				return super.onOptionsItemSelected(item);
+//		}
+//	}
 }

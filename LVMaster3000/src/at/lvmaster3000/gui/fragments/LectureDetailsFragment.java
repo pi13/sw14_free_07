@@ -1,9 +1,14 @@
 package at.lvmaster3000.gui.fragments;
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -225,5 +230,59 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 	public void onPause() {
 		super.onPause();
 		updateLecture();
+	}
+	
+	@Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+        getActivity().invalidateOptionsMenu();
+    }
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {		
+		menu.clear();
+	    inflater.inflate(R.menu.fragment_details, menu);
+	}
+	
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {	
+		menu.clear();
+		MenuInflater inflater = getActivity().getMenuInflater();
+	    inflater.inflate(R.menu.fragment_details, menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		DialogFragment newFragment;
+		
+		switch (item.getItemId()) {
+			case R.id.action_addDate:
+				Log.w("TEST_", "action_addDate");
+				return true;
+			case R.id.action_addTask:
+				
+				newFragment = AddTaskFragment.newInstance(context);
+			    newFragment.show(getFragmentManager(), "add_task_dialog");
+				
+				Log.w("TEST_", "action_addTask");
+				return true;
+			case R.id.action_addExam:
+				
+				newFragment = AddExamFragment.newInstance(context);
+			    newFragment.show(getFragmentManager(), "add_exam_dialog");
+				
+				Log.w("TEST_", "action_addExam");
+				return true;
+			case R.id.action_addResource:
+				
+				newFragment = AddResourceFragment.newInstance(context);
+			    newFragment.show(getFragmentManager(), "add_resource_dialog");
+				
+				Log.w("TEST_", "action_addResource");
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 }
