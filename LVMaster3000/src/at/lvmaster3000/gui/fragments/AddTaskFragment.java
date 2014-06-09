@@ -28,13 +28,13 @@ public class AddTaskFragment extends DialogFragment implements OnClickListener {
 	private EditText taskComment;
 	private EditText taskLocation;
 
-	private long lectureId;
-	
+	private long lectureId;	
 	private IDBlogic dbLogic;
 
 	public static AddTaskFragment newInstance(Context context) {
 		AddTaskFragment dialog = new AddTaskFragment();
 		dialog.context = context;
+		
 		return dialog;
 	}
 
@@ -74,8 +74,7 @@ public class AddTaskFragment extends DialogFragment implements OnClickListener {
 		taskLocation = (EditText) view.findViewById(R.id.add_task_location);
 		
 		Bundle bundle = getArguments();
-		this.lectureId = bundle.getLong("lectureId");
-		
+		this.lectureId = bundle.getLong("lectureId");		
 		this.dbLogic = new IDBlogic(context);
 
 		return view;
@@ -88,16 +87,12 @@ public class AddTaskFragment extends DialogFragment implements OnClickListener {
 			
 			task = new Task(0, taskTitle.getText().toString(), taskComment.getText().toString(), new Date(0, new java.util.Date().getTime(),
 					taskLocation.getText().toString(), "", taskComment.getText().toString()));
-			
-			Log.i("TEST_", "l-id: " + this.lectureId);
-			
+						
 			if(this.lectureId > 0) {				
 				Lecture lecture = new Lecture();
-				lecture.setID(this.lectureId);
-				
+				lecture.setID(this.lectureId);				
 				this.dbLogic.addTaskToLecture(task, lecture);
-				
-				this.dismiss();
+				dialogListener.onTaskAddToLecture(this);
 			} else {
 				dialogListener.onTaskAdd(this);
 			}

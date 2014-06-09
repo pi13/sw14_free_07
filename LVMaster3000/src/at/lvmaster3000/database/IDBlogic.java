@@ -85,12 +85,34 @@ public class IDBlogic {
 		return this.lectures.addTaskToLecture(task, lecture);
 	}
 	
+	/**
+	 * 
+	 * @param date
+	 * @param lecture
+	 * @return
+	 */
 	public long addDateToLecture(Date date, Lecture lecture) {
 		return this.lectures.addDateToLecture(date, lecture);
 	}
 	
+	/**
+	 * 
+	 * @param exam
+	 * @param lecture
+	 * @return
+	 */
 	public long addExamToLecture(Exam exam, Lecture lecture) {
 		return this.lectures.addExamToLecture(exam, lecture);
+	}
+	
+	/**
+	 * 
+	 * @param resource
+	 * @param lecture
+	 * @return
+	 */
+	public long addResourceToLecture(Resource resource, Lecture lecture) {
+		return this.lectures.addResourceToLecture(resource, lecture);
 	}
 	
 	/**
@@ -179,6 +201,15 @@ public class IDBlogic {
 	 * @param exam
 	 * @return
 	 */
+	public int updateExam(Exam exam) {
+		return this.exames.updateExam(exam);
+	}
+	
+	/**
+	 * 
+	 * @param exam
+	 * @return
+	 */
 	public int deleteExam(Exam exam){
 		return this.exames.deleteExam(exam);
 	}
@@ -206,6 +237,15 @@ public class IDBlogic {
 	 * @param task
 	 * @return
 	 */
+	public int updateTask(Task task) {
+		return this.tasks.updateTask(task);
+	}
+	
+	/**
+	 * 
+	 * @param task
+	 * @return
+	 */
 	public int deleteTask(Task task){
 		return this.tasks.deleteTask(task);
 	}
@@ -226,6 +266,15 @@ public class IDBlogic {
 	 */
 	public long addResource(Resource resource){
 		return this.resources.addResource(resource);
+	}
+	
+	/**
+	 * 
+	 * @param resource
+	 * @return
+	 */
+	public int updateResource(Resource resource) {
+		return this.resources.updateResource(resource);
 	}
 	
 	/**

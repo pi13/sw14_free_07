@@ -11,7 +11,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import at.lvmaster3000.R;
+import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.database.objects.Exam;
+import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.gui.interfaces.IDialogListener;
 
 public class AddExamFragment  extends DialogFragment implements OnClickListener {
@@ -22,7 +24,9 @@ public class AddExamFragment  extends DialogFragment implements OnClickListener 
 	private Exam exam;
 	private EditText examTitle;
 	private EditText examComment;
-
+	
+	private long lectureId;	
+	private IDBlogic dbLogic;
 
 	public static AddExamFragment newInstance(Context context) {
 		AddExamFragment dialog = new AddExamFragment();
@@ -63,6 +67,10 @@ public class AddExamFragment  extends DialogFragment implements OnClickListener 
 
 		examTitle = (EditText) view.findViewById(R.id.add_exam_title);
 		examComment = (EditText) view.findViewById(R.id.add_exam_comment);
+		
+		Bundle bundle = getArguments();
+		this.lectureId = bundle.getLong("lectureId");		
+		this.dbLogic = new IDBlogic(context);
 
 		return view;
 	}
@@ -72,7 +80,16 @@ public class AddExamFragment  extends DialogFragment implements OnClickListener 
 		switch (v.getId()) {
 		case R.id.ok_btn:
 			exam = new Exam(0, examTitle.getText().toString(), examComment.getText().toString(), 0);
-			dialogListener.onExamAdd(this);
+			
+			if(this.lectureId > 0) {
+				Lecture lecture = new Lecture();
+				lecture.setID(this.lectureId);
+				this.dbLogic.addExamToLecture(exam, lecture);
+				dialogListener.onExamAddToLecture(this);
+			} else {
+				dialogListener.onExamAdd(this);
+			}			
+			
 			break;
 
 		case R.id.cancel_btn:
