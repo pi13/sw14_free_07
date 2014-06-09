@@ -10,12 +10,12 @@ import at.lvmaster3000.R;
 
 public class UIFragmentBase extends Fragment {
 	
-	protected void switchToFragemnt(Fragment fragment)
+	protected void switchToFragemnt(Fragment fragment, String fragmentTag)
 	{
 		if (fragment != null) {
 			FragmentManager fragManager = getFragmentManager();
 			FragmentTransaction fragTrans =  fragManager.beginTransaction();
-			fragTrans.replace(R.id.frame_container, fragment);
+			fragTrans.replace(R.id.frame_container,fragment,  fragmentTag);
 			fragTrans.addToBackStack(null);
 			fragTrans.commit();
 		}

@@ -14,6 +14,8 @@
     <string name="required">Required</string>
     <string name="compulsory">Compulsory</string>
     
+    <string name="lecture_details_frag">lecture_details_frag</string>
+
     <string name="hint_lecture_id">123.456</string>
     <string name="hint_lecture_name">Lecture Name</string>
     <string name="hint_exam_title">Exam title</string>

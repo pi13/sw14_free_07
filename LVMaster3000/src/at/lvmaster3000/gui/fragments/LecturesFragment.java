@@ -81,7 +81,7 @@ public class LecturesFragment extends UIFragmentBase implements OnItemClickListe
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,	long id) {
-			switchToFragemnt(LectureDetailsFragment.newInstance((Lecture) adapter.getItem(position), context, dbLogic));
+			switchToFragemnt(LectureDetailsFragment.newInstance((Lecture) adapter.getItem(position), context, dbLogic),getResources().getString(R.string.lecture_details_frag));
 	}
 	
 	@Override
