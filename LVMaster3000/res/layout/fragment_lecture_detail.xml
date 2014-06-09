@@ -85,7 +85,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@id/details_lect_dates"
         android:divider="@color/white"
-        android:groupIndicator="@drawable/expandable_list_selector" >
+        android:groupIndicator="@drawable/expandable_list_selector">
     </ExpandableListView>
 
     <ExpandableListView
@@ -95,7 +95,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@id/details_lect_exams"
         android:divider="@color/white"
-        android:groupIndicator="@drawable/expandable_list_selector" >
+        android:groupIndicator="@drawable/expandable_list_selector">
     </ExpandableListView>
 
     <ExpandableListView
@@ -105,7 +105,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@id/details_lect_tasks"
         android:divider="@color/white"
-        android:groupIndicator="@drawable/expandable_list_selector" >
+        android:groupIndicator="@drawable/expandable_list_selector">
     </ExpandableListView>
 
 </RelativeLayout>
