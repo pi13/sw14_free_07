@@ -320,7 +320,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 
 	@Override
 	public void updateLectureExam(Exam exam) {
-		// TODO Auto-generated method stub
+		//
 		
 	}
 

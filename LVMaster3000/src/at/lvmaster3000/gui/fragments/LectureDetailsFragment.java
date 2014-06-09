@@ -167,6 +167,7 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 			isCompulsoryChb.setChecked(true);
 		}
 	}
+	
 	private void addGroups(IDBlogic dbLogic) {
 		ExamGroup exam = new ExamGroup(getResources().getString(R.string.exams));
 		exam.setChildren(dbLogic.getExamsForLecture(lecture).getExams());
@@ -293,3 +294,4 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 		}
 	}
 }
+
