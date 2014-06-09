@@ -1,23 +1,20 @@
 package at.lvmaster3000.gui.adapters;
 
+import java.util.Calendar;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.NetworkInfo.DetailedState;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.objects.Date;
-import at.lvmaster3000.database.objects.Task;
 import at.lvmaster3000.gui.fragments.TasksFragment;
 
-public class HomeDateListAdapter extends BaseAdapter implements OnClickListener{
+public class HomeDateListAdapter extends BaseAdapter{
 
 	private Context context;
 	private List<Date> dates;
@@ -31,17 +28,17 @@ public class HomeDateListAdapter extends BaseAdapter implements OnClickListener{
 	
 	@Override
 	public int getCount() {
-		return tasks.size();
+		return dates.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return tasks.get(position);
+		return dates.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		return tasks.get(position).getId();
+		return dates.get(position).getID();
 	}
 
 	@Override
@@ -50,22 +47,14 @@ public class HomeDateListAdapter extends BaseAdapter implements OnClickListener{
 		{
             LayoutInflater mInflater = (LayoutInflater)
                     context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            convertView = mInflater.inflate(R.layout.single_list_item, null);
+            convertView = mInflater.inflate(R.layout.date_list_item, null);
 		}
 		
-		TextView title = (TextView)convertView.findViewById(R.id.list_item_label);
-		title.setText(tasks.get(position).getTitle());
-		
-		ImageButton imgBtn = (ImageButton)convertView.findViewById(R.id.delete_list_item_btn);
-		imgBtn.setTag(position);
-		imgBtn.setOnClickListener(this);
-		
+		TextView title = (TextView)convertView.findViewById(R.id.date_item_label);
+	    Calendar cal = Calendar.getInstance();
+	    cal.setTime(new java.util.Date(dates.get(position).getTimestamp()*1000));
+		title.setText(cal.get(Calendar.DAY_OF_MONTH) + "-" + cal.get(Calendar.MONTH) + "-" + cal.get(Calendar.YEAR));
+				
 		return convertView;
-	}
-
-	@Override
-	public void onClick(View v) {
-		taskFragment.onClick(v);
-		
 	}
 }

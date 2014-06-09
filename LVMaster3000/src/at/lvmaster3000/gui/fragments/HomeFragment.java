@@ -16,6 +16,7 @@ import android.widget.ListView;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.database.objects.Date;
+import at.lvmaster3000.gui.adapters.HomeDateListAdapter;
 import at.lvmaster3000.gui.adapters.LectureListAdapter;
 
 public class HomeFragment extends UIFragmentBase {
@@ -23,14 +24,14 @@ public class HomeFragment extends UIFragmentBase {
 	private Context context;
 	private IDBlogic dbLogic;
 	private ListView dates;
-	private ListAdapter adapter;
+	private HomeDateListAdapter adapter;
 	
 	public static HomeFragment newInstance(Context context, IDBlogic dbLogic) 
 	{
 		HomeFragment base = new HomeFragment();
 		base.context = context;		
 		base.dbLogic = dbLogic;
-
+		base.adapter = new HomeDateListAdapter(base.context, base.dbLogic.getDates(10).getDates());
 		return base;
 	}
 	
@@ -38,15 +39,10 @@ public class HomeFragment extends UIFragmentBase {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
  
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        datePicker  = (DatePicker) rootView.findViewById(R.id.home_dates);
         
-        //Calendar cal = Calendar.getInstance();
-        CalendarView cv = datePicker.getCalendarView();
-        
-        for (Date date : dbLogic.getDates(15).getDates()) 
-        {
-        	cv.setDate(date.getTimestamp()*1000);
-		}
+        dates = (ListView)rootView.findViewById(R.id.home_dates);
+        dates.setAdapter(adapter);
+
         return rootView;
     }
 	
