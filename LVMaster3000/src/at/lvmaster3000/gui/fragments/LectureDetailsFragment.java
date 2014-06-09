@@ -361,7 +361,7 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 	@Override
 	public void onPause() {
 		super.onPause();
-		updateLecture();
+//		updateLecture();
 	}
 	
 	@Override
