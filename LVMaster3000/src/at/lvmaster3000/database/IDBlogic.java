@@ -201,6 +201,15 @@ public class IDBlogic {
 	 * @param exam
 	 * @return
 	 */
+	public int updateExam(Exam exam) {
+		return this.exames.updateExam(exam);
+	}
+	
+	/**
+	 * 
+	 * @param exam
+	 * @return
+	 */
 	public int deleteExam(Exam exam){
 		return this.exames.deleteExam(exam);
 	}
@@ -228,6 +237,15 @@ public class IDBlogic {
 	 * @param task
 	 * @return
 	 */
+	public int updateTask(Task task) {
+		return this.tasks.updateTask(task);
+	}
+	
+	/**
+	 * 
+	 * @param task
+	 * @return
+	 */
 	public int deleteTask(Task task){
 		return this.tasks.deleteTask(task);
 	}
@@ -248,6 +266,15 @@ public class IDBlogic {
 	 */
 	public long addResource(Resource resource){
 		return this.resources.addResource(resource);
+	}
+	
+	/**
+	 * 
+	 * @param resource
+	 * @return
+	 */
+	public int updateResource(Resource resource) {
+		return this.resources.updateResource(resource);
 	}
 	
 	/**
