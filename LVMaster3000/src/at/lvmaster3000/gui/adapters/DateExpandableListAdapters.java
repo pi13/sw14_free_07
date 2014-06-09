@@ -1,7 +1,6 @@
 package at.lvmaster3000.gui.adapters;
 
 import android.app.Fragment;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,18 +9,17 @@ import android.view.View.OnClickListener;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
-import android.widget.Toast;
 import at.lvmaster3000.R;
-import at.lvmaster3000.database.objects.Exam;
-import at.lvmaster3000.gui.ExamGroup;
+import at.lvmaster3000.database.objects.Date;
+import at.lvmaster3000.gui.DateGroup;
 
-public class ExamExpandableListAdapter extends BaseExpandableListAdapter{
+public class DateExpandableListAdapters extends BaseExpandableListAdapter{
 
-	private final SparseArray<ExamGroup> groups;
+	private final SparseArray<DateGroup> groups;
 	public LayoutInflater inflater;
 	public Fragment fragment;
 	
-	public ExamExpandableListAdapter(Fragment frag, SparseArray<ExamGroup> groups)
+	public DateExpandableListAdapters(Fragment frag, SparseArray<DateGroup> groups)
 	{
 		this.fragment = frag;
 		this.groups = groups;
@@ -69,7 +67,7 @@ public class ExamExpandableListAdapter extends BaseExpandableListAdapter{
 	    if (convertView == null) {
 	        convertView = inflater.inflate(R.layout.exp_list_row_group, null);
 	      }
-	      ExamGroup group = (ExamGroup) getGroup(groupPosition);
+	      DateGroup group = (DateGroup) getGroup(groupPosition);
 	      ((CheckedTextView) convertView).setText(group.getGroupName());
 	      ((CheckedTextView) convertView).setChecked(isExpanded);
 	      return convertView;
@@ -79,14 +77,15 @@ public class ExamExpandableListAdapter extends BaseExpandableListAdapter{
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
 		
-		Exam children = (Exam) getChild(groupPosition, childPosition);
+		final Date children = (Date) getChild(groupPosition, childPosition);
 		TextView text = null;
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.single_list_item, null);
 		}
 		text = (TextView) convertView.findViewById(R.id.list_item_label);
-		text.setText(children.getTitle());
-
+		java.util.Date date = new java.util.Date();
+		date.setTime((long)children.getTimestamp() * 1000);
+		text.setText(date.toString());
 		convertView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -102,5 +101,6 @@ public class ExamExpandableListAdapter extends BaseExpandableListAdapter{
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return false;
 	}
+
 
 }

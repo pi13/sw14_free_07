@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.IDBlogic;
@@ -44,6 +45,7 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 	private EditText lvName;
 	private EditText lvComment;
 	private Spinner lvType;
+	private RelativeLayout inputContainer;
 	
 	private ArrayAdapter<CharSequence> lvTypeAdapter;
 	ExamExpandableListAdapter examsAdapter;
@@ -101,6 +103,7 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 		lvNumber = (EditText) view.findViewById(R.id.details_lect_lectId);
 		lvName = (EditText) view.findViewById(R.id.details_lect_lectName);
 		lvComment = (EditText) view.findViewById(R.id.details_lect_comment);
+		inputContainer = (RelativeLayout)view.findViewById(R.id.details_lecture_fields);
 
 		lvType = (Spinner) view.findViewById(R.id.details_lect_lectType);
 		lvType.setAdapter(lvTypeAdapter);
@@ -111,7 +114,7 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 
 		CheckBox isCompulsory = (CheckBox) view
 				.findViewById(R.id.details_lect_compulsory);
-		isCompulsory.setOnClickListener(this);
+		isCompulsory.setOnClickListener(this);		
 
 		return view;
 	}
@@ -168,7 +171,7 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 		ExamGroup exam = new ExamGroup(getResources().getString(R.string.exams));
 		exam.setChildren(dbLogic.getExamsForLecture(lecture).getExams());
 		examsGroup.append(0, exam);
-
+		
 		TaskGroup task = new TaskGroup(getResources().getString(R.string.tasks));
 		task.setChildren(dbLogic.getTasksForLecture(lecture).getTasks());
 		tasksGroup.append(0, task);
