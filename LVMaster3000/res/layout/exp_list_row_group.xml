@@ -8,9 +8,10 @@
     android:background="@drawable/list_selector"
     android:gravity="left"
     android:paddingLeft="32dp"
-    android:paddingTop="8dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
     android:textAlignment="textEnd"
     android:textColor="#ffffff"
-    android:textSize="17sp"
-    android:textStyle="bold" />
+    android:textSize="22sp"
+    android:textStyle="normal" />
  

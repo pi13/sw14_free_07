@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.database.objects.Lecture;
@@ -56,6 +57,12 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 	int isCompulsory;
 
 	private Boolean initDone;
+	
+	private boolean logContainerToggle;
+	private boolean examsExpanded;
+	private boolean tasksExpanded;
+	private boolean resourcesExpanded;
+	
 
 	public static LectureDetailsFragment newInstance(Lecture lecture, Context context, IDBlogic dbLogic) {
 		LectureDetailsFragment details = new LectureDetailsFragment();
@@ -146,18 +153,33 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 		listviewTasks.setAdapter(tasksAdapter);
 		listviewResources.setAdapter(resourcesAdapter);
 		
+		logContainerToggle = false;
+		examsExpanded = false;
+		tasksExpanded = false;
+		resourcesExpanded = false;
+		
 		listviewExams.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-	        public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-	        	Log.w("TEST_", "Exams click");
+	        public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {	        	
+	        	if(!examsExpanded) {
+	        		examsExpanded = true;
+	        	} else {
+	        		examsExpanded = false;
+	        	}
+	        	
+//	        	Log.w("TEST_", "expaned: " +  examsExpanded + " / " + tasksExpanded + " / " + resourcesExpanded);
 	        	
 	        	if(inputContainer.getVisibility() == View.VISIBLE) {
 	        		inputContainer.setVisibility(View.GONE);	        		
-	        	} else {
+	        	} 
+	        	
+	        	if(inputContainer.getVisibility() == View.GONE && !examsExpanded && !tasksExpanded && !resourcesExpanded) {
 	        		inputContainer.setVisibility(View.VISIBLE);
 	        	}
 	        	
 	        	listviewTasks.collapseGroup(0);
+	        	tasksExpanded = false;
         		listviewResources.collapseGroup(0);
+        		resourcesExpanded = false;
 	        	
 	        	return false;
 	        }
@@ -165,16 +187,26 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 		
 		listviewTasks.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 	        public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-	        	Log.w("TEST_", "Tasks click");
+	        	if(!tasksExpanded) {
+	        		tasksExpanded = true;
+	        	} else {
+	        		tasksExpanded = false;
+	        	}
+	        	
+//	        	Log.w("TEST_", "expaned: " +  examsExpanded + " / " + tasksExpanded + " / " + resourcesExpanded);
 	        	
 	        	if(inputContainer.getVisibility() == View.VISIBLE) {
 	        		inputContainer.setVisibility(View.GONE);	        		
-	        	} else {
+	        	} 
+	        	
+	        	if(inputContainer.getVisibility() == View.GONE && !examsExpanded && !tasksExpanded && !resourcesExpanded) {
 	        		inputContainer.setVisibility(View.VISIBLE);
 	        	}
 	        	
 	        	listviewExams.collapseGroup(0);
+	        	examsExpanded = false;
         		listviewResources.collapseGroup(0);
+        		resourcesExpanded = false;
 	        	
 	        	return false;
 	        }
@@ -182,17 +214,27 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 		
 		listviewResources.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 	        public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {	        	
-	        	Log.w("TEST_", "Resources click");
+	        	if(!resourcesExpanded) {
+	        		resourcesExpanded = true;
+	        	} else {
+	        		resourcesExpanded = false;
+	        	}
+	        	
+//	        	Log.w("TEST_", "expaned: " +  examsExpanded + " / " + tasksExpanded + " / " + resourcesExpanded);
 	        	
 	        	if(inputContainer.getVisibility() == View.VISIBLE) {
 	        		inputContainer.setVisibility(View.GONE);	        		
-	        	} else {
+	        	} 
+	        	
+	        	if(inputContainer.getVisibility() == View.GONE && !examsExpanded && !tasksExpanded && !resourcesExpanded) {
 	        		inputContainer.setVisibility(View.VISIBLE);
 	        	}
 	        	
 	        	listviewExams.collapseGroup(0);
+	        	examsExpanded = false;
         		listviewTasks.collapseGroup(0);
-	        	
+        		tasksExpanded = false;
+        			        	
 	        	return false;
 	        }
 	    });		
@@ -311,12 +353,15 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 			updateLectureListener.updateLecture(lecture);
 		}
 
+		Toast.makeText(context, "Saved :)", Toast.LENGTH_LONG).show();
+		
+		Log.i("TEST_", "updateLecture");
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-		updateLecture();
+//		updateLecture();
 	}
 	
 	@Override
@@ -347,6 +392,11 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 		bundle.putLong("lectureId", lecture.getID());
 		
 		switch (item.getItemId()) {
+		case R.id.action_save:
+			
+				updateLecture();
+			
+				return true;
 			case R.id.action_addDate:
 				Log.w("TEST_", "action_addDate");
 				return true;
