@@ -70,8 +70,10 @@ public class AddResourceFragment extends DialogFragment implements	OnClickListen
 		resTitle = (EditText) view.findViewById(R.id.add_res_title);
 		
 		Bundle bundle = getArguments();
-		this.lectureId = bundle.getLong("lectureId");		
-		this.dbLogic = new IDBlogic(context);
+		if(bundle != null) {
+			this.lectureId = bundle.getLong("lectureId");		
+			this.dbLogic = new IDBlogic(context);
+		}
 
 		return view;
 	}

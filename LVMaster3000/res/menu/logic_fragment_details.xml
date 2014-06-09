@@ -4,6 +4,13 @@
     tools:context="at.lvmaster3000.MainActivity" >
     
     <item 
+	    android:id="@+id/action_save"
+	    android:orderInCategory="101"
+	    android:title="Save"
+	    android:icon="@drawable/ic_action_save"
+	    android:showAsAction="always"/>
+    
+    <item 
 	    android:id="@+id/action_addDate"
 	    android:orderInCategory="101"
 	    android:title="Add Date"

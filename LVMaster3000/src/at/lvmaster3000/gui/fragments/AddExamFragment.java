@@ -69,8 +69,10 @@ public class AddExamFragment  extends DialogFragment implements OnClickListener 
 		examComment = (EditText) view.findViewById(R.id.add_exam_comment);
 		
 		Bundle bundle = getArguments();
-		this.lectureId = bundle.getLong("lectureId");		
-		this.dbLogic = new IDBlogic(context);
+		if(bundle != null) {
+			this.lectureId = bundle.getLong("lectureId");		
+			this.dbLogic = new IDBlogic(context);
+		}
 
 		return view;
 	}
