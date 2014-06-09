@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -94,6 +96,26 @@ public class TaskDetailsFragment extends UIFragmentBase{
 	public void onPause() {
 		super.onPause();
 		updateExam();
+	}
+	
+	@Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+        getActivity().invalidateOptionsMenu();
+    }
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {		
+		menu.clear();
+	    inflater.inflate(R.menu.tasks_fragment_details, menu);
+	}
+	
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {	
+		menu.clear();
+		MenuInflater inflater = getActivity().getMenuInflater();
+	    inflater.inflate(R.menu.tasks_fragment_details, menu);
 	}
 
 }
