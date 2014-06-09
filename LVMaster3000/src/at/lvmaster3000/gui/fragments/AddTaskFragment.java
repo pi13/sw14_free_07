@@ -26,7 +26,6 @@ public class AddTaskFragment extends DialogFragment implements OnClickListener {
 	private Task task;
 	private EditText taskTitle;
 	private EditText taskComment;
-	private EditText taskLocation;
 
 	private long lectureId;	
 	private IDBlogic dbLogic;
@@ -71,7 +70,6 @@ public class AddTaskFragment extends DialogFragment implements OnClickListener {
 
 		taskTitle = (EditText) view.findViewById(R.id.add_task_title);
 		taskComment = (EditText) view.findViewById(R.id.add_task_comment);
-		taskLocation = (EditText) view.findViewById(R.id.add_task_location);
 		
 		Bundle bundle = getArguments();
 		if(bundle != null) {
@@ -88,7 +86,7 @@ public class AddTaskFragment extends DialogFragment implements OnClickListener {
 		case R.id.ok_btn:
 			
 			task = new Task(0, taskTitle.getText().toString(), taskComment.getText().toString(), new Date(0, new java.util.Date().getTime(),
-					taskLocation.getText().toString(), "", taskComment.getText().toString()));
+					"", "", taskComment.getText().toString()));
 						
 			if(this.lectureId > 0) {				
 				Lecture lecture = new Lecture();
