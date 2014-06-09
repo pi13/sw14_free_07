@@ -294,4 +294,13 @@ public class IDBlogic {
 	public Resources getResources(int limit){
 		return this.resources.getResources(limit);
 	}
+	
+	/**
+	 * 
+	 * @param limit
+	 * @return
+	 */
+	public Dates getDates(int limit) {
+		return this.dates.getDates(limit);
+	}
 }
