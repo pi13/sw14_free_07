@@ -84,7 +84,7 @@ public class DDTestsetA {
         this.hlpdates.openCon();
         this.hlpdates.resetTable();  
         long unixTime = System.currentTimeMillis() / 1000L;
-        long hour = 60;
+        long hour = 3600;
         long day = hour * 24;
         long week = day * 7;
         long did1 = hlpdates.addDate(unixTime, "Testlocation 1", "LV", "Thats a comment");
@@ -97,7 +97,7 @@ public class DDTestsetA {
         this.datescnt += 1;
         long did5 = hlpdates.addDate(unixTime + week, "Testlocation 5", "LV", "Thats a comment");
         this.datescnt += 1;
-//        this.hlpdates.allEntriesToLog();
+        this.hlpdates.allEntriesToLog();
         this.hlpdates.closeCon();
         
         //add exams
