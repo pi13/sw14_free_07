@@ -1,6 +1,5 @@
 package at.lvmaster3000;
 
-import java.io.PipedOutputStream;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -21,9 +20,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebIconDatabase.IconListener;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.database.objects.Exam;
@@ -31,17 +28,14 @@ import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.database.objects.Resource;
 import at.lvmaster3000.database.objects.Task;
 import at.lvmaster3000.gui.NavDrawerItem;
-import at.lvmaster3000.gui.adapters.ExamListAdapter;
-import at.lvmaster3000.gui.adapters.LectureListAdapter;
 import at.lvmaster3000.gui.adapters.NavDrawerListAdapter;
-import at.lvmaster3000.gui.adapters.ResourceListAdapter;
-import at.lvmaster3000.gui.adapters.TaskListAdapter;
 import at.lvmaster3000.gui.fragments.AddExamFragment;
 import at.lvmaster3000.gui.fragments.AddLectureFragment;
 import at.lvmaster3000.gui.fragments.AddResourceFragment;
 import at.lvmaster3000.gui.fragments.AddTaskFragment;
 import at.lvmaster3000.gui.fragments.ExamsFragment;
 import at.lvmaster3000.gui.fragments.HomeFragment;
+import at.lvmaster3000.gui.fragments.LectureDetailsFragment;
 import at.lvmaster3000.gui.fragments.LecturesFragment;
 import at.lvmaster3000.gui.fragments.ResourcesFragment;
 import at.lvmaster3000.gui.fragments.TasksFragment;
@@ -303,6 +297,27 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		TasksFragment taskFrag = (TasksFragment)fragManager.findFragmentByTag(getResources().getString(R.string.tasks));
 		taskFrag.updateTaskList(temp.getTask());
 		updateElemetnCount(POS_TASKS);
+		dialog.dismiss();
+	}
+	
+	@Override
+	public void onTaskAddToLecture(DialogFragment dialog) {
+		LectureDetailsFragment taskFrag = (LectureDetailsFragment)fragManager.findFragmentByTag(getResources().getString(R.string.lecture_details_frag));		
+		taskFrag.updateTaskList();		
+		dialog.dismiss();
+	}
+	
+	@Override
+	public void onExamAddToLecture(DialogFragment dialog) {
+		LectureDetailsFragment taskFrag = (LectureDetailsFragment)fragManager.findFragmentByTag(getResources().getString(R.string.lecture_details_frag));		
+		taskFrag.updateExamList();
+		dialog.dismiss();
+	}
+	
+	@Override
+	public void onResourceAddToLecture(DialogFragment dialog) {
+		LectureDetailsFragment taskFrag = (LectureDetailsFragment)fragManager.findFragmentByTag(getResources().getString(R.string.lecture_details_frag));		
+		taskFrag.updateResourceList();
 		dialog.dismiss();
 	}
 

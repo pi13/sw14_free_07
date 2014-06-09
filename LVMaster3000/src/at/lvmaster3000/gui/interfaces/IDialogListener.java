@@ -17,4 +17,10 @@ public interface IDialogListener {
 	public void onTaskAdd(DialogFragment dialog);
 
 	public void onDialogNegativeClick(DialogFragment dialog);
+
+	void onTaskAddToLecture(DialogFragment dialog);
+
+	void onExamAddToLecture(DialogFragment dialog);
+
+	void onResourceAddToLecture(DialogFragment dialog);
 }

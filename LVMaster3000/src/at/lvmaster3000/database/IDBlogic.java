@@ -85,12 +85,34 @@ public class IDBlogic {
 		return this.lectures.addTaskToLecture(task, lecture);
 	}
 	
+	/**
+	 * 
+	 * @param date
+	 * @param lecture
+	 * @return
+	 */
 	public long addDateToLecture(Date date, Lecture lecture) {
 		return this.lectures.addDateToLecture(date, lecture);
 	}
 	
+	/**
+	 * 
+	 * @param exam
+	 * @param lecture
+	 * @return
+	 */
 	public long addExamToLecture(Exam exam, Lecture lecture) {
 		return this.lectures.addExamToLecture(exam, lecture);
+	}
+	
+	/**
+	 * 
+	 * @param resource
+	 * @param lecture
+	 * @return
+	 */
+	public long addResourceToLecture(Resource resource, Lecture lecture) {
+		return this.lectures.addResourceToLecture(resource, lecture);
 	}
 	
 	/**

@@ -11,6 +11,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import at.lvmaster3000.R;
+import at.lvmaster3000.database.IDBlogic;
+import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.database.objects.Resource;
 import at.lvmaster3000.gui.interfaces.IDialogListener;
 
@@ -24,6 +26,9 @@ public class AddResourceFragment extends DialogFragment implements	OnClickListen
 
 	int isRequired;
 	int isCompulsory;
+	
+	private long lectureId;	
+	private IDBlogic dbLogic;
 
 	public static AddResourceFragment newInstance(Context context) {
 		AddResourceFragment dialog = new AddResourceFragment();
@@ -64,6 +69,9 @@ public class AddResourceFragment extends DialogFragment implements	OnClickListen
 
 		resTitle = (EditText) view.findViewById(R.id.add_res_title);
 		
+		Bundle bundle = getArguments();
+		this.lectureId = bundle.getLong("lectureId");		
+		this.dbLogic = new IDBlogic(context);
 
 		return view;
 	}
@@ -75,7 +83,17 @@ public class AddResourceFragment extends DialogFragment implements	OnClickListen
 			String value = resTitle.getText().toString();
 			if (value != null) {
 				resource = new Resource(value);
-				dialogListener.onResourceAdd(this);
+				
+				if(this.lectureId > 0) {
+					Lecture lecture = new Lecture();
+					lecture.setID(this.lectureId);
+					this.dbLogic.addResourceToLecture(resource, lecture);
+					dialogListener.onResourceAddToLecture(this);
+					
+				} else {
+					dialogListener.onResourceAdd(this);
+				}
+				
 			}else
 			{
 				dialogListener.onDialogNegativeClick(this);

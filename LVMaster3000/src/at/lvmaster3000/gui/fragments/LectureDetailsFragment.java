@@ -167,6 +167,7 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 			isCompulsoryChb.setChecked(true);
 		}
 	}
+	
 	private void addGroups(IDBlogic dbLogic) {
 		ExamGroup exam = new ExamGroup(getResources().getString(R.string.exams));
 		exam.setChildren(dbLogic.getExamsForLecture(lecture).getExams());
@@ -179,6 +180,36 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 		ResourceGroup res = new ResourceGroup(getResources().getString(R.string.resources));
 		res.setChildren(dbLogic.getResourcesForLecture(lecture).getResources());
 		resourcesGroup.append(0, res);
+	}
+	
+	public void updateTaskList() {
+		tasksGroup.clear();
+		
+		TaskGroup task = new TaskGroup(getResources().getString(R.string.tasks));
+		task.setChildren(dbLogic.getTasksForLecture(lecture).getTasks());
+		tasksGroup.append(0, task);
+		
+		tasksAdapter.notifyDataSetChanged();
+	}
+	
+	public void updateExamList() {
+		examsGroup.clear();
+		
+		ExamGroup exam = new ExamGroup(getResources().getString(R.string.exams));
+		exam.setChildren(dbLogic.getExamsForLecture(lecture).getExams());
+		examsGroup.append(0, exam);
+		
+		examsAdapter.notifyDataSetChanged();
+	}
+	
+	public void updateResourceList() {
+		resourcesGroup.clear();
+		
+		ResourceGroup res = new ResourceGroup(getResources().getString(R.string.resources));
+		res.setChildren(dbLogic.getResourcesForLecture(lecture).getResources());
+		resourcesGroup.append(0, res);
+		
+		resourcesAdapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -259,14 +290,14 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		DialogFragment newFragment;
 		
+		Bundle bundle = new Bundle();
+		bundle.putLong("lectureId", lecture.getID());
+		
 		switch (item.getItemId()) {
 			case R.id.action_addDate:
 				Log.w("TEST_", "action_addDate");
 				return true;
 			case R.id.action_addTask:
-				
-				Bundle bundle = new Bundle();
-				bundle.putLong("lectureId", lecture.getID());
 				
 				newFragment = AddTaskFragment.newInstance(context);
 				newFragment.setArguments(bundle);
@@ -277,6 +308,7 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 			case R.id.action_addExam:
 				
 				newFragment = AddExamFragment.newInstance(context);
+				newFragment.setArguments(bundle);
 			    newFragment.show(getFragmentManager(), "add_exam_dialog");
 				
 				Log.w("TEST_", "action_addExam");
@@ -284,6 +316,7 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 			case R.id.action_addResource:
 				
 				newFragment = AddResourceFragment.newInstance(context);
+				newFragment.setArguments(bundle);
 			    newFragment.show(getFragmentManager(), "add_resource_dialog");
 				
 				Log.w("TEST_", "action_addResource");
