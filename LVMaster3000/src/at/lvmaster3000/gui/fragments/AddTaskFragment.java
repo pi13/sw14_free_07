@@ -4,14 +4,17 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import at.lvmaster3000.R;
+import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.database.objects.Date;
+import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.database.objects.Task;
 import at.lvmaster3000.gui.interfaces.IDialogListener;
 
@@ -25,6 +28,9 @@ public class AddTaskFragment extends DialogFragment implements OnClickListener {
 	private EditText taskComment;
 	private EditText taskLocation;
 
+	private long lectureId;
+	
+	private IDBlogic dbLogic;
 
 	public static AddTaskFragment newInstance(Context context) {
 		AddTaskFragment dialog = new AddTaskFragment();
@@ -66,6 +72,11 @@ public class AddTaskFragment extends DialogFragment implements OnClickListener {
 		taskTitle = (EditText) view.findViewById(R.id.add_task_title);
 		taskComment = (EditText) view.findViewById(R.id.add_task_comment);
 		taskLocation = (EditText) view.findViewById(R.id.add_task_location);
+		
+		Bundle bundle = getArguments();
+		this.lectureId = bundle.getLong("lectureId");
+		
+		this.dbLogic = new IDBlogic(context);
 
 		return view;
 	}
@@ -74,10 +85,23 @@ public class AddTaskFragment extends DialogFragment implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ok_btn:
+			
 			task = new Task(0, taskTitle.getText().toString(), taskComment.getText().toString(), new Date(0, new java.util.Date().getTime(),
-																taskLocation.getText().toString(), "", taskComment.getText().toString()));
-
-			dialogListener.onTaskAdd(this);
+					taskLocation.getText().toString(), "", taskComment.getText().toString()));
+			
+			Log.i("TEST_", "l-id: " + this.lectureId);
+			
+			if(this.lectureId > 0) {				
+				Lecture lecture = new Lecture();
+				lecture.setID(this.lectureId);
+				
+				this.dbLogic.addTaskToLecture(task, lecture);
+				
+				this.dismiss();
+			} else {
+				dialogListener.onTaskAdd(this);
+			}
+			
 			break;
 
 		case R.id.cancel_btn:

@@ -276,8 +276,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		LecturesFragment lectFrag = (LecturesFragment)fragManager.findFragmentByTag(getResources().getString(R.string.lectures));
 		lectFrag.updateLectureList(temp.getLecture());
 		updateElemetnCount(POS_LECTURES);
-		dialog.dismiss();
-		
+		dialog.dismiss();		
 	}
 	
 	@Override
@@ -295,8 +294,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		ExamsFragment examFrag = (ExamsFragment)fragManager.findFragmentByTag(getResources().getString(R.string.exams));
 		examFrag.updateExamList(temp.getExam());
 		updateElemetnCount(POS_EXAMS);
-		dialog.dismiss();
-		
+		dialog.dismiss();		
 	}
 
 	@Override
@@ -306,7 +304,6 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		taskFrag.updateTaskList(temp.getTask());
 		updateElemetnCount(POS_TASKS);
 		dialog.dismiss();
-		
 	}
 
 	@Override

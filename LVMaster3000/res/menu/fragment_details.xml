@@ -1,0 +1,34 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="at.lvmaster3000.MainActivity" >
+    
+    <item 
+	    android:id="@+id/action_addDate"
+	    android:orderInCategory="101"
+	    android:title="Add Date"
+	    android:icon="@drawable/ic_action_new"
+	    android:showAsAction="never"/>
+    
+    <item 
+	    android:id="@+id/action_addTask"
+	    android:orderInCategory="102"
+	    android:title="Add Task"
+	    android:icon="@drawable/ic_action_new"
+	    android:showAsAction="never"/>
+    
+    <item 
+	    android:id="@+id/action_addExam"
+	    android:orderInCategory="103"
+	    android:title="Add Exam"
+	    android:icon="@drawable/ic_action_new"
+	    android:showAsAction="never"/>    
+    
+    <item 
+	    android:id="@+id/action_addResource"
+	    android:orderInCategory="104"
+	    android:title="Add Resource"
+	    android:icon="@drawable/ic_action_new"
+	    android:showAsAction="never"/>
+
+</menu>

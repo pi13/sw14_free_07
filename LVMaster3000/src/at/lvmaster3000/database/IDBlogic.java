@@ -17,6 +17,7 @@ import at.lvmaster3000.database.logic.DBLLectures;
 import at.lvmaster3000.database.logic.DBLRelations;
 import at.lvmaster3000.database.logic.DBLResources;
 import at.lvmaster3000.database.logic.DBLTasks;
+import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.database.objects.Resource;
@@ -72,6 +73,24 @@ public class IDBlogic {
 	 */
 	public long addLecture(Lecture lecture) {
 		return this.lectures.addLecture(lecture);
+	}
+	
+	/**
+	 * 
+	 * @param task
+	 * @param lecture
+	 * @return
+	 */
+	public long addTaskToLecture(Task task, Lecture lecture) {
+		return this.lectures.addTaskToLecture(task, lecture);
+	}
+	
+	public long addDateToLecture(Date date, Lecture lecture) {
+		return this.lectures.addDateToLecture(date, lecture);
+	}
+	
+	public long addExamToLecture(Exam exam, Lecture lecture) {
+		return this.lectures.addExamToLecture(exam, lecture);
 	}
 	
 	/**

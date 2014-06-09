@@ -262,9 +262,13 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 				return true;
 			case R.id.action_addTask:
 				
-				newFragment = AddTaskFragment.newInstance(context);
-			    newFragment.show(getFragmentManager(), "add_task_dialog");
+				Bundle bundle = new Bundle();
+				bundle.putLong("lectureId", lecture.getID());
 				
+				newFragment = AddTaskFragment.newInstance(context);
+				newFragment.setArguments(bundle);
+			    newFragment.show(getFragmentManager(), "add_task_dialog");
+			    
 				Log.w("TEST_", "action_addTask");
 				return true;
 			case R.id.action_addExam:
