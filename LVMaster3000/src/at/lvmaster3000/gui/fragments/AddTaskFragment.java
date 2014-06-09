@@ -74,8 +74,10 @@ public class AddTaskFragment extends DialogFragment implements OnClickListener {
 		taskLocation = (EditText) view.findViewById(R.id.add_task_location);
 		
 		Bundle bundle = getArguments();
-		this.lectureId = bundle.getLong("lectureId");		
-		this.dbLogic = new IDBlogic(context);
+		if(bundle != null) {
+			this.lectureId = bundle.getLong("lectureId");
+			this.dbLogic = new IDBlogic(context);
+		}
 
 		return view;
 	}
