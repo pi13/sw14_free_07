@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="at.lvmaster3000.MainActivity" >
+    
+    <item 
+	    android:id="@+id/action_save"
+	    android:orderInCategory="101"
+	    android:title="Save"
+	    android:icon="@drawable/ic_action_save"
+	    android:showAsAction="always"/>
+
+</menu>
