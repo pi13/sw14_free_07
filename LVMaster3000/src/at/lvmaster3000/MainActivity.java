@@ -340,13 +340,13 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 
 	@Override
 	public void updateTask(Task task) {
-		// TODO Auto-generated method stub
+		dbLogic.updateTask(task);
 		
 	}
 
 	@Override
 	public void updateResource(Resource resource) {
-		// TODO Auto-generated method stub
+		dbLogic.updateResource(resource);
 		
 	}
 
