@@ -5,13 +5,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 import at.lvmaster3000.database.helper.HLPDates;
+import at.lvmaster3000.database.interfaces.IHLPTest;
 
 /**
  * test class for functionality of dates helper class
- * @author Doris Pedratscher
  *
  */
-public class HLPDatesTest extends AndroidTestCase{
+public class HLPDatesTest extends AndroidTestCase implements IHLPTest {
 
 	private HLPDates hlpObjects;
 	private SQLiteDatabase db;

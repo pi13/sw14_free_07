@@ -3,10 +3,11 @@ package at.lvmaster3000.database.logic.test;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 import at.lvmaster3000.database.demodata.DDTestsetA;
+import at.lvmaster3000.database.interfaces.IDBLTests;
 import at.lvmaster3000.database.logic.DBLResources;
 import at.lvmaster3000.database.objects.Resource;
 
-public class DBLResourcesTest extends AndroidTestCase{
+public class DBLResourcesTest extends AndroidTestCase implements IDBLTests {
 	private DBLResources dblResources;	
 	private RenamingDelegatingContext context = null;
 	
@@ -15,6 +16,24 @@ public class DBLResourcesTest extends AndroidTestCase{
 	public void setUp(){
 		this.context = new RenamingDelegatingContext(getContext(), "test_");		
 		this.dblResources = new DBLResources(this.context);		
+	}
+	
+	@Override
+	public void testAddNew() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void testDelete() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void testUpdate() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	public void testAddResource(){
@@ -33,4 +52,5 @@ public class DBLResourcesTest extends AndroidTestCase{
 		
 		assertNotSame(0, testset.getResourceCnt());
 	}
+	
 }

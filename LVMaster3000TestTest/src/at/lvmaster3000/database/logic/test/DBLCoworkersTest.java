@@ -6,12 +6,13 @@ import java.util.List;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 import android.util.Log;
+import at.lvmaster3000.database.interfaces.IDBLTests;
 import at.lvmaster3000.database.lists.Coworkers;
 import at.lvmaster3000.database.logic.DBLCoworkers;
 import at.lvmaster3000.database.objects.Coworker;
 import at.lvmaster3000.settings.CMONsettings;
 
-public class DBLCoworkersTest extends AndroidTestCase{
+public class DBLCoworkersTest extends AndroidTestCase implements IDBLTests {
 	
 	private DBLCoworkers dblCoworkers;
 	private List<Coworker> testObjects = null;
@@ -28,6 +29,7 @@ public class DBLCoworkersTest extends AndroidTestCase{
 		createTestObjects();
 	}
 	
+	@Override
 	public void testAddNew(){
 		dropAllObjects();
 		createTestObjects();
@@ -35,6 +37,18 @@ public class DBLCoworkersTest extends AndroidTestCase{
 		long idFromDatabase = dblCoworkers.addCoworker(this.testObjects.get(0).getRefID(), this.testObjects.get(0).getRole());
 		
 		assertNotSame(-1l, idFromDatabase);
+	}
+	
+	@Override
+	public void testDelete() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void testUpdate() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	public void testGetAll(){

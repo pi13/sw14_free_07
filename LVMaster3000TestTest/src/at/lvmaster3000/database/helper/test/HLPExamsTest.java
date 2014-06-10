@@ -5,13 +5,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 import at.lvmaster3000.database.helper.HLPExams;
+import at.lvmaster3000.database.interfaces.IHLPTest;
 
 /**
  * test class for functionality of exams helper class
- * @author Doris Pedratscher
  *
  */
-public class HLPExamsTest extends AndroidTestCase{
+public class HLPExamsTest extends AndroidTestCase implements IHLPTest {
 	private HLPExams hlpObjects;
 	private SQLiteDatabase db;
 

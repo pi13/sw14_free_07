@@ -5,8 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 import at.lvmaster3000.database.helper.HLPTasks;
+import at.lvmaster3000.database.interfaces.IHLPTest;
 
-public class HLPTasksTest extends AndroidTestCase{
+public class HLPTasksTest extends AndroidTestCase implements IHLPTest {
 	private HLPTasks hlpObjects;
 	private SQLiteDatabase db;
 
@@ -14,8 +15,7 @@ public class HLPTasksTest extends AndroidTestCase{
 	 * first create new HLPLectures and open database connection
 	 */
 	public void setUp() {
-		RenamingDelegatingContext context = new RenamingDelegatingContext(
-				getContext(), "test_");
+		RenamingDelegatingContext context = new RenamingDelegatingContext(getContext(), "test_");
 		hlpObjects = new HLPTasks(context);
 		db = hlpObjects.openCon();
 	}

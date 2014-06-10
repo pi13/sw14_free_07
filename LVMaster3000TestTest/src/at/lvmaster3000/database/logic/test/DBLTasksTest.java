@@ -6,11 +6,12 @@ import java.util.List;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 import android.util.Log;
+import at.lvmaster3000.database.interfaces.IDBLTests;
 import at.lvmaster3000.database.lists.Tasks;
 import at.lvmaster3000.database.logic.DBLTasks;
 import at.lvmaster3000.database.objects.Task;
 
-public class DBLTasksTest extends AndroidTestCase{
+public class DBLTasksTest extends AndroidTestCase implements IDBLTests {
 	private DBLTasks dblObjects;
 	private List<Task> testObjects = null;
 	private int NR_TEST_OBJECTS = 0;
@@ -25,6 +26,7 @@ public class DBLTasksTest extends AndroidTestCase{
 		createTestObjects();
 	}
 	
+	@Override
 	public void testAddNew(){
 		dropAllObjects();
 		createTestObjects();
@@ -32,6 +34,18 @@ public class DBLTasksTest extends AndroidTestCase{
 		long idFromDatabase = dblObjects.addTask(this.testObjects.get(0));
 		
 		assertNotSame(-1l, idFromDatabase);
+	}
+	
+	@Override
+	public void testDelete() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void testUpdate() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	public void testGetAll(){
@@ -75,5 +89,5 @@ public class DBLTasksTest extends AndroidTestCase{
 	private void dropAllObjects(){
 		this.dblObjects = null;
 		this.dblObjects = new DBLTasks(testContext);
-	}
+	}	
 }

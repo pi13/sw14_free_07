@@ -35,4 +35,8 @@ public class Resources {
 			this.resources.get(i).printResource();
 		}
 	}
+
+	public void clear() {
+		this.resources.clear();
+	}
 }

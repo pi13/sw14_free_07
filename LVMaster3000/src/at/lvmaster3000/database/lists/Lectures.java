@@ -34,4 +34,8 @@ public class Lectures {
 			lectures.get(i).printLecture();
 		}
 	}
+
+	public void clear() {
+		this.lectures.clear();
+	}
 }

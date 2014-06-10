@@ -2,6 +2,7 @@ package at.lvmaster3000.database.logic.test;
 
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
+import at.lvmaster3000.database.interfaces.IDBLTests;
 import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.logic.DBLLectures;
 import at.lvmaster3000.database.objects.Date;
@@ -10,7 +11,7 @@ import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.database.objects.Resource;
 import at.lvmaster3000.database.objects.Task;
 
-public class DBLLecturesTest extends AndroidTestCase{
+public class DBLLecturesTest extends AndroidTestCase implements IDBLTests {
 	
 	private DBLLectures dblLectures;
 	
@@ -25,17 +26,20 @@ public class DBLLecturesTest extends AndroidTestCase{
 		this.dblLectures.resetTablesInvolved();
 	}
 	
-	public void testAddNewLecture(){
+	@Override
+	public void testAddNew(){
 		long id = this.dblLectures.addLecture("701.001","Test LV", "Some comment...", "LV", 1, 1);	
 		assertNotSame(-1l, id);
 	}
 	
-	public void testDeleteLecture(){
+	@Override
+	public void testDelete(){
 		long id = this.dblLectures.addLecture("701.001","Test LV", "Some comment...", "LV", 1, 1);
 		assertSame(1, this.dblLectures.deleteLecture(id));
 	}
 	
-	public void testUpdateLecture() {
+	@Override
+	public void testUpdate() {
 		Lecture lecture = new Lecture(0, "701.001","Test LV", "Some comment...", "LV", 1, 1);		
 		assertEquals(1, this.dblLectures.addLecture(lecture));
 		

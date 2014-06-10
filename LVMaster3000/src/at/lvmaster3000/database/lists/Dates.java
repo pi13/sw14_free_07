@@ -39,7 +39,7 @@ public class Dates {
 		return this.dates.size();
 	}
 
-	public void deleteAllDates() {
+	public void clear() {
 		this.dates.clear();
 	}
 

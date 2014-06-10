@@ -6,13 +6,13 @@ import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 import at.lvmaster3000.database.helper.HLPCoworkers;
 import at.lvmaster3000.database.helper.HLPLectures;
+import at.lvmaster3000.database.interfaces.IHLPTest;
 
 /**
  * test class for functionality of coworkers helper class
- * @author Doris Pedratscher
  *
  */
-public class HLPCoworkersTest extends AndroidTestCase {
+public class HLPCoworkersTest extends AndroidTestCase implements IHLPTest {
 
 	private HLPCoworkers hlpObjects;
 	private SQLiteDatabase db;

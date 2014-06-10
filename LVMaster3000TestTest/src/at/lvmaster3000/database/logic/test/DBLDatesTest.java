@@ -6,12 +6,13 @@ import java.util.List;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 import at.lvmaster3000.database.demodata.DDTestsetA;
+import at.lvmaster3000.database.interfaces.IDBLTests;
 import at.lvmaster3000.database.lists.Dates;
 import at.lvmaster3000.database.logic.DBLDates;
 import at.lvmaster3000.database.objects.Coworker;
 import at.lvmaster3000.database.objects.Date;
 
-public class DBLDatesTest extends AndroidTestCase{
+public class DBLDatesTest extends AndroidTestCase implements IDBLTests {
 	private DBLDates dblObjects;
 	private List<Date> testObjects = null;
 	private int NR_TEST_OBJECTS = 0;
@@ -25,6 +26,7 @@ public class DBLDatesTest extends AndroidTestCase{
 		createTestObjects();
 	}
 	
+	@Override
 	public void testAddNew(){
 		dropAllObjects();
 		createTestObjects();
@@ -34,10 +36,19 @@ public class DBLDatesTest extends AndroidTestCase{
 		assertNotSame(-1l, idFromDatabase);
 	}
 	
-	public void testGetAll(){
-//		dropAllObjects();
-//		fillTestObjectsInDBL();
+	@Override
+	public void testDelete() {
+		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void testUpdate() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void testGetAll(){		
 		DDTestsetA a = new DDTestsetA(this.testContext);
 		a.FillDb();
 		
@@ -45,17 +56,7 @@ public class DBLDatesTest extends AndroidTestCase{
 		
 		assertEquals(a.getDatesCnt(), cnt);
 	}
-	
-	private void fillTestObjectsInDBL(){
-		if(this.testObjects == null){
-			createTestObjects();
-		}
 		
-		for(Date object : this.testObjects){
-			this.dblObjects.addDate(object);
-		}
-	}
-	
 	private void createTestObjects(){
 		long unixTime = System.currentTimeMillis() / 1000L;
 		

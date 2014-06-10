@@ -35,4 +35,8 @@ public class Tasks {
 			this.tasks.get(i).printTask();
 		}
 	}
+
+	public void clear() {
+		this.tasks.clear();
+	}
 }

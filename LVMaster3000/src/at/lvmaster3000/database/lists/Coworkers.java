@@ -36,7 +36,7 @@ public class Coworkers {
 		}
 	}
 
-	public void deleteAllCoworkers() {
+	public void clear() {
 		this.coworkers.clear();		
 	}	
 	

@@ -10,6 +10,7 @@ import at.lvmaster3000.database.helper.HLPExams;
 import at.lvmaster3000.database.helper.HLPLectures;
 import at.lvmaster3000.database.helper.HLPRelations;
 import at.lvmaster3000.database.helper.HLPResources;
+import at.lvmaster3000.database.interfaces.IDBLTests;
 import at.lvmaster3000.database.lists.Coworkers;
 import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.lists.Resources;
@@ -20,7 +21,7 @@ import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Resource;
 
-public class DBLExamsTest extends AndroidTestCase{
+public class DBLExamsTest extends AndroidTestCase implements IDBLTests {
 	private DBLExams dblExams;
 	private List<Exam> testObjects = null;
 	private int NR_TEST_EXAMS = 0;
@@ -35,6 +36,24 @@ public class DBLExamsTest extends AndroidTestCase{
 		context = new RenamingDelegatingContext(getContext(), "test_");		
 		dblExams = new DBLExams(context);
 		createTestObjects();
+	}
+	
+	@Override
+	public void testAddNew() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void testDelete() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void testUpdate() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	public void testTestSet(){
@@ -207,4 +226,5 @@ public class DBLExamsTest extends AndroidTestCase{
 		this.dblExams = null;
 		this.dblExams = new DBLExams(context);
 	}
+	
 }

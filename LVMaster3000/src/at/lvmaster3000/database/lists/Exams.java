@@ -38,4 +38,8 @@ public class Exams {
 	public int nrOfExams() {
 		return this.exams.size();
 	}
+
+	public void clear() {
+		this.exams.clear();
+	}
 }
