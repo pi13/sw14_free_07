@@ -5,13 +5,11 @@ import java.util.List;
 
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
+import android.util.Log;
 import at.lvmaster3000.database.demodata.DDTestsetA;
 import at.lvmaster3000.database.helper.HLPExams;
-import at.lvmaster3000.database.helper.HLPLectures;
 import at.lvmaster3000.database.helper.HLPRelations;
-import at.lvmaster3000.database.helper.HLPResources;
 import at.lvmaster3000.database.interfaces.IDBLTests;
-import at.lvmaster3000.database.lists.Coworkers;
 import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.lists.Resources;
 import at.lvmaster3000.database.logic.DBLExams;
@@ -33,8 +31,10 @@ public class DBLExamsTest extends AndroidTestCase implements IDBLTests {
 	public static final String LOG_TAG_EXAMS_LOGIC_TEST = "TEST_EXAMS_LOGIC";
 	
 	public void setUp(){
-		context = new RenamingDelegatingContext(getContext(), "test_");		
-		dblExams = new DBLExams(context);
+		this.context = new RenamingDelegatingContext(getContext(), "test_");		
+		this.dblExams = new DBLExams(context);
+		this.dblExams.resetTablesInvolved();
+		
 		createTestObjects();
 	}
 	
@@ -79,6 +79,18 @@ public class DBLExamsTest extends AndroidTestCase implements IDBLTests {
 		assertNotSame(-1l, idFromDatabase);
 		assertEquals(1,dblExams.deleteExam(idFromDatabase));	
 		
+	}
+	
+	public void testAddExamWithDate() {
+		long unixTime = System.currentTimeMillis() / 1000L;
+		Date date = new Date(0, unixTime, "i13", "", "Comment");
+		Exam exam = new Exam(0, "Ex Title", "Comment", 0, date);
+		
+		this.dblExams.addExam(exam);
+		
+		boolean eval = ((long)date.getTimestamp() == (long)this.dblExams.getExamDate(exam).getTimestamp());
+		
+		assertTrue(eval);
 	}
 	
 	public void testGetAllExams(){
@@ -180,39 +192,15 @@ public class DBLExamsTest extends AndroidTestCase implements IDBLTests {
 		hlpRelations.addRelation(HLPExams.TABLE_NAME, 0, exId, 0, 0, resId);
 		hlpRelations.closeCon();
 		
-		Resources resources = dblExams.getExamResources(new Exam(exId, "", "", 0));
+		Resources resources = dblExams.getExamResources(new Exam(exId, "", "", 0, null));
 		
 		assertNotNull(resources);
 		assertEquals(1, resources.getResources().size());
 	}
 	
-	public void testGetCoworkersOfExam(){
-		//TODO: feature migth not be added
-		DDTestsetA TestA = new DDTestsetA(context);
-	    TestA.FillDb();
-	    
-		dropAllObjects();
-		createTestObjects();
-		
-		long id = 0;
-		Coworkers coworkers = null; //dblExams.getCoworkers(id);
-		
-//		assertNotNull(coworkers);
-	}
-	
-	private void fillTestExamsInDBL(){
-		if(this.testObjects == null){
-			createTestObjects();
-		}
-		
-		for(Exam ex : this.testObjects){
-			this.dblExams.addExam(ex);
-		}
-	}
-	
 	private void createTestObjects(){
-		Exam e1 = new Exam(0, "ex1","comm1",1);
-		Exam e2 = new Exam(0, "ex2","comm2",2);
+		Exam e1 = new Exam(0, "ex1", "comm1", 1, null);
+		Exam e2 = new Exam(0, "ex2", "comm2", 2, null);
 	
 		this.testObjects = new ArrayList<Exam>();
 		

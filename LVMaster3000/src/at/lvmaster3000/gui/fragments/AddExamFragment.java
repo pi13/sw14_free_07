@@ -81,7 +81,7 @@ public class AddExamFragment  extends DialogFragment implements OnClickListener 
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ok_btn:
-			exam = new Exam(0, examTitle.getText().toString(), examComment.getText().toString(), 0);
+			exam = new Exam(0, examTitle.getText().toString(), examComment.getText().toString(), 0, null);
 			
 			if(this.lectureId > 0) {
 				Lecture lecture = new Lecture();

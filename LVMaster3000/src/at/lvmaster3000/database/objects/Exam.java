@@ -9,16 +9,18 @@ public class Exam {
 	private String title;
 	private String comment;
 	private long lecture_id;
+	private Date date;
 	
 	public Exam() {
 		
 	}
 	
-	public Exam(long id, String title, String comment, long lectureId){
+	public Exam(long id, String title, String comment, long lectureId, Date date){
 		this.id = id; 
 		this.title = title;
 		this.comment = comment;
 		this.lecture_id = lectureId;
+		this.setDate(date);
 	}
 
 	public long getId() {
@@ -45,6 +47,12 @@ public class Exam {
 	}
 	public void setLecture_id(long lecture_id) {
 		this.lecture_id = lecture_id;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	
 	public Exam cursorToExam(Cursor cursor) {

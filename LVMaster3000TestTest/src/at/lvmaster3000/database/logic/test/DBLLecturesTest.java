@@ -90,7 +90,7 @@ public class DBLLecturesTest extends AndroidTestCase implements IDBLTests {
 		Lecture lecture = new Lecture(0, "705.001", "LV with exam", "some text ...", "LV", 0, 0);
 		this.dblLectures.addLecture(lecture);
 		
-		long eid = this.dblLectures.addExamToLecture(new Exam(0, "Ex1", "Ex1 comment", 0), lecture);
+		long eid = this.dblLectures.addExamToLecture(new Exam(0, "Ex1", "Ex1 comment", 0, null), lecture);
 		
 		assertNotSame(-1L, eid);
 	}
@@ -99,7 +99,7 @@ public class DBLLecturesTest extends AndroidTestCase implements IDBLTests {
 		Lecture lecture = new Lecture(0, "705.001", "LV with exam", "some text ...", "LV", 0, 0);
 		this.dblLectures.addLecture(lecture);
 		
-		this.dblLectures.addExamToLecture(new Exam(0, "Ex1", "Ex1 comment", 0), lecture);
+		this.dblLectures.addExamToLecture(new Exam(0, "Ex1", "Ex1 comment", 0, null), lecture);
 		
 		Exams exams = this.dblLectures.getExamsForLecture(lecture);
 		

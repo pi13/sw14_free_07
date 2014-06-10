@@ -17,7 +17,7 @@ public class ExamsTest extends AndroidTestCase implements IListTests {
 	public void testAddToList(){
 		this.exams.clear();
 		
-		Exam ex1 = new Exam(1l, "Exam 1", "Ex comment", 0);
+		Exam ex1 = new Exam(1l, "Exam 1", "Ex comment", 0, null);
 		exams.addExam(ex1);
 		
 		assertSame(1, this.exams.getExams().size());
@@ -27,7 +27,7 @@ public class ExamsTest extends AndroidTestCase implements IListTests {
 	public void testPrintList() {
 		this.exams.clear();
 		
-		Exam ex1 = new Exam(1l, "Exam 1", "Ex comment", 0);
+		Exam ex1 = new Exam(1l, "Exam 1", "Ex comment", 0, null);
 		exams.addExam(ex1);
 		
 		try {

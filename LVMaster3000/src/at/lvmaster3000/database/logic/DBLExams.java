@@ -49,6 +49,12 @@ public class DBLExams {
 		this.hlpExams.resetTable();
 		this.hlpExams.closeCon();
 	}
+	
+	public void resetTablesInvolved() {
+		this.resetTable();
+		this.dblRelations.resetTable();
+		this.dblDates.resetTable();
+	}
 
 	/**
 	 * 
@@ -58,6 +64,11 @@ public class DBLExams {
 	public long addExam(Exam exam) {
 		long id = this.addExam(exam.getTitle(), exam.getComment(), exam.getLecture_id());
 		exam.setId(id);
+		
+		if(exam.getDate() != null) {
+			this.setExamDate(exam, exam.getDate());
+		}
+		
 		return id;
 	}
 
@@ -72,6 +83,7 @@ public class DBLExams {
 		this.hlpExams.openCon();
 		long id = this.hlpExams.addExam(title, comment, lectureId);
 		this.hlpExams.closeCon();
+		
 		return id;
 	}
 	
@@ -194,8 +206,6 @@ public class DBLExams {
 		
 		long dateId = this.dblDates.addDate(date);
 		long relId = this.dblRelations.addRelation(new Relation(0, HLPExams.TABLE_NAME, 0, exam.getId(), 0, dateId, 0));
-		
-		this.dblRelations.getRelationById(relId).printRelation();
 		
 		if(dateId != -1 && relId != -1)
 			worked = true;

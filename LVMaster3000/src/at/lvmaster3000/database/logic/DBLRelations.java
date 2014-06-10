@@ -55,7 +55,7 @@ public class DBLRelations {
         		relation.cursorToRelation(cursor);   
         	}
         } else {
-        	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
+        	Log.w(DBsettings.LOG_TAG_RELATIONS, "Cursor is NULL!!");        	
         }
         this.hlpRelations.closeCon();
 		
@@ -80,7 +80,7 @@ public class DBLRelations {
         		relation.cursorToRelation(cursor);   
         	}
         } else {
-        	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
+        	Log.w(DBsettings.LOG_TAG_RELATIONS, "Cursor is NULL!!");        	
         }
         this.hlpRelations.closeCon();
 		
@@ -100,20 +100,20 @@ public class DBLRelations {
         if(cursor != null) {
         	if(cursor.getCount() > 1) {
         		this.hlpRelations.closeCon();
-        		Log.e(DBsettings.LOG_TAG_TASKS, "This should never happen. CNT: " + cursor.getCount());
+        		Log.e(DBsettings.LOG_TAG_RELATIONS, "This should never happen. CNT: " + cursor.getCount());
         		return null;
         	}
         	
         	if(cursor.getCount() < 1) {
         		this.hlpRelations.closeCon();
-        		Log.e(DBsettings.LOG_TAG_TASKS, "This are not the droids u're searching. CNT: " + cursor.getCount());
+        		Log.e(DBsettings.LOG_TAG_RELATIONS, "This are not the droids u're searching. CNT: " + cursor.getCount());
         		return null;
         	}
         	
         	cursor.moveToFirst();
         	relation.cursorToRelation(cursor);   	
         } else {
-        	Log.w(DBsettings.LOG_TAG_TASKS, "Cursor is NULL!!");        	
+        	Log.w(DBsettings.LOG_TAG_RELATIONS, "Cursor is NULL!!");        	
         }
         this.hlpRelations.closeCon();
 		
