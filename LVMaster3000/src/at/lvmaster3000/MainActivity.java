@@ -33,11 +33,14 @@ import at.lvmaster3000.gui.fragments.AddExamFragment;
 import at.lvmaster3000.gui.fragments.AddLectureFragment;
 import at.lvmaster3000.gui.fragments.AddResourceFragment;
 import at.lvmaster3000.gui.fragments.AddTaskFragment;
+import at.lvmaster3000.gui.fragments.ExamDetailsFragment;
 import at.lvmaster3000.gui.fragments.ExamsFragment;
 import at.lvmaster3000.gui.fragments.HomeFragment;
 import at.lvmaster3000.gui.fragments.LectureDetailsFragment;
 import at.lvmaster3000.gui.fragments.LecturesFragment;
+import at.lvmaster3000.gui.fragments.ResourceDetailsFragment;
 import at.lvmaster3000.gui.fragments.ResourcesFragment;
+import at.lvmaster3000.gui.fragments.TaskDetailsFragment;
 import at.lvmaster3000.gui.fragments.TasksFragment;
 import at.lvmaster3000.gui.fragments.TestFragment;
 import at.lvmaster3000.gui.interfaces.IDialogListener;
@@ -216,7 +219,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		}
 	}
 
-	private void showFragment(Fragment fragment, String tag, int position)
+	private void showFragment(Fragment fragment, String tag)
 	{
 		if (fragment != null) {
 			fragManager = getFragmentManager();
@@ -224,6 +227,18 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 			fragTrans.replace(R.id.frame_container, fragment, tag);
 			fragTrans.addToBackStack(null);
 			fragTrans.commit();
+			
+		} else {
+			// error in creating fragment
+			Log.e("MainActivity", "Error in creating fragment");
+		}
+		
+	}
+	
+	private void showFragment(Fragment fragment, String tag, int position)
+	{
+		if (fragment != null) {
+			showFragment(fragment, tag);
 
 			// update selected item and title, then close the drawer
 			mDrawerList.setItemChecked(position, true);
@@ -266,36 +281,48 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 	public void onLectureAdd(DialogFragment dialog) {
 		AddLectureFragment temp = (AddLectureFragment)dialog;
 		LecturesFragment lectFrag = (LecturesFragment)fragManager.findFragmentByTag(getResources().getString(R.string.lectures));
-		lectFrag.updateLectureList(temp.getLecture());
+		Lecture lecture = temp.getLecture();
+		lectFrag.updateLectureList(lecture);
 		updateElemetnCount(POS_LECTURES);
-		dialog.dismiss();		
+		dialog.dismiss();
+		
+		showFragment(LectureDetailsFragment.newInstance(lecture, context, dbLogic), Long.toString(lecture.getID()));
 	}
 	
 	@Override
 	public void onResourceAdd(DialogFragment dialog) {
 		AddResourceFragment temp = (AddResourceFragment)dialog;
 		ResourcesFragment resFrag = (ResourcesFragment)fragManager.findFragmentByTag(getResources().getString(R.string.resources));
-		resFrag.updateResourceList(temp.getResource());
+		Resource res = temp.getResource();
+		resFrag.updateResourceList(res);
 		updateElemetnCount(POS_RESOURCES);
 		dialog.dismiss();
+		
+		showFragment(ResourceDetailsFragment.newInstance(res, context, dbLogic), Long.toString(res.getId()));
 	}
 
 	@Override
 	public void onExamAdd(DialogFragment dialog) {
 		AddExamFragment temp = (AddExamFragment)dialog;
 		ExamsFragment examFrag = (ExamsFragment)fragManager.findFragmentByTag(getResources().getString(R.string.exams));
-		examFrag.updateExamList(temp.getExam());
+		Exam exam = temp.getExam();
+		examFrag.updateExamList(exam);
 		updateElemetnCount(POS_EXAMS);
-		dialog.dismiss();		
+		dialog.dismiss();	
+		
+		showFragment(ExamDetailsFragment.newInstance(exam, context, dbLogic), Long.toString(exam.getId()));
 	}
 
 	@Override
 	public void onTaskAdd(DialogFragment dialog) {
 		AddTaskFragment temp = (AddTaskFragment)dialog;
 		TasksFragment taskFrag = (TasksFragment)fragManager.findFragmentByTag(getResources().getString(R.string.tasks));
-		taskFrag.updateTaskList(temp.getTask());
+		Task task = temp.getTask();
+		taskFrag.updateTaskList(task);
 		updateElemetnCount(POS_TASKS);
 		dialog.dismiss();
+		
+		showFragment(TaskDetailsFragment.newInstance(task, context, dbLogic), Long.toString(task.getId()));
 	}
 	
 	@Override

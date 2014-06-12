@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.IDBlogic;
@@ -21,6 +22,7 @@ public class TaskDetailsFragment extends UIFragmentBase{
 
 	private EditText taskTitle;
 	private EditText taskComment;
+	private DatePicker datePicker;
 	private Boolean initDone;
 	
 	private Task task;
@@ -62,7 +64,7 @@ public class TaskDetailsFragment extends UIFragmentBase{
 		View view = inflater.inflate(R.layout.fragment_task_details, container, false);
 		taskTitle = (EditText) view.findViewById(R.id.detail_task_title);
 		taskComment = (EditText) view.findViewById(R.id.detail_task_comment);
-
+		datePicker = (DatePicker) view.findViewById(R.id.detail_task_date);
 		return view;
 	}
 

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
+
     <EditText
         android:id="@+id/detail_task_title"
         android:layout_width="match_parent"
@@ -26,5 +26,10 @@
         android:hint="@string/hint_comment"
         android:inputType="text" />
 
+    <DatePicker
+        android:id="@+id/detail_task_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false" />
 
 </LinearLayout>
