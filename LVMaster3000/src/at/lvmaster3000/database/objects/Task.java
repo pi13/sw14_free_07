@@ -65,11 +65,7 @@ public class Task {
 		} else {
 			this.id = cursor.getLong(idx);
 		}
-		
-		if(this.id < 0){
-			return null;
-		}
-		
+				
 		this.title = cursor.getString(cursor.getColumnIndex(HLPTasks.COL_TITLE));
 		this.comment = cursor.getString(cursor.getColumnIndex(HLPTasks.COL_COMMENT));
 //		this.date = new Date().cursorToDate(cursor);

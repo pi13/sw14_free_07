@@ -52,6 +52,10 @@ public class DBLTasks {
 		long tid = this.addTask(task.getTitle(), task.getComment());
 		task.setId(tid);
 		
+		if(task.getDate() != null) {
+//			this.dblDates.addDate(task.getDate());
+		}
+		
 		return tid;
 	}
 	

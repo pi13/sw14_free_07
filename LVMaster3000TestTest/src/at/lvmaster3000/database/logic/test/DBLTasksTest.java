@@ -9,6 +9,7 @@ import android.util.Log;
 import at.lvmaster3000.database.interfaces.IDBLTests;
 import at.lvmaster3000.database.lists.Tasks;
 import at.lvmaster3000.database.logic.DBLTasks;
+import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Task;
 
 public class DBLTasksTest extends AndroidTestCase implements IDBLTests {
@@ -46,6 +47,14 @@ public class DBLTasksTest extends AndroidTestCase implements IDBLTests {
 	public void testUpdate() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void testCreateTaskWithDate() {
+		long unixTime = System.currentTimeMillis() / 1000L;
+		Date date = new Date(0, unixTime, "i13", "", "Comment ...");		
+		Task task = new Task(0, "Task title", "Comment ...", date);
+		
+		this.dblObjects.addTask(task);
 	}
 	
 	public void testGetAll(){
