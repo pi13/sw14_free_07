@@ -1,5 +1,7 @@
 package at.lvmaster3000.gui.adapters;
 
+import java.text.SimpleDateFormat;
+
 import android.app.Fragment;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -91,7 +93,9 @@ public class DateExpandableListAdapters extends BaseExpandableListAdapter implem
 		text.setClickable(true);
 		text.setOnClickListener(this);
 		text.setTag(child);
-		text.setText(date.toString());
+				
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");		
+		text.setText(sdf.format(date));
 		
 		ImageButton imgBtn = (ImageButton)convertView.findViewById(R.id.delete_list_item_btn);
 		imgBtn.setTag(child);
