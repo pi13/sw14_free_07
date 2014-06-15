@@ -39,11 +39,15 @@ public class DBLRelations {
 		return ret;
 	}
 	
-	public int deleteRelation(Relation relation) {
+	public int deleteRelation(long relationId) {
 		this.hlpRelations.openCon();
-		int ret = this.hlpRelations.deleteRelation(relation.getId());
+		int ret = this.hlpRelations.deleteRelation(relationId);
 		this.hlpRelations.closeCon();
 		return ret;
+	}
+	
+	public int deleteRelation(Relation relation) {
+		return this.deleteRelation(relation.getId());
 	}
 	
 	public int deleteRelationByDate(Date date){
