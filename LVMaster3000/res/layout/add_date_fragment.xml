@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:minHeight="800dp">
+
+    <TimePicker
+        android:id="@+id/add_date_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <DatePicker
+        android:id="@+id/add_date_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_date_time"
+        android:spinnersShown="false" />
+
+    <LinearLayout
+        android:id="@+id/button_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_date_date"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/ok_btn"
+            style="?android:buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/list_background"
+            android:text="@string/add"
+            android:textColor="@color/list_item_title" />
+
+        <Button
+            android:id="@+id/cancel_btn"
+            style="?android:buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/list_background"
+            android:text="@string/cancel"
+            android:textColor="@color/list_item_title" />
+    </LinearLayout>
+
+</RelativeLayout>
