@@ -4,6 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+import at.lvmaster3000.database.helper.HLPDates;
+import at.lvmaster3000.database.helper.HLPExams;
+import at.lvmaster3000.database.helper.HLPRelations;
 import at.lvmaster3000.database.helper.HLPTasks;
 import at.lvmaster3000.database.lists.Tasks;
 import at.lvmaster3000.database.objects.Date;
@@ -97,6 +100,8 @@ public class DBLTasks {
 	public Tasks getTasks(int limit) {
 		Tasks tasks = new Tasks();
 		String query = "SELECT * FROM " + HLPTasks.TABLE_NAME;
+		query += " LEFT JOIN " + HLPRelations.TABLE_NAME + " ON (" + HLPTasks.TABLE_NAME + "." + HLPTasks.COL_ID + " = " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_TASK_ID + ")";
+		query += " LEFT JOIN " + HLPDates.TABLE_NAME + " ON ("  + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_DATE_ID + " = " + HLPDates.TABLE_NAME + "." + HLPDates.COL_ID + ")";
 		
 		if(limit > 0) {
 			query += " LIMIT " + limit;

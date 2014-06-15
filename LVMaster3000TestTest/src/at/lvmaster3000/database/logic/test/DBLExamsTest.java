@@ -68,8 +68,7 @@ public class DBLExamsTest extends AndroidTestCase implements IDBLTests {
 			assertTrue(true);
 		} catch (Exception e) {
 			assertTrue(false);
-		}
-		
+		}		
 	}
 	
 	public void testGetExamById(){

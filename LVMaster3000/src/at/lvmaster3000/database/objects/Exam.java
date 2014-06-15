@@ -82,6 +82,9 @@ public class Exam {
 		msg += " | Comment: " + this.comment;
 		msg += " | Lecture ID: " +  this.lecture_id;
 		Log.d(DBsettings.LOG_TAG_EXAMS, msg);
+		if(date != null) {
+			date.printDate();
+		}
 	}
 
 }
