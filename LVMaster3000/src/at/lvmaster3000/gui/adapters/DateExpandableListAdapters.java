@@ -14,7 +14,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.objects.Date;
-import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.gui.DateGroup;
 import at.lvmaster3000.gui.fragments.LectureDetailsFragment;
 
@@ -82,7 +81,7 @@ public class DateExpandableListAdapters extends BaseExpandableListAdapter implem
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
 		
-		final Date child = (Date) getChild(groupPosition, childPosition);
+		Date child = (Date) getChild(groupPosition, childPosition);
 		TextView text = null;
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.single_list_item, null);

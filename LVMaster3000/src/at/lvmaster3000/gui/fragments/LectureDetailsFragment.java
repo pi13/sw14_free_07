@@ -436,7 +436,7 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 		dates.setChildren(dbLogic.getDatesForLecture(lecture).getDates());
 		dateGroup.append(0, dates);
 
-		resourcesAdapter.notifyDataSetChanged();
+		dateAdapter.notifyDataSetChanged();
 	}
 	
 	@Override
