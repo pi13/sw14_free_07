@@ -1,5 +1,6 @@
 package at.lvmaster3000.gui.interfaces;
 
+import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.database.objects.Resource;
@@ -11,4 +12,5 @@ public interface IUpdateDBObject {
 	void updateLectureExam(Exam exam);
 	void updateTask(Task task);
 	void updateResource(Resource resource);
+	void updateDate(Date date);
 }

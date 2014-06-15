@@ -34,6 +34,7 @@ import at.lvmaster3000.gui.fragments.AddExamFragment;
 import at.lvmaster3000.gui.fragments.AddLectureFragment;
 import at.lvmaster3000.gui.fragments.AddResourceFragment;
 import at.lvmaster3000.gui.fragments.AddTaskFragment;
+import at.lvmaster3000.gui.fragments.DateDetailsFragment;
 import at.lvmaster3000.gui.fragments.ExamDetailsFragment;
 import at.lvmaster3000.gui.fragments.ExamsFragment;
 import at.lvmaster3000.gui.fragments.HomeFragment;
@@ -385,6 +386,12 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		dbLogic.updateResource(resource);
 		
 	}
+	
+	@Override
+	public void updateDate(Date date) {
+		
+		
+	}
 
 	@Override
 	public void DeleteLectureItem(final Lecture lecture) {
@@ -544,7 +551,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 	
 	@Override
 	public void onExpandableDateSelected(Date date) {
-		
+		showFragment(DateDetailsFragment.newInstance(date, context, dbLogic), Long.toString(date.getID()));
 	}
 
 	@Override
