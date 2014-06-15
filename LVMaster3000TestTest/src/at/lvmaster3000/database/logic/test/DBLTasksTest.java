@@ -56,7 +56,7 @@ public class DBLTasksTest extends AndroidTestCase implements IDBLTests {
 	
 	public void testGetTasksPrintDates() {
 		Task t1 = new Task(0, "Task title", "Comment ...", new Date(0, 0, "i13", "", "comment"));
-		Task t2 = new Task(0, "Task title", "Comment ...", new Date(0, 0, "i13", "", "comment"));
+		Task t2 = new Task(0, "Task title", "Comment ...", null); //task date is optional
 		this.dblTasks.addTask(t1);
 		this.dblTasks.addTask(t2);
 		assertSame(2, this.dblTasks.getTasks(0).getTasks().size());

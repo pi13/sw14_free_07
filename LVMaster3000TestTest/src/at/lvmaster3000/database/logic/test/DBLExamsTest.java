@@ -111,7 +111,7 @@ public class DBLExamsTest extends AndroidTestCase implements IDBLTests {
 	public void testGetResourcesOfExam(){
 		long id = this.dblExams.addExam("Ex 1", "Comment...", 0);
 //		this.dblExams
-		//TODO: implement core function
+		//TODO: implement core function (if time)
 	}
 	
 }

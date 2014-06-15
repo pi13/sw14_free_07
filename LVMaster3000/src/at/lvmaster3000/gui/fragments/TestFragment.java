@@ -31,8 +31,6 @@ public class TestFragment extends UIFragmentBase {
 		DDTestsetA TestA = new DDTestsetA(context);
 		TestA.FillDb();
 		TestA.getStuffForLecture();
-		
-		
 //		
 //		Log.e("TEST_", "adapter count: " + adapter.getCount());
 //		
