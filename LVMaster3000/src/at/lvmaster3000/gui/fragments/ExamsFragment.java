@@ -19,7 +19,7 @@ import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.gui.adapters.ExamListAdapter;
-import at.lvmaster3000.interfaces.IDeleteItems;
+import at.lvmaster3000.gui.interfaces.IDeleteItems;
 
 public class ExamsFragment extends UIFragmentBase implements OnItemClickListener, OnClickListener {
 	

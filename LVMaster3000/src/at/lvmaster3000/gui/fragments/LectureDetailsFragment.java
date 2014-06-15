@@ -32,6 +32,7 @@ import at.lvmaster3000.gui.adapters.DateExpandableListAdapters;
 import at.lvmaster3000.gui.adapters.ExamExpandableListAdapter;
 import at.lvmaster3000.gui.adapters.ResourceExpandableListAdapter;
 import at.lvmaster3000.gui.adapters.TaskExpandableListAdapter;
+import at.lvmaster3000.gui.interfaces.IExpandableListItemSelected;
 import at.lvmaster3000.gui.interfaces.IUpdateDBObject;
 
 public class LectureDetailsFragment extends UIFragmentBase implements
@@ -45,6 +46,7 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 
 	private Lecture lecture;
 	private IUpdateDBObject updateLectureListener;
+	private IExpandableListItemSelected expandableItemListener;
 	private IDBlogic dbLogic;
 
 	private EditText lvNumber;

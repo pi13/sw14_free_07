@@ -25,8 +25,8 @@ import at.lvmaster3000.R;
 import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.gui.adapters.LectureListAdapter;
+import at.lvmaster3000.gui.interfaces.IDeleteItems;
 import at.lvmaster3000.gui.interfaces.IDialogListener;
-import at.lvmaster3000.interfaces.IDeleteItems;
 
 public class LecturesFragment extends UIFragmentBase implements OnItemClickListener, OnClickListener {
 

@@ -19,7 +19,7 @@ import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.database.objects.Resource;
 import at.lvmaster3000.database.objects.Task;
 import at.lvmaster3000.gui.adapters.ResourceListAdapter;
-import at.lvmaster3000.interfaces.IDeleteItems;
+import at.lvmaster3000.gui.interfaces.IDeleteItems;
 
 public class ResourcesFragment extends UIFragmentBase implements OnItemClickListener, OnClickListener {
 	

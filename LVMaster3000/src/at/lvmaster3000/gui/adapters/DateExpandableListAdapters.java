@@ -16,8 +16,8 @@ import at.lvmaster3000.gui.DateGroup;
 public class DateExpandableListAdapters extends BaseExpandableListAdapter{
 
 	private final SparseArray<DateGroup> groups;
-	public LayoutInflater inflater;
-	public Fragment fragment;
+	private LayoutInflater inflater;
+	private final Fragment fragment;
 	
 	public DateExpandableListAdapters(Fragment frag, SparseArray<DateGroup> groups)
 	{
@@ -89,8 +89,15 @@ public class DateExpandableListAdapters extends BaseExpandableListAdapter{
 		convertView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				Toast.makeText(fragment.getActivity(), children,
-//						Toast.LENGTH_SHORT).show();
+				switch(v.getId())
+				{
+				case R.id.list_item_label:
+					
+					break;
+				case R.id.delete_list_item_btn:
+					break;
+				
+				}
 			}
 		});
 		

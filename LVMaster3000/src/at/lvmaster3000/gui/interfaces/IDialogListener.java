@@ -23,4 +23,5 @@ public interface IDialogListener {
 	void onExamAddToLecture(DialogFragment dialog);
 
 	void onResourceAddToLecture(DialogFragment dialog);
+	
 }

@@ -19,8 +19,8 @@ import android.widget.TextView;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.gui.fragments.LecturesFragment;
+import at.lvmaster3000.gui.interfaces.IDeleteItems;
 import at.lvmaster3000.gui.interfaces.IDialogListener;
-import at.lvmaster3000.interfaces.IDeleteItems;
 
 public class LectureListAdapter extends BaseAdapter implements OnClickListener{
 

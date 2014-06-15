@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import at.lvmaster3000.database.IDBlogic;
+import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.database.objects.Resource;
@@ -43,11 +44,12 @@ import at.lvmaster3000.gui.fragments.ResourcesFragment;
 import at.lvmaster3000.gui.fragments.TaskDetailsFragment;
 import at.lvmaster3000.gui.fragments.TasksFragment;
 import at.lvmaster3000.gui.fragments.TestFragment;
+import at.lvmaster3000.gui.interfaces.IDeleteItems;
 import at.lvmaster3000.gui.interfaces.IDialogListener;
+import at.lvmaster3000.gui.interfaces.IExpandableListItemSelected;
 import at.lvmaster3000.gui.interfaces.IUpdateDBObject;
-import at.lvmaster3000.interfaces.IDeleteItems;
 
-public class MainActivity extends Activity implements IDialogListener, IUpdateDBObject, IDeleteItems{
+public class MainActivity extends Activity implements IDialogListener, IUpdateDBObject, IDeleteItems, IExpandableListItemSelected{
 	
 	private final int POS_LECTURES = 1;
 	private final int POS_TASKS = 2;
@@ -224,7 +226,15 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		if (fragment != null) {
 			fragManager = getFragmentManager();
 			FragmentTransaction fragTrans =  fragManager.beginTransaction();
-			fragTrans.replace(R.id.frame_container, fragment, tag);
+
+			if(tag != null)
+			{
+				fragTrans.replace(R.id.frame_container, fragment, tag);
+			}else
+			{
+				fragTrans.replace(R.id.frame_container, fragment);
+			}
+			
 			fragTrans.addToBackStack(null);
 			fragTrans.commit();
 			
@@ -252,6 +262,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		}
 		
 	}
+	
 	@Override
 	public void setTitle(CharSequence title) {
 		mTitle = title;
@@ -487,5 +498,51 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		
 		adapter.notifyDataSetChanged();
 	
+	}
+
+	@Override
+	public void onExpandableDateSelected(Date date) {
+		
+	}
+
+	@Override
+	public void onExpandableExamSelected(Exam exam) {
+		showFragment(ExamDetailsFragment.newInstance(exam, context, dbLogic), Long.toString(exam.getId()));
+		
+	}
+
+	@Override
+	public void onExpandableTaskSelected(Task task) {
+		showFragment(TaskDetailsFragment.newInstance(task, context, dbLogic), Long.toString(task.getId()));
+		
+	}
+
+	@Override
+	public void onExpandableResourceSelected(Resource resource) {
+		showFragment(ResourceDetailsFragment.newInstance(resource, context, dbLogic), Long.toString(resource.getId()));
+	}
+
+	@Override
+	public void onExpandableDateDeleted(Date date) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onExpandableExamDeleted(Exam exam) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onExpandableTaskDeleted(Task task) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onExpandableResourceDeleted(Resource resource) {
+		// TODO Auto-generated method stub
+		
 	}
 }

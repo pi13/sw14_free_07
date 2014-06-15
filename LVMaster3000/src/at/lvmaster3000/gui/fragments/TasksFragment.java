@@ -21,7 +21,7 @@ import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Task;
 import at.lvmaster3000.gui.adapters.TaskListAdapter;
-import at.lvmaster3000.interfaces.IDeleteItems;
+import at.lvmaster3000.gui.interfaces.IDeleteItems;
 
 public class TasksFragment extends UIFragmentBase implements OnItemClickListener, OnClickListener{
 	
