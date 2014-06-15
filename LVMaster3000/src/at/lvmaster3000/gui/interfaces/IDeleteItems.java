@@ -1,4 +1,4 @@
-package at.lvmaster3000.interfaces;
+package at.lvmaster3000.gui.interfaces;
 
 import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Lecture;
