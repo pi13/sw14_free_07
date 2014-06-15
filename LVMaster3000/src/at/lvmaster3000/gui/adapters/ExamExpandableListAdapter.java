@@ -83,7 +83,7 @@ public class ExamExpandableListAdapter extends BaseExpandableListAdapter impleme
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
 		
-		final Exam child = (Exam) getChild(groupPosition, childPosition);
+		Exam child = (Exam) getChild(groupPosition, childPosition);
 		TextView text = null;
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.single_list_item, null);
