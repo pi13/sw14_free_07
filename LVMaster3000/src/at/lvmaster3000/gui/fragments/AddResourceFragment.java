@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,7 +59,7 @@ public class AddResourceFragment extends DialogFragment implements	OnClickListen
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.add_resource_fragment, container);
-
+		getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 		Button ok = (Button) view.findViewById(R.id.ok_btn);
 		Button cancel = (Button) view.findViewById(R.id.cancel_btn);
 		ok.setOnClickListener(this);

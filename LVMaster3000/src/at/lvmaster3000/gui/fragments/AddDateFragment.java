@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
@@ -63,6 +64,8 @@ public class AddDateFragment extends DialogFragment implements OnClickListener {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.add_date_fragment, container);
 
+		getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+		
 		Button ok = (Button) view.findViewById(R.id.ok_btn);
 		Button cancel = (Button) view.findViewById(R.id.cancel_btn);
 		ok.setOnClickListener(this);

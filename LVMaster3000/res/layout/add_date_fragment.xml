@@ -13,13 +13,13 @@
         android:id="@+id/add_date_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-                android:layout_below="@id/add_date_date" />
+        android:layout_below="@id/add_date_date" />
 
     <LinearLayout
         android:id="@+id/button_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/add_date_date"
+        android:layout_below="@id/add_date_time"
         android:orientation="horizontal" >
 
         <Button
