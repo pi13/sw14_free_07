@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.IDBlogic;
@@ -27,6 +28,7 @@ public class AddTaskFragment extends DialogFragment implements OnClickListener {
 	private Task task;
 	private EditText taskTitle;
 	private EditText taskComment;
+	private DatePicker datePicker;
 
 	private long lectureId;	
 	private IDBlogic dbLogic;
@@ -71,6 +73,7 @@ public class AddTaskFragment extends DialogFragment implements OnClickListener {
 
 		taskTitle = (EditText) view.findViewById(R.id.add_task_title);
 		taskComment = (EditText) view.findViewById(R.id.add_task_comment);
+		datePicker = (DatePicker)view.findViewById(R.id.add_task_date);
 		
 		Bundle bundle = getArguments();
 		if(bundle != null) {
@@ -86,8 +89,8 @@ public class AddTaskFragment extends DialogFragment implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.ok_btn:
 			
-			task = new Task(0, taskTitle.getText().toString(), taskComment.getText().toString(), new Date(0, new java.util.Date().getTime(),
-					"", "", taskComment.getText().toString()));
+			task = new Task(0, taskTitle.getText().toString(), taskComment.getText().toString(), 
+					new Date(0, datePicker.getCalendarView().getDate()/1000, "", "", ""));
 						
 			if(this.lectureId > 0) {				
 				Lecture lecture = new Lecture();

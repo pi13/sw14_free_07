@@ -11,13 +11,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.database.objects.Resource;
-import at.lvmaster3000.database.objects.Task;
 import at.lvmaster3000.gui.adapters.ResourceListAdapter;
 import at.lvmaster3000.gui.interfaces.IDeleteItems;
 

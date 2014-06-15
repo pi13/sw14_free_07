@@ -93,7 +93,7 @@ public class ExamDetailsFragment extends UIFragmentBase{
 		{
 			exam.setTitle((examTitle.getText().toString()));
 			exam.setComment((examComment.getText().toString()));
-			exam.setDate(new Date(0, examDate.getCalendarView().getDate()/1000, "", "", ""));
+			exam.getDate().setTimestamp(examDate.getCalendarView().getDate()/1000);
 			updateExamListener.updateLectureExam(exam);
 		}
 
@@ -101,36 +101,36 @@ public class ExamDetailsFragment extends UIFragmentBase{
 	}
 	
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-        getActivity().invalidateOptionsMenu();
-    }
-	
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {		
-		menu.clear();
-	    inflater.inflate(R.menu.exam_fragment_details, menu);
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
+		getActivity().invalidateOptionsMenu();
 	}
-	
+
 	@Override
-	public void onPrepareOptionsMenu(Menu menu) {	
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		menu.clear();
+		inflater.inflate(R.menu.exam_fragment_details, menu);
+	}
+
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
 		MenuInflater inflater = getActivity().getMenuInflater();
-	    inflater.inflate(R.menu.exam_fragment_details, menu);
+		inflater.inflate(R.menu.exam_fragment_details, menu);
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+
 		switch (item.getItemId()) {
 		case R.id.action_save:
-
 			updateExam();
-
+			exam.printExam();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
-		}		
+		}
 	}
 	
 }
