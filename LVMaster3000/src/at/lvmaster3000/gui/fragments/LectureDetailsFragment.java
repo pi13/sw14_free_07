@@ -17,13 +17,17 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.database.objects.Date;
+import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Lecture;
+import at.lvmaster3000.database.objects.Resource;
+import at.lvmaster3000.database.objects.Task;
 import at.lvmaster3000.gui.DateGroup;
 import at.lvmaster3000.gui.ExamGroup;
 import at.lvmaster3000.gui.ResourceGroup;
@@ -32,6 +36,7 @@ import at.lvmaster3000.gui.adapters.DateExpandableListAdapters;
 import at.lvmaster3000.gui.adapters.ExamExpandableListAdapter;
 import at.lvmaster3000.gui.adapters.ResourceExpandableListAdapter;
 import at.lvmaster3000.gui.adapters.TaskExpandableListAdapter;
+import at.lvmaster3000.gui.interfaces.IDeleteItems;
 import at.lvmaster3000.gui.interfaces.IExpandableListItemSelected;
 import at.lvmaster3000.gui.interfaces.IUpdateDBObject;
 
@@ -47,6 +52,7 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 	private Lecture lecture;
 	private IUpdateDBObject updateLectureListener;
 	private IExpandableListItemSelected expandableItemListener;
+	private IDeleteItems deleteListener;
 	private IDBlogic dbLogic;
 
 	private EditText lvNumber;
@@ -93,7 +99,16 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 
 		return details;
 	}
+	
+	public IExpandableListItemSelected getExpandableItemListener()
+	{
+		return expandableItemListener;
+	}
 
+	public IDeleteItems getDeleteListener()
+	{
+		return deleteListener;
+	}
 	// Override the Fragment.onAttach() method to instantiate the
 	// NoticeDialogListener
 	@Override
@@ -104,6 +119,8 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 			// Instantiate the NoticeDialogListener so we can send events to the
 			// host
 			updateLectureListener = (IUpdateDBObject) activity;
+			expandableItemListener = (IExpandableListItemSelected) activity;
+			deleteListener = (IDeleteItems) activity;
 		} catch (ClassCastException e) {
 			// The activity doesn't implement the interface, throw exception
 			throw new ClassCastException(activity.toString()
@@ -207,7 +224,7 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 						return false;
 					}
 				});
-
+		
 		listviewTasks
 				.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 					public boolean onGroupClick(ExpandableListView parent,
@@ -355,6 +372,29 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 		dateGroup.append(0, dates);
 	}
 
+	public void deleteExam(Exam exam)
+	{
+		dbLogic.deleteExam(exam);
+		updateExamList();
+	}
+	
+	public void deleteTask(Task task)
+	{
+		dbLogic.deleteTask(task);
+		updateTaskList();
+	}
+	
+	public void deleteResource(Resource resource)
+	{
+		dbLogic.deleteResource(resource);
+		updateResourceList();
+	}
+	
+	public void deleteDate(Date date)
+	{
+		
+	}
+	
 	public void updateTaskList() {
 		tasksGroup.clear();
 

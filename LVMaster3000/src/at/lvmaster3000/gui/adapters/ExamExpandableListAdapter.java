@@ -10,19 +10,22 @@ import android.view.View.OnClickListener;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.gui.ExamGroup;
+import at.lvmaster3000.gui.fragments.LectureDetailsFragment;
+import at.lvmaster3000.gui.fragments.LecturesFragment;
 
-public class ExamExpandableListAdapter extends BaseExpandableListAdapter{
+public class ExamExpandableListAdapter extends BaseExpandableListAdapter implements OnClickListener{
 
 	private final SparseArray<ExamGroup> groups;
-	public LayoutInflater inflater;
-	public Fragment fragment;
+	private LayoutInflater inflater;
+	private LectureDetailsFragment fragment;
 	
-	public ExamExpandableListAdapter(Fragment frag, SparseArray<ExamGroup> groups)
+	public ExamExpandableListAdapter(LectureDetailsFragment frag, SparseArray<ExamGroup> groups)
 	{
 		this.fragment = frag;
 		this.groups = groups;
@@ -80,21 +83,20 @@ public class ExamExpandableListAdapter extends BaseExpandableListAdapter{
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
 		
-		Exam children = (Exam) getChild(groupPosition, childPosition);
+		final Exam child = (Exam) getChild(groupPosition, childPosition);
 		TextView text = null;
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.single_list_item, null);
 		}
 		text = (TextView) convertView.findViewById(R.id.list_item_label);
-		text.setText(children.getTitle());
+		text.setClickable(true);
+		text.setOnClickListener(this);
+		text.setTag(child);
+		text.setText(child.getTitle());
 
-		convertView.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-//				Toast.makeText(fragment.getActivity(), children,
-//						Toast.LENGTH_SHORT).show();
-			}
-		});
+		ImageButton imgBtn = (ImageButton)convertView.findViewById(R.id.delete_list_item_btn);
+		imgBtn.setTag(child);
+		imgBtn.setOnClickListener(this);
 				
 		return convertView;
 	}
@@ -102,6 +104,20 @@ public class ExamExpandableListAdapter extends BaseExpandableListAdapter{
 	@Override
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return false;
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch(v.getId())
+		{
+		case R.id.list_item_label:
+			fragment.getExpandableItemListener().onExpandableExamSelected((Exam)v.getTag());
+			break;
+		case R.id.delete_list_item_btn:
+			fragment.getDeleteListener().DeleteItem((Exam)v.getTag());
+			break;
+		
+		}		
 	}
 
 }

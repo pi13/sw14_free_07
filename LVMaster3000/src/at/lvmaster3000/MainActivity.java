@@ -501,6 +501,48 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 	}
 
 	@Override
+	public void DeleteItem(final Object item) {
+		new AlertDialog.Builder(this)
+	    .setTitle("Delete entry")
+	    .setMessage("Are you sure you want to delete this entry?")
+	    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int which) { 
+	        	LectureDetailsFragment fragment = (LectureDetailsFragment)fragManager.findFragmentByTag(getResources().getString(R.string.lecture_details_frag));
+	        	
+	        	if(item instanceof Exam){
+		    		fragment.deleteExam((Exam)item);
+		    		updateElemetnCount(POS_EXAMS);
+	        	}
+	        	
+	        	if(item instanceof Resource){
+		    		fragment.deleteResource((Resource)item);
+		    		updateElemetnCount(POS_RESOURCES);
+	        	}
+	        	
+	        	if(item instanceof Task){
+		    		fragment.deleteTask((Task) item);
+		    		updateElemetnCount(POS_TASKS);
+	        	}
+	        	
+	        	
+	        	if(item instanceof Date){
+		    		fragment.deleteDate((Date)item);
+	        	}
+	    		
+	    		
+	    		dialog.dismiss();
+	        }
+	     })
+	    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int which) { 
+	            dialog.dismiss();
+	        }
+	     })
+	    .setIcon(android.R.drawable.ic_dialog_alert)
+	     .show();
+	}
+	
+	@Override
 	public void onExpandableDateSelected(Date date) {
 		
 	}
@@ -523,26 +565,9 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 	}
 
 	@Override
-	public void onExpandableDateDeleted(Date date) {
+	public void DeleteDateItem(Date date) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public void onExpandableExamDeleted(Exam exam) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onExpandableTaskDeleted(Task task) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onExpandableResourceDeleted(Resource resource) {
-		// TODO Auto-generated method stub
-		
-	}
 }

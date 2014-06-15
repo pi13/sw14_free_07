@@ -8,18 +8,21 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import at.lvmaster3000.R;
+import at.lvmaster3000.database.objects.Resource;
 import at.lvmaster3000.database.objects.Task;
 import at.lvmaster3000.gui.TaskGroup;
+import at.lvmaster3000.gui.fragments.LectureDetailsFragment;
 
-public class TaskExpandableListAdapter  extends BaseExpandableListAdapter{
+public class TaskExpandableListAdapter  extends BaseExpandableListAdapter implements OnClickListener{
 
 	private final SparseArray<TaskGroup> groups;
-	public LayoutInflater inflater;
-	public Fragment fragment;
+	private LayoutInflater inflater;
+	private LectureDetailsFragment fragment;
 	
-	public TaskExpandableListAdapter(Fragment frag, SparseArray<TaskGroup> groups)
+	public TaskExpandableListAdapter(LectureDetailsFragment frag, SparseArray<TaskGroup> groups)
 	{
 		this.fragment = frag;
 		this.groups = groups;
@@ -77,20 +80,20 @@ public class TaskExpandableListAdapter  extends BaseExpandableListAdapter{
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
 		
-		final Task children = (Task) getChild(groupPosition, childPosition);
+		final Task child = (Task) getChild(groupPosition, childPosition);
 		TextView text = null;
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.single_list_item, null);
 		}
 		text = (TextView) convertView.findViewById(R.id.list_item_label);
-		text.setText(children.getTitle());
-		convertView.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-//				Toast.makeText(fragment.getActivity(), children,
-//						Toast.LENGTH_SHORT).show();
-			}
-		});
+		text.setClickable(true);
+		text.setOnClickListener(this);
+		text.setTag(child);
+		text.setText(child.getTitle());
+
+		ImageButton imgBtn = (ImageButton)convertView.findViewById(R.id.delete_list_item_btn);
+		imgBtn.setTag(child);
+		imgBtn.setOnClickListener(this);
 		
 		return convertView;
 	}
@@ -98,6 +101,20 @@ public class TaskExpandableListAdapter  extends BaseExpandableListAdapter{
 	@Override
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return false;
+	}
+	
+	@Override
+	public void onClick(View v) {
+		switch(v.getId())
+		{
+		case R.id.list_item_label:
+			fragment.getExpandableItemListener().onExpandableTaskSelected((Task)v.getTag());
+			break;
+		case R.id.delete_list_item_btn:
+			fragment.getDeleteListener().DeleteItem((Task)v.getTag());
+			break;
+		
+		}		
 	}
 
 }

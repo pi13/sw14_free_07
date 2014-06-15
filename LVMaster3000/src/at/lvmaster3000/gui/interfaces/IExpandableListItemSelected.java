@@ -11,9 +11,4 @@ public interface IExpandableListItemSelected {
 	void onExpandableExamSelected(Exam exam);
 	void onExpandableTaskSelected(Task task);
 	void onExpandableResourceSelected(Resource resource);
-	
-	void onExpandableDateDeleted(Date date);
-	void onExpandableExamDeleted(Exam exam);
-	void onExpandableTaskDeleted(Task task);
-	void onExpandableResourceDeleted(Resource resource);
 }

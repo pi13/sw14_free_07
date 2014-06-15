@@ -1,5 +1,6 @@
 package at.lvmaster3000.gui.interfaces;
 
+import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.database.objects.Resource;
@@ -11,4 +12,6 @@ public interface IDeleteItems {
 	void DeleteExamItem(Exam exam);
 	void DeleteTaskItem(Task task);
 	void DeleteResourceItem(Resource resource);
+	void DeleteDateItem(Date date);
+	void DeleteItem(Object item);
 }

@@ -8,18 +8,21 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.objects.Date;
+import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.gui.DateGroup;
+import at.lvmaster3000.gui.fragments.LectureDetailsFragment;
 
-public class DateExpandableListAdapters extends BaseExpandableListAdapter{
+public class DateExpandableListAdapters extends BaseExpandableListAdapter implements OnClickListener{
 
 	private final SparseArray<DateGroup> groups;
 	private LayoutInflater inflater;
-	private final Fragment fragment;
+	private LectureDetailsFragment fragment;
 	
-	public DateExpandableListAdapters(Fragment frag, SparseArray<DateGroup> groups)
+	public DateExpandableListAdapters(LectureDetailsFragment frag, SparseArray<DateGroup> groups)
 	{
 		this.fragment = frag;
 		this.groups = groups;
@@ -77,29 +80,22 @@ public class DateExpandableListAdapters extends BaseExpandableListAdapter{
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
 		
-		final Date children = (Date) getChild(groupPosition, childPosition);
+		final Date child = (Date) getChild(groupPosition, childPosition);
 		TextView text = null;
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.single_list_item, null);
 		}
 		text = (TextView) convertView.findViewById(R.id.list_item_label);
 		java.util.Date date = new java.util.Date();
-		date.setTime((long)children.getTimestamp() * 1000);
+		date.setTime((long)child.getTimestamp() * 1000);
+		text.setClickable(true);
+		text.setOnClickListener(this);
+		text.setTag(child);
 		text.setText(date.toString());
-		convertView.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				switch(v.getId())
-				{
-				case R.id.list_item_label:
-					
-					break;
-				case R.id.delete_list_item_btn:
-					break;
-				
-				}
-			}
-		});
+		
+		ImageButton imgBtn = (ImageButton)convertView.findViewById(R.id.delete_list_item_btn);
+		imgBtn.setTag(child);
+		imgBtn.setOnClickListener(this);
 		
 		return convertView;
 	}
@@ -107,6 +103,20 @@ public class DateExpandableListAdapters extends BaseExpandableListAdapter{
 	@Override
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return false;
+	}
+	
+	@Override
+	public void onClick(View v) {
+		switch(v.getId())
+		{
+		case R.id.list_item_label:
+			fragment.getExpandableItemListener().onExpandableDateSelected((Date)v.getTag());
+			break;
+		case R.id.delete_list_item_btn:
+			fragment.getDeleteListener().DeleteItem((Date)v.getTag());
+			break;
+		
+		}		
 	}
 
 
