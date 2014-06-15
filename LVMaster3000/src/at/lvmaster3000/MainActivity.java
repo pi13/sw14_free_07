@@ -390,7 +390,7 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 	@Override
 	public void updateDate(Date date) {
 		
-		
+		dbLogic.updateDate(date);
 	}
 
 	@Override
