@@ -1,5 +1,6 @@
 package at.lvmaster3000.gui.adapters;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -52,8 +53,15 @@ public class HomeDateListAdapter extends BaseAdapter{
 		
 		TextView title = (TextView)convertView.findViewById(R.id.date_item_label);
 	    Calendar cal = Calendar.getInstance();
-	    cal.setTime(new java.util.Date(dates.get(position).getTimestamp()*1000));
-		title.setText(cal.get(Calendar.DAY_OF_MONTH) + "-" + cal.get(Calendar.MONTH) + "-" + cal.get(Calendar.YEAR));
+	    
+//	    cal.setTime(new java.util.Date(dates.get(position).getTimestamp()*1000));
+//		title.setText(cal.get(Calendar.DAY_OF_MONTH) + "-" + cal.get(Calendar.MONTH) + "-" + cal.get(Calendar.YEAR));
+	    
+	    java.util.Date date = new java.util.Date();
+		date.setTime((long)dates.get(position).getTimestamp() * 1000);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");		
+		title.setText(sdf.format(date));
 				
 		return convertView;
 	}

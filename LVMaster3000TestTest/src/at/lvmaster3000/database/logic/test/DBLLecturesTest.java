@@ -29,19 +29,20 @@ public class DBLLecturesTest extends AndroidTestCase implements IDBLTests {
 	@Override
 	public void testAddNew(){
 		long id = this.dblLectures.addLecture("701.001","Test LV", "Some comment...", "LV", 1, 1);	
-		assertNotSame(-1l, id);
+		assertSame(1l, id);
 	}
 	
 	@Override
 	public void testDelete(){
 		long id = this.dblLectures.addLecture("701.001","Test LV", "Some comment...", "LV", 1, 1);
+		assertSame(1l, id);
 		assertSame(1, this.dblLectures.deleteLecture(id));
 	}
 	
 	@Override
 	public void testUpdate() {
 		Lecture lecture = new Lecture(0, "701.001","Test LV", "Some comment...", "LV", 1, 1);		
-		assertEquals(1, this.dblLectures.addLecture(lecture));
+		assertEquals(1l, this.dblLectures.addLecture(lecture));
 		
 		String title = "New title for LV 701.001";
 		lecture.setName(title);

@@ -13,75 +13,45 @@ import at.lvmaster3000.database.objects.Coworker;
 import at.lvmaster3000.database.objects.Date;
 
 public class DBLDatesTest extends AndroidTestCase implements IDBLTests {
-	private DBLDates dblObjects;
-	private List<Date> testObjects = null;
-	private int NR_TEST_OBJECTS = 0;
+	private DBLDates dblDates;
 	
-	private RenamingDelegatingContext testContext = null;
+	private RenamingDelegatingContext context = null;
 	
 	public void setUp(){
-		testContext = new RenamingDelegatingContext(getContext(), "test_");
-		
-		dblObjects = new DBLDates(testContext);
-		createTestObjects();
+		context = new RenamingDelegatingContext(getContext(), "test_");		
+		dblDates = new DBLDates(context);
 	}
 	
 	@Override
 	public void testAddNew(){
-		dropAllObjects();
-		createTestObjects();
-		
-		long idFromDatabase = dblObjects.addDate(this.testObjects.get(0));
-		
-		assertNotSame(-1l, idFromDatabase);
+		long unixTime = System.currentTimeMillis() / 1000L;
+		long id = dblDates.addDate(unixTime, "i13","","Comment");		
+		assertEquals(1, id);
 	}
 	
 	@Override
 	public void testDelete() {
-		// TODO Auto-generated method stub
-		
+		long unixTime = System.currentTimeMillis() / 1000L;
+		long id = dblDates.addDate(unixTime, "i13","","Comment");		
+		assertEquals(1, this.dblDates.deleteDate(id));
 	}
 
 	@Override
 	public void testUpdate() {
-		// TODO Auto-generated method stub
+		long unixTime = System.currentTimeMillis() / 1000L;
+		Date date = new Date(0, unixTime, "i13", "", "Comment");
+		long id = this.dblDates.addDate(date);
+		assertEquals(1, id);
 		
+		date.setLocation("i12");
+		assertEquals(1, this.dblDates.updateDate(date));
 	}
 	
 	public void testGetAll(){		
-		DDTestsetA a = new DDTestsetA(this.testContext);
+		DDTestsetA a = new DDTestsetA(this.context);
 		a.FillDb();
 		
-		int cnt = dblObjects.getDates(0).getDates().size();
-		
+		int cnt = dblDates.getDates(0).getDates().size();		
 		assertEquals(a.getDatesCnt(), cnt);
-	}
-		
-	private void createTestObjects(){
-		long unixTime = System.currentTimeMillis() / 1000L;
-		
-		Date o1 = new Date();
-		o1.setType("LV");
-		o1.setComment("some d1 comment");
-		o1.setTimestamp(unixTime);
-		o1.setLocation("i13");
-		
-		Date o2 = new Date();
-		o2.setType("VU");
-		o2.setComment("some d2 comment");
-		o2.setTimestamp(unixTime + 3600);
-		o2.setLocation("i12");
-	
-		this.testObjects = new ArrayList<Date>();
-		
-		this.testObjects.add(o1);
-		this.testObjects.add(o2);
-		
-		this.NR_TEST_OBJECTS = this.testObjects.size();
-	}
-	
-	private void dropAllObjects(){
-		this.dblObjects = null;
-		this.dblObjects = new DBLDates(testContext);
 	}
 }

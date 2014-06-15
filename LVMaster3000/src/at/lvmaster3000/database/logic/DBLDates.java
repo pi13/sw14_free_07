@@ -65,7 +65,7 @@ public class DBLDates {
         if(cursor != null) {
         	dates.cursorToDateList(cursor);
         } else {
-        	Log.w(DBsettings.LOG_TAG_LECTURES, "Cursor is NULL!!");        	
+        	Log.w(DBsettings.LOG_TAG_DATES, "Cursor is NULL!!");        	
         }
         this.hlpDates.closeCon();
 		
@@ -78,6 +78,8 @@ public class DBLDates {
 		String query = "SELECT * FROM " + HLPDates.TABLE_NAME;
 		query += " WHERE " + HLPDates.COL_ID + " = " + relation.getDateId();
 		
+		Log.i(DBsettings.LOG_TAG_DATES, query);
+		
         Cursor cursor = hlpDates.openCon().rawQuery(query, null);
         if(cursor != null) {  
         	if(cursor.getCount() < 1) {
@@ -88,7 +90,7 @@ public class DBLDates {
         	cursor.moveToFirst();        	
         	date.cursorToDate(cursor);
         } else {
-        	Log.w(DBsettings.LOG_TAG_LECTURES, "Cursor is NULL!!");        	
+        	Log.w(DBsettings.LOG_TAG_DATES, "Cursor is NULL!!");        	
         }
         this.hlpDates.closeCon();
 		

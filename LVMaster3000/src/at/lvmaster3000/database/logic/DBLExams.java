@@ -213,6 +213,11 @@ public class DBLExams {
 		return worked;
 	}
 	
+	/**
+	 * 
+	 * @param exam
+	 * @return
+	 */
 	public Date getExamDate(Exam exam) {
 		Relation relation = this.dblRelations.getRelationByExamWithDateSet(exam);
 		if(relation == null) {

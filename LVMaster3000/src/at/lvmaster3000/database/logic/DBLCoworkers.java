@@ -1,9 +1,11 @@
 package at.lvmaster3000.database.logic;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 import at.lvmaster3000.database.helper.HLPCoworkers;
+import at.lvmaster3000.database.helper.HLPDates;
 import at.lvmaster3000.database.helper.HLPLectures;
 import at.lvmaster3000.database.lists.Coworkers;
 import at.lvmaster3000.database.objects.Coworker;
@@ -15,10 +17,12 @@ public class DBLCoworkers {
 	
 	public DBLCoworkers(Context context) {
 		this.hlpCoworkers = new HLPCoworkers(context);
-		
+	}
+	
+	public void resetTable() {
 		this.hlpCoworkers.openCon();
-//		hlpCoworkers.resetTable();
-//		this.hlpCoworkers.closeCon();
+		hlpCoworkers.resetTable();
+		this.hlpCoworkers.closeCon();
 	}
 	
 	public long addCoworker(String refid, String role) {
@@ -34,6 +38,24 @@ public class DBLCoworkers {
 		coworker.setID(cid);
 		
 		return cid;
+	}
+	
+	public int updateCoworker(Coworker coworker) {
+		ContentValues values = new ContentValues();
+		
+		if(!coworker.getRefID().isEmpty()) {
+			values.put(HLPCoworkers.COL_REFID, coworker.getRefID());
+		}
+		
+		if(!coworker.getRole().isEmpty()) {
+			values.put(HLPCoworkers.COL_ROLE, coworker.getRole());
+		}
+		
+		int ret = this.hlpCoworkers.openCon().update(HLPCoworkers.TABLE_NAME, values, "_id = " + coworker.getID(), null);
+		
+		Log.i(DBsettings.LOG_TAG_COWORKERS, "Update res.: " + ret);
+		
+		return ret;
 	}
 	
 	public int deleteCoworker(long id) {

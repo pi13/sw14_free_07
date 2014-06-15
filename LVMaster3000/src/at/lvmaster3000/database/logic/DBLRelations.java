@@ -7,6 +7,7 @@ import at.lvmaster3000.database.helper.HLPRelations;
 import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Relation;
+import at.lvmaster3000.database.objects.Task;
 import at.lvmaster3000.settings.DBsettings;
 
 public class DBLRelations {
@@ -98,15 +99,9 @@ public class DBLRelations {
 		
 		Cursor cursor = this.hlpRelations.openCon().rawQuery(query, null);
         if(cursor != null) {
-        	if(cursor.getCount() > 1) {
+        	if(cursor.getCount() != 1) {
         		this.hlpRelations.closeCon();
-        		Log.e(DBsettings.LOG_TAG_RELATIONS, "This should never happen. CNT: " + cursor.getCount());
-        		return null;
-        	}
-        	
-        	if(cursor.getCount() < 1) {
-        		this.hlpRelations.closeCon();
-        		Log.e(DBsettings.LOG_TAG_RELATIONS, "This are not the droids u're searching. CNT: " + cursor.getCount());
+        		Log.e(DBsettings.LOG_TAG_RELATIONS, "CNT: " + cursor.getCount());
         		return null;
         	}
         	
@@ -118,6 +113,34 @@ public class DBLRelations {
         this.hlpRelations.closeCon();
 		
 		return relation;
+	}
+	
+	public Relation getRelationByTaskWithDateSet(Task task) {
+		Relation relation = new Relation();
+		
+		String query = "SELECT * FROM " + HLPRelations.TABLE_NAME;
+		query += " WHERE " + HLPRelations.COL_TASK_ID + " = " + task.getId();
+		query += " AND " + HLPRelations.COL_DATE_ID + " > 0";
+		
+		Log.i(DBsettings.LOG_TAG_RELATIONS, query);
+		
+		Cursor cursor = this.hlpRelations.openCon().rawQuery(query, null);
+        if(cursor != null) {
+        	if(cursor.getCount() != 1) {
+        		this.hlpRelations.closeCon();
+        		Log.e(DBsettings.LOG_TAG_RELATIONS, "CNT: " + cursor.getCount());
+        		return null;
+        	}
+        	
+        	cursor.moveToFirst();
+        	relation.cursorToRelation(cursor); 
+        } else {
+        	Log.w(DBsettings.LOG_TAG_RELATIONS, "Cursor is NULL!!");        	
+        }
+        
+        this.hlpRelations.closeCon();
+        
+        return relation;
 	}
 	
 }

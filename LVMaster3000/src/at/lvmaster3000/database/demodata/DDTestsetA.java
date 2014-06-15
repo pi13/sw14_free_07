@@ -90,15 +90,17 @@ public class DDTestsetA {
         long week = day * 7;
         long did1 = hlpdates.addDate(unixTime, "Testlocation 1", "LV", "Thats a comment");
         this.datescnt += 1;
-        long did2 = hlpdates.addDate(unixTime + hour , "Testlocation 2", "LV", "Thats a comment");
+        long did2 = hlpdates.addDate(unixTime + hour , "Testlocation 2", "LV", "(eid 1) Thats a comment");
         this.datescnt += 1;
         long did3 = hlpdates.addDate(unixTime + day, "Testlocation 3", "LV", "Thats a comment");
         this.datescnt += 1;
         long did4 = hlpdates.addDate(unixTime + (day * 2), "Testlocation 4", "LV", "Thats a comment");
         this.datescnt += 1;
-        long did5 = hlpdates.addDate(unixTime + week, "Testlocation 5", "LV", "Thats a comment");
+        long did5 = hlpdates.addDate(unixTime + week - day, "Testlocation 5", "LV", " (eid 2) Thats a comment");
         this.datescnt += 1;
-        long did6 = hlpdates.addDate(unixTime + week, "Testlocation 6", "E", "Thats a comment");
+        long did6 = hlpdates.addDate(unixTime + week + day, "Testlocation 6", "E", "(eid 3) Thats a comment");
+        this.datescnt += 1;
+        long did7 = hlpdates.addDate(unixTime + week + week, "Testlocation 7", "E", "Thats a comment");
         this.datescnt += 1;
         this.hlpdates.allEntriesToLog();
         this.hlpdates.closeCon();
@@ -127,20 +129,40 @@ public class DDTestsetA {
         this.resourcecnt++;
         this.hlpresources.closeCon();
         
-      //add relation
+        //add relation
         this.hlprelations.openCon();
-        this.hlprelations.resetTable();        
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, 0, tid1, did5, 0);
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, 0, tid2, did3, 0);
+        this.hlprelations.resetTable();     
+        
+        //relations lectures <-> tasks
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, 0, tid1, 0, 0);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, 0, tid2, 0, 0);
+        
+        //relations lectures <-> dates
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, 0, 0, did1, 0);
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, 0, 0, did4, 0);
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, 0, eid1, 0, did2, 0);
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, eid2, 0, did6, 0);
-        this.hlprelations.addRelation(HLPExams.TABLE_NAME, 0, eid3, 0, 0, res1);
-        this.hlprelations.addRelation(HLPExams.TABLE_NAME, 0, eid3, 0, 0, res2);
+        
+        //relations lectures <-> exams
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid2, eid1, 0, 0, 0);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, eid2, 0, 0, 0);
+        
+        //relations lectures <-> resources
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid3, 0, 0, 0, res3);
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, 0, 0, 0, res4);
+        
+        //relations exams <-> resources
+        this.hlprelations.addRelation(HLPExams.TABLE_NAME, 0, eid3, 0, 0, res1);
+        this.hlprelations.addRelation(HLPExams.TABLE_NAME, 0, eid3, 0, 0, res2);
+        
+        //relations exams <-> dates
+        this.hlprelations.addRelation(HLPExams.TABLE_NAME, 0, eid1, 0, did2, 0);
+        this.hlprelations.addRelation(HLPExams.TABLE_NAME, 0, eid2, 0, did5, 0);
+        this.hlprelations.addRelation(HLPExams.TABLE_NAME, 0, eid3, 0, did6, 0);
+        
+        //relations tasks <-> dates
+        this.hlprelations.addRelation(HLPTasks.TABLE_NAME, 0, 0, tid1, did7, 0);
+        
 //        this.hlprelations.allEntriesToLog();
+        
         this.hlprelations.closeCon();
 	}
 	

@@ -13,40 +13,40 @@ import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Task;
 
 public class DBLTasksTest extends AndroidTestCase implements IDBLTests {
-	private DBLTasks dblObjects;
+	private DBLTasks dblTasks;
 	private List<Task> testObjects = null;
 	private int NR_TEST_OBJECTS = 0;
 	
-	private RenamingDelegatingContext testContext = null;
+	private RenamingDelegatingContext context = null;
 	
 	public static final String LOG_TAG_TASKS_LOGIC_TEST = "TEST_TASKS_LOGIC";
 	
 	public void setUp(){
-		testContext = new RenamingDelegatingContext(getContext(), "test_");		
-		dblObjects = new DBLTasks(testContext);
-		createTestObjects();
+		this.context = new RenamingDelegatingContext(getContext(), "test_");		
+		this.dblTasks = new DBLTasks(context);
+		this.dblTasks.resetTablesInvolved();
 	}
 	
 	@Override
-	public void testAddNew(){
-		dropAllObjects();
-		createTestObjects();
-		
-		long idFromDatabase = dblObjects.addTask(this.testObjects.get(0));
-		
-		assertNotSame(-1l, idFromDatabase);
+	public void testAddNew(){		
+		long id = dblTasks.addTask("T1", "comment");
+		assertSame(1l, id);
 	}
 	
 	@Override
 	public void testDelete() {
-		// TODO Auto-generated method stub
-		
+		long id = dblTasks.addTask("T1", "comment");	
+		assertSame(1l, id);
+		assertSame(1, this.dblTasks.deleteTask(id));
 	}
 
 	@Override
 	public void testUpdate() {
-		// TODO Auto-generated method stub
+		Task task = new Task(0, "T1", "comment", null);
+		assertSame(1l, this.dblTasks.addTask(task));
 		
+		task.setTitle("T 1.1");
+		assertSame(1, this.dblTasks.updateTask(task));
 	}
 	
 	public void testCreateTaskWithDate() {
@@ -54,49 +54,10 @@ public class DBLTasksTest extends AndroidTestCase implements IDBLTests {
 		Date date = new Date(0, unixTime, "i13", "", "Comment ...");		
 		Task task = new Task(0, "Task title", "Comment ...", date);
 		
-		this.dblObjects.addTask(task);
+		this.dblTasks.addTask(task);
+		
+		boolean eval = ((long)date.getTimestamp() == (long)this.dblTasks.getTaskDate(task).getTimestamp());
+		
+		assertTrue(eval);
 	}
-	
-	public void testGetAll(){
-		dropAllObjects();
-		fillTestObjectsInDBL();
-		Tasks tasks = dblObjects.getTasks(0);
-		
-		Log.w(LOG_TAG_TASKS_LOGIC_TEST, "size: " + tasks.getTasks().size());
-		
-		assertEquals(NR_TEST_OBJECTS, tasks.getTasks().size());
-	}
-	
-	private void fillTestObjectsInDBL(){
-		if(this.testObjects == null){
-			createTestObjects();
-		}
-		
-		for(Task task : this.testObjects) {
-			task.printTask();
-			this.dblObjects.addTask(task);
-		}
-	}
-	
-	private void createTestObjects(){
-		Task o1 = new Task();
-		o1.setTitle("Titel T1");
-		o1.setComment("Comment T 1");
-		
-		Task o2 = new Task();
-		o2.setTitle("Title T2");
-		o2.setComment("Comment T2");
-		
-		this.testObjects = new ArrayList<Task>();
-	
-		this.testObjects.add(o1);
-		this.testObjects.add(o2);
-		
-		this.NR_TEST_OBJECTS = this.testObjects.size();
-	}
-	
-	private void dropAllObjects(){
-		this.dblObjects = null;
-		this.dblObjects = new DBLTasks(testContext);
-	}	
 }

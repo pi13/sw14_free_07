@@ -15,38 +15,32 @@ public class DBLResourcesTest extends AndroidTestCase implements IDBLTests {
 	
 	public void setUp(){
 		this.context = new RenamingDelegatingContext(getContext(), "test_");		
-		this.dblResources = new DBLResources(this.context);		
+		this.dblResources = new DBLResources(this.context);	
+		this.dblResources.resetTable();
 	}
 	
 	@Override
 	public void testAddNew() {
-		// TODO Auto-generated method stub
-		
+		long rid = dblResources.addResource(new Resource("TEST res"));		
+		assertNotSame(-1l, rid);
 	}
 
 	@Override
 	public void testDelete() {
-		// TODO Auto-generated method stub
-		
+		long rid = dblResources.addResource(new Resource("TEST res"));
+		assertSame(1, dblResources.deleteResource(rid));
 	}
 
 	@Override
 	public void testUpdate() {
-		// TODO Auto-generated method stub
+		Resource res = new Resource("Res 1");
+		assertSame(1l, this.dblResources.addResource(res));
 		
+		res.setTitle("Res 1.0");
+		assertSame(1, this.dblResources.updateResource(res));
 	}
 	
-	public void testAddResource(){
-		long rid = dblResources.addResource(new Resource("TEST res"));		
-		assertNotSame(-1l, rid);
-	}
-	
-	public void testDeleteResource() {
-		long rid = dblResources.addResource(new Resource("TEST res"));
-		assertSame(1, dblResources.deleteResource(rid));
-	}
-	
-	public void testGetAllResources(){
+	public void testGetResources(){
 		DDTestsetA testset = new DDTestsetA(this.context);
 		testset.FillDb();
 		

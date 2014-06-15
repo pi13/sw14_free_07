@@ -5,15 +5,20 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 import at.lvmaster3000.database.helper.HLPDates;
+import at.lvmaster3000.database.helper.HLPExams;
 import at.lvmaster3000.database.helper.HLPTasks;
 import at.lvmaster3000.database.lists.Tasks;
+import at.lvmaster3000.database.objects.Date;
+import at.lvmaster3000.database.objects.Exam;
+import at.lvmaster3000.database.objects.Relation;
 import at.lvmaster3000.database.objects.Task;
 import at.lvmaster3000.settings.DBsettings;
 
 public class DBLTasks {
 	
-	private HLPTasks hlpTasks = null;
-	private DBLDates dblDates = null;
+	private HLPTasks hlpTasks;
+	private DBLDates dblDates;
+	private DBLRelations dblRelations;
 
 	/**
 	 * 
@@ -22,12 +27,19 @@ public class DBLTasks {
 	public DBLTasks(Context context) {
 		this.hlpTasks = new HLPTasks(context);
 		this.dblDates = new DBLDates(context);
+		this.dblRelations = new DBLRelations(context);
 	}
 	
 	public void resetTable() {
 		this.hlpTasks.openCon();
 		this.hlpTasks.resetTable();
 		this.hlpTasks.closeCon();
+	}
+	
+	public void resetTablesInvolved() {
+		this.resetTable();
+		this.dblDates.resetTable();
+		this.dblRelations.resetTable();
 	}
 	
 	/**
@@ -53,7 +65,7 @@ public class DBLTasks {
 		task.setId(tid);
 		
 		if(task.getDate() != null) {
-//			this.dblDates.addDate(task.getDate());
+			this.setTaskDate(task, task.getDate());
 		}
 		
 		return tid;
@@ -129,6 +141,44 @@ public class DBLTasks {
 		Log.i(DBsettings.LOG_TAG_TASKS, "Update res.: " + ret);
 		
 		return ret;
+	}
+	
+	/**
+	 * 
+	 * @param task
+	 * @param date
+	 * @return
+	 */
+	public boolean setTaskDate(Task task, Date date) {
+		boolean worked = false;
+		
+		Relation relation = this.dblRelations.getRelationByTaskWithDateSet(task);
+		if(relation != null) {
+			this.dblDates.deleteDate(relation.getDateId());
+			this.dblRelations.deleteRelation(relation);
+		}
+		
+		long dateId = this.dblDates.addDate(date);
+		long relId = this.dblRelations.addRelation(new Relation(0, HLPTasks.TABLE_NAME, 0, 0, task.getId(), dateId, 0));
+		
+		if(dateId != -1 && relId != -1)
+			worked = true;
+
+		return worked;
+	}
+	
+	/**
+	 * 
+	 * @param task
+	 * @return
+	 */
+	public Date getTaskDate(Task task) {
+		Relation relation = this.dblRelations.getRelationByTaskWithDateSet(task);
+		if(relation == null) {
+			return null;
+		}
+		
+		return this.dblDates.getDateByRelation(relation);
 	}
 
 }
