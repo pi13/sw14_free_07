@@ -2,6 +2,9 @@ package at.lvmaster3000.database.objects;
 
 import android.database.Cursor;
 import android.util.Log;
+import at.lvmaster3000.database.helper.HLPExams;
+import at.lvmaster3000.database.helper.HLPRelations;
+import at.lvmaster3000.database.helper.HLPTasks;
 import at.lvmaster3000.settings.DBsettings;
 
 public class Exam {
@@ -56,10 +59,19 @@ public class Exam {
 	}
 	
 	public Exam cursorToExam(Cursor cursor) {
-		this.id = cursor.getLong(0); 
-		this.title = cursor.getString(1);
-		this.comment = cursor.getString(2);
-		this.lecture_id = cursor.getLong(3);
+		int idx = cursor.getColumnIndex(HLPRelations.COL_EXAM_ID);
+		
+		if(idx < 0) {
+			this.id = cursor.getLong(cursor.getColumnIndex(HLPExams.COL_ID));
+		} else {
+			this.id = cursor.getLong(idx);
+		}
+		
+		this.id = cursor.getLong(cursor.getColumnIndex(HLPExams.COL_ID)); 
+		this.title = cursor.getString(cursor.getColumnIndex(HLPExams.COL_TITLE));
+		this.comment = cursor.getString(cursor.getColumnIndex(HLPExams.COL_COMMENT));
+		this.lecture_id = cursor.getLong(cursor.getColumnIndex(HLPExams.COL_LECTURE_ID));
+		this.date = new Date().cursorToDate(cursor);
 		
 		return this;
 	}
@@ -70,6 +82,9 @@ public class Exam {
 		msg += " | Comment: " + this.comment;
 		msg += " | Lecture ID: " +  this.lecture_id;
 		Log.d(DBsettings.LOG_TAG_EXAMS, msg);
+		if(date != null) {
+			date.printDate();
+		}
 	}
 
 }
