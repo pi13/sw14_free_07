@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 import at.lvmaster3000.database.helper.HLPDates;
-import at.lvmaster3000.database.helper.HLPTasks;
 import at.lvmaster3000.database.lists.Dates;
 import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Relation;

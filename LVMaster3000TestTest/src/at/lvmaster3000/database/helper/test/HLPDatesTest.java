@@ -13,7 +13,7 @@ import at.lvmaster3000.database.interfaces.IHLPTest;
  */
 public class HLPDatesTest extends AndroidTestCase implements IHLPTest {
 
-	private HLPDates hlpObjects;
+	private HLPDates hlpDates;
 	private SQLiteDatabase db;
 
 	/**
@@ -22,16 +22,16 @@ public class HLPDatesTest extends AndroidTestCase implements IHLPTest {
 	public void setUp() {
 		RenamingDelegatingContext context = new RenamingDelegatingContext(
 				getContext(), "test_");
-		hlpObjects = new HLPDates(context);
-		db = hlpObjects.openCon();
+		hlpDates = new HLPDates(context);
+		db = hlpDates.openCon();
 	}
 
 	/**
 	 * test is the insertion of an object returns an error case or if it works
 	 */
 	public void testInsert(){
-        hlpObjects.resetTable();
-        long id = hlpObjects.addDate(1000l, "30 grad west", "weekly appointment", "team meeting");
+        hlpDates.resetTable();
+        long id = hlpDates.addDate(1000l, "30 grad west", "weekly appointment", "team meeting");
         assertNotSame(-1, id);
 	}
 	
@@ -39,13 +39,13 @@ public class HLPDatesTest extends AndroidTestCase implements IHLPTest {
 	 * test if deletion of an object works
 	 */
 	public void testDelete(){
-		hlpObjects.resetTable();
-        long id = hlpObjects.addDate(1000l, "30 grad west", "weekly appointment", "team meeting");
-		hlpObjects.deleteDate(id);
+		hlpDates.resetTable();
+        long id = hlpDates.addDate(1000l, "30 grad west", "weekly appointment", "team meeting");
+		hlpDates.deleteDate(id);
 		
 		try{
 			// should throw exception because lecture has been deleted
-			Cursor cursor = db.rawQuery("SELECT * FROM " + hlpObjects.TABLE_NAME + " WHERE _id = " + id, null);
+			Cursor cursor = db.rawQuery("SELECT * FROM " + HLPDates.TABLE_NAME + " WHERE _id = " + id, null);
 			assertEquals(0, cursor.getCount());
 		}catch(Exception e){
 			assertNull(e);
@@ -56,8 +56,8 @@ public class HLPDatesTest extends AndroidTestCase implements IHLPTest {
 	 * at last tear town the database connection
 	 */
 	public void tearDown() {
-		db.rawQuery("DELETE FROM " + hlpObjects.TABLE_NAME, null);
-		hlpObjects.closeCon();
+		db.rawQuery("DELETE FROM " + HLPDates.TABLE_NAME, null);
+		hlpDates.closeCon();
 	}
 
 }

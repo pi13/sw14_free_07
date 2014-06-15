@@ -1,22 +1,14 @@
 package at.lvmaster3000.database.logic.test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
-import android.util.Log;
 import at.lvmaster3000.database.interfaces.IDBLTests;
-import at.lvmaster3000.database.lists.Tasks;
 import at.lvmaster3000.database.logic.DBLTasks;
 import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Task;
 
 public class DBLTasksTest extends AndroidTestCase implements IDBLTests {
-	private DBLTasks dblTasks;
-	private List<Task> testObjects = null;
-	private int NR_TEST_OBJECTS = 0;
-	
+	private DBLTasks dblTasks;	
 	private RenamingDelegatingContext context = null;
 	
 	public static final String LOG_TAG_TASKS_LOGIC_TEST = "TEST_TASKS_LOGIC";

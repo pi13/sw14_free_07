@@ -9,6 +9,7 @@ public class ExamTest extends AndroidTestCase implements IObjectTest {
 	@Override
 	public void testCreateObject() {
 		Exam ex = new Exam(0, "title", "comment ...", 0, null);
+		assertNotNull(ex);
 	}
 
 	@Override

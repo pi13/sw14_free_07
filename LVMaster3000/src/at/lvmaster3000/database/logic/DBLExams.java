@@ -3,10 +3,7 @@ package at.lvmaster3000.database.logic;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
-import at.lvmaster3000.database.helper.HLPCoworkers;
-import at.lvmaster3000.database.helper.HLPDates;
 import at.lvmaster3000.database.helper.HLPExams;
 import at.lvmaster3000.database.helper.HLPRelations;
 import at.lvmaster3000.database.helper.HLPResources;
@@ -255,7 +252,7 @@ public class DBLExams {
 	}
 
 	public Coworkers getExamCoworkers(Exam exam){
-		// TODO Auto-generated method stub
+		// TODO: implement later....
 		return null;
 	}
 

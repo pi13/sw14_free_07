@@ -44,7 +44,7 @@ public class HLPExamsTest extends AndroidTestCase implements IHLPTest {
 		
 		try{
 			// should throw exception because lecture has been deleted
-			Cursor cursor = db.rawQuery("SELECT * FROM " + hlpObjects.TABLE_NAME + " WHERE _id = " + id, null);
+			Cursor cursor = db.rawQuery("SELECT * FROM " + HLPExams.TABLE_NAME + " WHERE _id = " + id, null);
 			assertEquals(0, cursor.getCount());
 		}catch(Exception e){
 			assertNull(e);
@@ -55,7 +55,7 @@ public class HLPExamsTest extends AndroidTestCase implements IHLPTest {
 	 * at last tear town the database connection
 	 */
 	public void tearDown() {
-		db.rawQuery("DELETE FROM " + hlpObjects.TABLE_NAME, null);
+		db.rawQuery("DELETE FROM " + HLPExams.TABLE_NAME, null);
 		hlpObjects.closeCon();
 	}
 }

@@ -12,7 +12,7 @@ import at.lvmaster3000.database.interfaces.IHLPTest;
  *
  */
 public class HLPResourcesTest extends AndroidTestCase implements IHLPTest {
-	private HLPResources hlpObjects;
+	private HLPResources hlpResources;
 	private SQLiteDatabase db;
 
 	/**
@@ -21,16 +21,16 @@ public class HLPResourcesTest extends AndroidTestCase implements IHLPTest {
 	public void setUp() {
 		RenamingDelegatingContext context = new RenamingDelegatingContext(
 				getContext(), "test_");
-		hlpObjects = new HLPResources(context);
-		db = hlpObjects.openCon();
+		hlpResources = new HLPResources(context);
+		db = hlpResources.openCon();
 	}
 
 	/**
 	 * test is the insertion of an object returns an error case or if it works
 	 */
 	public void testInsert(){
-        hlpObjects.resetTable();
-        long id = hlpObjects.addResource("test book");
+        hlpResources.resetTable();
+        long id = hlpResources.addResource("test book");
         assertNotSame(-1, id);
 	}
 	
@@ -38,13 +38,13 @@ public class HLPResourcesTest extends AndroidTestCase implements IHLPTest {
 	 * test if deletion of an object works
 	 */
 	public void testDelete(){
-		hlpObjects.resetTable();
-        long id = hlpObjects.addResource("test book");
-		hlpObjects.deleteResource(id);
+		hlpResources.resetTable();
+        long id = hlpResources.addResource("test book");
+		hlpResources.deleteResource(id);
 		
 		try{
 			// should throw exception because lecture has been deleted
-			Cursor cursor = db.rawQuery("SELECT * FROM " + hlpObjects.TABLE_NAME + " WHERE _id = " + id, null);
+			Cursor cursor = db.rawQuery("SELECT * FROM " + HLPResources.TABLE_NAME + " WHERE _id = " + id, null);
 			assertEquals(0, cursor.getCount());
 		}catch(Exception e){
 			assertNull(e);
@@ -55,7 +55,7 @@ public class HLPResourcesTest extends AndroidTestCase implements IHLPTest {
 	 * at last tear town the database connection
 	 */
 	public void tearDown() {
-		db.rawQuery("DELETE FROM " + hlpObjects.TABLE_NAME, null);
-		hlpObjects.closeCon();
+		db.rawQuery("DELETE FROM " + HLPResources.TABLE_NAME, null);
+		hlpResources.closeCon();
 	}
 }

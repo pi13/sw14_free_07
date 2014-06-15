@@ -1,15 +1,10 @@
 package at.lvmaster3000.database.logic.test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 import at.lvmaster3000.database.demodata.DDTestsetA;
 import at.lvmaster3000.database.interfaces.IDBLTests;
-import at.lvmaster3000.database.lists.Dates;
 import at.lvmaster3000.database.logic.DBLDates;
-import at.lvmaster3000.database.objects.Coworker;
 import at.lvmaster3000.database.objects.Date;
 
 public class DBLDatesTest extends AndroidTestCase implements IDBLTests {
