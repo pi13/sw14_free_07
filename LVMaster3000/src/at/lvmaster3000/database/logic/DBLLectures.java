@@ -354,8 +354,12 @@ public class DBLLectures {
 		Tasks tasks = new Tasks();
 		
 		String query = "SELECT * FROM " + HLPTasks.TABLE_NAME;
-		query += " LEFT JOIN " + HLPRelations.TABLE_NAME + " ON (" + HLPTasks.TABLE_NAME + "." + HLPTasks.COL_ID + " = " + HLPRelations.COL_TASK_ID + ")";
-		query += " LEFT JOIN " + HLPDates.TABLE_NAME + " ON (" + HLPDates.TABLE_NAME + "." + HLPDates.COL_ID + " = " + HLPRelations.COL_DATE_ID + ")";
+//		query += " LEFT JOIN " + HLPRelations.TABLE_NAME + " ON (" + HLPTasks.TABLE_NAME + "." + HLPTasks.COL_ID + " = " + HLPRelations.COL_TASK_ID + ")";
+//		query += " LEFT JOIN " + HLPDates.TABLE_NAME + " ON (" + HLPDates.TABLE_NAME + "." + HLPDates.COL_ID + " = " + HLPRelations.COL_DATE_ID + ")";
+		
+		query += " LEFT JOIN " + HLPRelations.TABLE_NAME + " ON (" + HLPTasks.TABLE_NAME + "." + HLPTasks.COL_ID + " = " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_TASK_ID + ")";
+		query += " LEFT JOIN " + HLPDates.TABLE_NAME + " ON ("  + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_DATE_ID + " = " + HLPDates.TABLE_NAME + "." + HLPDates.COL_ID + ")";
+		
 		query += " WHERE " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_LECTURE_ID + " = " + lecture.getID();
 		query += " AND " + HLPRelations.COL_EXAM_ID + " = 0";
 		query += " AND " + HLPRelations.COL_SRCTABLE + " = '" + HLPLectures.TABLE_NAME + "';";
@@ -403,7 +407,9 @@ public class DBLLectures {
 		
 		String query = "SELECT * FROM " + HLPExams.TABLE_NAME;
 		
-		query += " LEFT JOIN " + HLPRelations.TABLE_NAME + " ON (" + HLPExams.TABLE_NAME + "." + HLPExams.COL_ID + " = " + HLPRelations.COL_EXAM_ID + ")";
+//		query += " LEFT JOIN " + HLPRelations.TABLE_NAME + " ON (" + HLPExams.TABLE_NAME + "." + HLPExams.COL_ID + " = " + HLPRelations.COL_EXAM_ID + ")";
+		query += " LEFT JOIN " + HLPRelations.TABLE_NAME + " ON (" + HLPExams.TABLE_NAME + "." + HLPExams.COL_ID + " = " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_EXAM_ID + ")";
+		query += " LEFT JOIN " + HLPDates.TABLE_NAME + " ON ("  + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_DATE_ID + " = " + HLPDates.TABLE_NAME + "." + HLPDates.COL_ID + ")";
 		query += " WHERE " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_LECTURE_ID + " = " + lecture.getID();	
 		query += " AND " + HLPRelations.COL_TASK_ID + " = 0";
 		query += " AND " + HLPRelations.COL_SRCTABLE + " = '" + HLPLectures.TABLE_NAME + "';";
