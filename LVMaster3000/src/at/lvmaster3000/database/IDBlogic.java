@@ -309,7 +309,10 @@ public class IDBlogic {
 	 * @param date
 	 * @return
 	 */
-	public int deleteDate(Date date) {
+	public int deleteDate(Date date) {	
+		if(this.relations.deleteRelation(relation))
+		
+		
 		return this.dates.deleteDate(date.getID());
 	}
 }
