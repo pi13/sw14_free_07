@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:minHeight="800dp">
-
-    <TimePicker
-        android:id="@+id/add_date_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent" >
 
     <DatePicker
         android:id="@+id/add_date_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/add_date_time"
         android:spinnersShown="false" />
+
+    <TimePicker
+        android:id="@+id/add_date_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+                android:layout_below="@id/add_date_date" />
 
     <LinearLayout
         android:id="@+id/button_container"
