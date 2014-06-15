@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.database.objects.Date;
@@ -95,6 +97,7 @@ public class ExamDetailsFragment extends UIFragmentBase{
 			updateExamListener.updateLectureExam(exam);
 		}
 
+		Toast.makeText(context, "Saved :)", Toast.LENGTH_LONG).show();
 	}
 	
 	@Override
@@ -115,6 +118,19 @@ public class ExamDetailsFragment extends UIFragmentBase{
 		menu.clear();
 		MenuInflater inflater = getActivity().getMenuInflater();
 	    inflater.inflate(R.menu.exam_fragment_details, menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_save:
+
+			updateExam();
+
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}		
 	}
 	
 }

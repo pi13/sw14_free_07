@@ -73,6 +73,8 @@ public class Exam {
 		this.lecture_id = cursor.getLong(cursor.getColumnIndex(HLPExams.COL_LECTURE_ID));
 		this.date = new Date().cursorToDate(cursor);
 		
+//		this.printExam();
+		
 		return this;
 	}
 	

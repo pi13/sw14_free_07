@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.database.objects.Resource;
@@ -82,13 +86,46 @@ public class ResourceDetailsFragment extends UIFragmentBase{
 			updateResourceListener.updateResource(resource);
 		}
 
+		Toast.makeText(context, "Saved :)", Toast.LENGTH_LONG).show();
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-		updateResource();
+//		updateResource();
+	}
+	
+	@Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+        getActivity().invalidateOptionsMenu();
+    }
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {		
+		menu.clear();
+	    inflater.inflate(R.menu.resource_fragment_details, menu);
+	}
+	
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {	
+		menu.clear();
+		MenuInflater inflater = getActivity().getMenuInflater();
+	    inflater.inflate(R.menu.resource_fragment_details, menu);
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_save:
+
+			updateResource();
+
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}		
+	}
 
 }

@@ -1,15 +1,18 @@
 package at.lvmaster3000.gui.fragments;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.database.objects.Task;
@@ -84,7 +87,7 @@ public class TaskDetailsFragment extends UIFragmentBase{
 		//examDate.setText(lecture.getComment());
 	}
 	
-	private void updateExam() {
+	private void updateTask() {
 		if(initDone)
 		{
 			task.setTitle((taskTitle.getText().toString()));
@@ -92,12 +95,13 @@ public class TaskDetailsFragment extends UIFragmentBase{
 			updateTaskListener.updateTask(task);
 		}
 
+		Toast.makeText(context, "Saved :)", Toast.LENGTH_LONG).show();
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-		updateExam();
+//		updateExam();
 	}
 	
 	@Override
@@ -118,6 +122,19 @@ public class TaskDetailsFragment extends UIFragmentBase{
 		menu.clear();
 		MenuInflater inflater = getActivity().getMenuInflater();
 	    inflater.inflate(R.menu.tasks_fragment_details, menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_save:
+
+			updateTask();
+
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}		
 	}
 
 }

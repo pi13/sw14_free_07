@@ -385,9 +385,9 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 	}
 
 	@Override
-	public void updateTask(Task task) {
+	public void updateTask(Task task) {		
+		task.printTask();
 		dbLogic.updateTask(task);
-		
 	}
 
 	@Override
