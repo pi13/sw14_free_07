@@ -392,6 +392,8 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 	
 	public void deleteDate(Date date)
 	{
+		dbLogic.deleteDate(date);
+		updateDateList();
 		
 	}
 	
