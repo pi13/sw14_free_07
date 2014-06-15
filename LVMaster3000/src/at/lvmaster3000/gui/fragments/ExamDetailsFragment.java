@@ -65,7 +65,7 @@ public class ExamDetailsFragment extends UIFragmentBase{
 		View view = inflater.inflate(R.layout.fragment_exam_details, container, false);
 		examTitle = (EditText) view.findViewById(R.id.detail_exam_title);
 		examComment = (EditText) view.findViewById(R.id.detail_exam_comment);
-		//examDate = (DatePicker) view.findViewById(R.id.detail_exam_date);
+		examDate = (DatePicker) view.findViewById(R.id.detail_exam_date);
 
 		return view;
 	}
@@ -83,7 +83,7 @@ public class ExamDetailsFragment extends UIFragmentBase{
 		examTitle.setText(exam.getTitle());
 		examComment.setText(exam.getComment());
 		
-		//examDate.getCalendarView().setDate(exam.getDate().getTimestamp()*1000);
+		examDate.getCalendarView().setDate(exam.getDate().getTimestamp()*1000);
 	}
 	
 	private void updateExam() {
@@ -91,7 +91,7 @@ public class ExamDetailsFragment extends UIFragmentBase{
 		{
 			exam.setTitle((examTitle.getText().toString()));
 			exam.setComment((examComment.getText().toString()));
-			//exam.setDate(new Date(0, examDate.getCalendarView().getDate()/1000, "", "", ""));
+			exam.setDate(new Date(0, examDate.getCalendarView().getDate()/1000, "", "", ""));
 			updateExamListener.updateLectureExam(exam);
 		}
 

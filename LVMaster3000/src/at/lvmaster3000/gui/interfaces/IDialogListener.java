@@ -24,4 +24,6 @@ public interface IDialogListener {
 
 	void onResourceAddToLecture(DialogFragment dialog);
 	
+	void onDateAddToLecture(DialogFragment dialog);
+	
 }

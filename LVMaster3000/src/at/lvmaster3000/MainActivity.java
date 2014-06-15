@@ -358,6 +358,15 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		dialog.dismiss();
 	}
 
+
+	@Override
+	public void onDateAddToLecture(DialogFragment dialog) {
+		LectureDetailsFragment dateFrag = (LectureDetailsFragment)fragManager.findFragmentByTag(getResources().getString(R.string.lecture_details_frag));		
+		dateFrag.updateDateList();
+		dialog.dismiss();
+		
+	}
+	
 	@Override
 	public void onDialogNegativeClick(DialogFragment dialog) {
 		dialog.dismiss();
@@ -576,5 +585,4 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		// TODO Auto-generated method stub
 		
 	}
-
 }

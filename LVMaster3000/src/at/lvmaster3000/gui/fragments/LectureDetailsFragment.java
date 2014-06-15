@@ -523,13 +523,15 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 
 			return true;
 		case R.id.action_addDate:
-			Log.w("TEST_", "action_addDate");
+			newFragment = AddDateFragment.newInstance(context);
+			newFragment.setArguments(bundle);
+			newFragment.show(getFragmentManager(), getResources().getString(R.string.add_date_frag));
 			return true;
 		case R.id.action_addTask:
 
 			newFragment = AddTaskFragment.newInstance(context);
 			newFragment.setArguments(bundle);
-			newFragment.show(getFragmentManager(), "add_task_dialog");
+			newFragment.show(getFragmentManager(), getResources().getString(R.string.add_task_frag));
 
 			Log.w("TEST_", "action_addTask");
 			return true;
@@ -537,7 +539,7 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 
 			newFragment = AddExamFragment.newInstance(context);
 			newFragment.setArguments(bundle);
-			newFragment.show(getFragmentManager(), "add_exam_dialog");
+			newFragment.show(getFragmentManager(), getResources().getString(R.string.add_exam_frag));
 
 			Log.w("TEST_", "action_addExam");
 			return true;
@@ -545,7 +547,7 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 
 			newFragment = AddResourceFragment.newInstance(context);
 			newFragment.setArguments(bundle);
-			newFragment.show(getFragmentManager(), "add_resource_dialog");
+			newFragment.show(getFragmentManager(), getResources().getString(R.string.add_res_frag));
 
 			Log.w("TEST_", "action_addResource");
 			return true;

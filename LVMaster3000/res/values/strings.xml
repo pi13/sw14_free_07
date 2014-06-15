@@ -19,6 +19,11 @@
     <string name="exam_details_frag">exam_details_frag</string>
     <string name="task_details_frag">task_details_frag</string>
     <string name="res_details_frag">res_details_frag</string>
+    
+    <string name="add_exam_frag">add_exam_frag</string>
+    <string name="add_res_frag">add_res_frag</string>
+    <string name="add_task_frag">add_task_frag</string>
+    <string name="add_date_frag">add_date_frag</string>
 
     <string name="hint_lecture_id">123.456</string>
     <string name="hint_lecture_name">Lecture Name</string>

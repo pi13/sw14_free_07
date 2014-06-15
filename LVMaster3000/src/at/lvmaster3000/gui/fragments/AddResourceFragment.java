@@ -23,9 +23,6 @@ public class AddResourceFragment extends DialogFragment implements	OnClickListen
 	private Context context;
 	private Resource resource;
 	private EditText resTitle;
-
-	int isRequired;
-	int isCompulsory;
 	
 	private long lectureId;	
 	private IDBlogic dbLogic;
