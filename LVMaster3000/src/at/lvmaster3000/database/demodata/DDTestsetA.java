@@ -2,6 +2,7 @@ package at.lvmaster3000.database.demodata;
 
 import java.util.List;
 
+import android.R.dimen;
 import android.content.Context;
 import at.lvmaster3000.database.helper.HLPCoworkers;
 import at.lvmaster3000.database.helper.HLPDates;
@@ -97,6 +98,8 @@ public class DDTestsetA {
         this.datescnt += 1;
         long did5 = hlpdates.addDate(unixTime + week, "Testlocation 5", "LV", "Thats a comment");
         this.datescnt += 1;
+        long did6 = hlpdates.addDate(unixTime + week, "Testlocation 6", "E", "Thats a comment");
+        this.datescnt += 1;
         this.hlpdates.allEntriesToLog();
         this.hlpdates.closeCon();
         
@@ -132,7 +135,7 @@ public class DDTestsetA {
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, 0, 0, did1, 0);
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, 0, 0, did4, 0);
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, 0, eid1, 0, did2, 0);
-        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, eid2, 0, 0, 0);
+        this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid1, eid2, 0, did6, 0);
         this.hlprelations.addRelation(HLPExams.TABLE_NAME, 0, eid3, 0, 0, res1);
         this.hlprelations.addRelation(HLPExams.TABLE_NAME, 0, eid3, 0, 0, res2);
         this.hlprelations.addRelation(HLPLectures.TABLE_NAME, lid3, 0, 0, 0, res3);
