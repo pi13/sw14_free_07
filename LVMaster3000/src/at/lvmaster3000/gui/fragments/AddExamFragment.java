@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.IDBlogic;
+import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Lecture;
 import at.lvmaster3000.gui.interfaces.IDialogListener;
@@ -25,6 +27,7 @@ public class AddExamFragment  extends DialogFragment implements OnClickListener 
 	private Exam exam;
 	private EditText examTitle;
 	private EditText examComment;
+	private DatePicker datePicker;
 	
 	private long lectureId;	
 	private IDBlogic dbLogic;
@@ -68,6 +71,7 @@ public class AddExamFragment  extends DialogFragment implements OnClickListener 
 
 		examTitle = (EditText) view.findViewById(R.id.add_exam_title);
 		examComment = (EditText) view.findViewById(R.id.add_exam_comment);
+		datePicker = (DatePicker)view.findViewById(R.id.add_exam_date);
 		
 		Bundle bundle = getArguments();
 		if(bundle != null) {
@@ -82,7 +86,8 @@ public class AddExamFragment  extends DialogFragment implements OnClickListener 
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ok_btn:
-			exam = new Exam(0, examTitle.getText().toString(), examComment.getText().toString(), 0, null);
+			exam = new Exam(0, examTitle.getText().toString(), examComment.getText().toString(), 0, 
+							new Date(0, datePicker.getCalendarView().getDate()/1000, "","",""));
 			
 			if(this.lectureId > 0) {
 				Lecture lecture = new Lecture();
