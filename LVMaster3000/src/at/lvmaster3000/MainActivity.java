@@ -382,12 +382,13 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 	@Override
 	public void updateLectureExam(Exam exam) {
 		dbLogic.updateExam(exam);
+		dbLogic.updateDate(exam.getDate());
 	}
 
 	@Override
 	public void updateTask(Task task) {
 		dbLogic.updateTask(task);
-		
+		dbLogic.updateDate(task.getDate());
 	}
 
 	@Override
