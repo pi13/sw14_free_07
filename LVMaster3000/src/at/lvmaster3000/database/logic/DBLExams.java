@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+import at.lvmaster3000.database.helper.HLPDates;
 import at.lvmaster3000.database.helper.HLPExams;
 import at.lvmaster3000.database.helper.HLPRelations;
 import at.lvmaster3000.database.helper.HLPResources;
@@ -93,6 +94,10 @@ public class DBLExams {
 		Exams exams = new Exams();
 		
 		String query = "SELECT * FROM " + HLPExams.TABLE_NAME;
+		query += " LEFT JOIN " + HLPRelations.TABLE_NAME + " ON (" + HLPExams.TABLE_NAME + "." + HLPExams.COL_ID + " = " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_EXAM_ID + ")";
+		query += " LEFT JOIN " + HLPDates.TABLE_NAME + " ON ("  + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_DATE_ID + " = " + HLPDates.TABLE_NAME + "." + HLPDates.COL_ID + ")";
+		
+		Log.i(DBsettings.LOG_TAG_EXAMS, query);
 		
 		if(limit > 0) {
 			query += " LIMIT " + limit;
@@ -100,7 +105,7 @@ public class DBLExams {
 		
         Cursor cursor = this.hlpExams.openCon().rawQuery(query, null);
         if(cursor != null) {
-        	exams.cursorToExamList(cursor);        	
+        	exams.cursorToExamList(cursor);  	
         } else {
         	Log.w(DBsettings.LOG_TAG_EXAMS, "Cursor is NULL!!");        	
         }

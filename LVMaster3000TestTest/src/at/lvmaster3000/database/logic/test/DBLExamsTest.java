@@ -46,11 +46,30 @@ public class DBLExamsTest extends AndroidTestCase implements IDBLTests {
 	}
 	
 	public void testGetAllExams(){
-		DDTestsetA TestA = new DDTestsetA(context);
-	    TestA.FillDb();
-
-		Exams exs = dblExams.getExams(0);		
-		assertEquals(TestA.getExamCnt(), exs.nrOfExams());		
+		Exam ex1 = new Exam(0, "Ex 2", "Comment...", 0, new Date(0, 0, "i13", "", "comment"));
+		Exam ex2 = new Exam(0, "Ex 2", "Comment...", 0, new Date(0, 0, "i12", "", "comment"));
+		this.dblExams.addExam(ex1);
+		this.dblExams.addExam(ex2);
+		assertSame(2, this.dblExams.getExams(0).getExams().size());
+	}
+	
+	public void testGetExamPrintDates() {
+		Exam ex1 = new Exam(0, "Ex 2", "Comment...", 0, new Date(0, 0, "i13", "", "comment"));
+		Exam ex2 = new Exam(0, "Ex 2", "Comment...", 0, new Date(0, 0, "i12", "", "comment"));
+		this.dblExams.addExam(ex1);
+		this.dblExams.addExam(ex2);
+		assertSame(2, this.dblExams.getExams(0).getExams().size());
+		
+		try {
+			for(Exam ex : this.dblExams.getExams(0).getExams()) {
+				ex.printExam();
+				ex.getDate().printDate();
+			}
+			assertTrue(true);
+		} catch (Exception e) {
+			assertTrue(false);
+		}
+		
 	}
 	
 	public void testGetExamById(){
