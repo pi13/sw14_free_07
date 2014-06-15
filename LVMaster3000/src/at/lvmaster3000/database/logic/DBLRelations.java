@@ -24,16 +24,34 @@ public class DBLRelations {
 		this.hlpRelations.closeCon();
 	}
 	
-	public long addRelation(Relation relation) {
+	public long addRelation(String srctable, long lectureID, long examID, long taskID, long dateID, long resID) {
 		this.hlpRelations.openCon();
-		long ret = this.hlpRelations.addRelation(relation.getSrcTable(), relation.getLectureId(), relation.getExamId(), relation.getTaskId(), relation.getDateId(), relation.getResId());
+		long ret = this.hlpRelations.addRelation(srctable, lectureID, examID, taskID, dateID, resID);
+		this.hlpRelations.closeCon();
+		
+		return ret;
+	}
+	
+	public long addRelation(Relation relation) {
+		long ret = this.addRelation(relation.getSrcTable(), relation.getLectureId(), relation.getExamId(), relation.getTaskId(), relation.getDateId(), relation.getResId());
+		relation.setId(ret);
+		
+		return ret;
+	}
+	
+	public int deleteRelation(long relationId) {
+		this.hlpRelations.openCon();
+		int ret = this.hlpRelations.deleteRelation(relationId);
 		this.hlpRelations.closeCon();
 		return ret;
 	}
 	
 	public int deleteRelation(Relation relation) {
-		this.hlpRelations.openCon();
-		int ret = this.hlpRelations.deleteRelation(relation.getId());
+		return this.deleteRelation(relation.getId());
+	}
+	
+	public int deleteRelationByDate(Date date){
+		int ret = this.hlpRelations.openCon().delete(HLPRelations.TABLE_NAME, HLPRelations.COL_DATE_ID + " = " + date.getID(), null);
 		this.hlpRelations.closeCon();
 		return ret;
 	}
