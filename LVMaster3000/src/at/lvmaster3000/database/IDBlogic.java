@@ -303,4 +303,13 @@ public class IDBlogic {
 	public Dates getDates(int limit) {
 		return this.dates.getDates(limit);
 	}
+	
+	/**
+	 * 
+	 * @param date
+	 * @return
+	 */
+	public int deleteDate(Date date) {
+		return this.dates.deleteDate(date.getID());
+	}
 }
