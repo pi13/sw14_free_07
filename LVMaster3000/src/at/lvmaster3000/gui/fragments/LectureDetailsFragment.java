@@ -352,6 +352,10 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 		}
 	}
 
+	/**
+	 * Load sublists for lecture
+	 * @param dbLogic
+	 */
 	private void addGroups(IDBlogic dbLogic) {
 		ExamGroup exam = new ExamGroup(getResources().getString(R.string.exams));
 		exam.setChildren(dbLogic.getExamsForLecture(lecture).getExams());

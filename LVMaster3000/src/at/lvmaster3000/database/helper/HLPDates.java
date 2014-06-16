@@ -18,7 +18,7 @@ public class HLPDates extends SQLiteOpenHelper {
 	public static final String COL_TIMESTAMP = "timestamp";
 	public static final String COL_LOCATION = "location";
 	public static final String COL_TYPE = "type";
-	public static final String COL_COMMENT = "comment";
+	public static final String COL_COMMENT = "datecomment";
 	
 	private String logtag = DBsettings.LOG_TAG_DATES;
 	

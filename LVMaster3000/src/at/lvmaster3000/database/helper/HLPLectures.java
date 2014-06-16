@@ -17,7 +17,7 @@ public class HLPLectures extends SQLiteOpenHelper {
 	public static final String COL_ID = "_id";
 	public static final String COL_NUMBER = "number";
 	public static final String COL_NAME = "name";
-	public static final String COL_COMMENT = "comment";
+	public static final String COL_COMMENT = "lvcomment";
 	public static final String COL_TYPE = "type";
 	public static final String COL_REQUIRED = "required";
 	public static final String COL_COMPULSORY = "compulsory";

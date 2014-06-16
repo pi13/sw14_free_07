@@ -82,7 +82,7 @@ public class ExamDetailsFragment extends UIFragmentBase{
 	
 	private void updateFileds()
 	{
-		exam.printExam();
+//		exam.printExam();
 		
 		examTitle.setText(exam.getTitle());
 		examComment.setText(exam.getComment());
@@ -95,7 +95,10 @@ public class ExamDetailsFragment extends UIFragmentBase{
 			exam.setTitle((examTitle.getText().toString()));
 			exam.setComment((examComment.getText().toString()));
 			exam.getDate().setTimestamp(examDate.getCalendarView().getDate()/1000);
-			exam.printExam();
+			exam.getDate().setType("");
+			exam.getDate().setLocation("");
+			exam.getDate().setComment("");
+			
 			updateExamListener.updateLectureExam(exam);
 		}
 

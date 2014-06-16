@@ -405,15 +405,17 @@ public class DBLLectures {
 	public Exams getExamsForLecture(Lecture lecture) {
 		Exams exams = new Exams();
 		
-		String query = "SELECT * FROM " + HLPExams.TABLE_NAME;
+		String subquery = "( SELECT " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_EXAM_ID + " FROM " + HLPExams.TABLE_NAME;		
+		subquery += " LEFT JOIN " + HLPRelations.TABLE_NAME + " ON (" + HLPExams.TABLE_NAME + "." + HLPExams.COL_ID + " = " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_EXAM_ID + ")";
+		subquery += " WHERE " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_LECTURE_ID + " = " + lecture.getID();	
+		subquery += " AND " + HLPRelations.COL_SRCTABLE + " = '" + HLPLectures.TABLE_NAME + "' ) AS sub";
 		
-//		query += " LEFT JOIN " + HLPRelations.TABLE_NAME + " ON (" + HLPExams.TABLE_NAME + "." + HLPExams.COL_ID + " = " + HLPRelations.COL_EXAM_ID + ")";
+		String query = "SELECT * FROM " + HLPExams.TABLE_NAME + ", " + subquery;
 		query += " LEFT JOIN " + HLPRelations.TABLE_NAME + " ON (" + HLPExams.TABLE_NAME + "." + HLPExams.COL_ID + " = " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_EXAM_ID + ")";
 		query += " LEFT JOIN " + HLPDates.TABLE_NAME + " ON ("  + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_DATE_ID + " = " + HLPDates.TABLE_NAME + "." + HLPDates.COL_ID + ")";
-		query += " WHERE " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_LECTURE_ID + " = " + lecture.getID();	
-		query += " AND " + HLPRelations.COL_TASK_ID + " = 0";
-		query += " AND " + HLPRelations.COL_SRCTABLE + " = '" + HLPLectures.TABLE_NAME + "';";
-		
+		query += " WHERE " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_EXAM_ID + " = sub." + HLPRelations.COL_EXAM_ID;
+		query += " AND " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_DATE_ID + " > 0";
+				
 		Log.i(DBsettings.LOG_TAG_EXAMS, query);
 		
 		Cursor cursor = this.hlpExams.openCon().rawQuery(query, null);

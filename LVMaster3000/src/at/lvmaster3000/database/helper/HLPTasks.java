@@ -16,7 +16,7 @@ public class HLPTasks extends SQLiteOpenHelper {
 	//table columns
 	public static final String COL_ID = "_id";
 	public static final String COL_TITLE = "title";
-	public static final String COL_COMMENT = "comment";
+	public static final String COL_COMMENT = "taskcomment";
 //	public static final String COL_LECTURE_ID = "lecture_id";
 	
 	private String logtag = DBsettings.LOG_TAG_TASKS;

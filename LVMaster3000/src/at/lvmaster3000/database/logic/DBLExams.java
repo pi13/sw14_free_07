@@ -90,13 +90,14 @@ public class DBLExams {
 	 * @param limit
 	 * @return
 	 */
-	public Exams getExams(int limit) {
+	public Exams getExams(int limit, boolean joinDate) {
 		Exams exams = new Exams();
 		
 		String query = "SELECT * FROM " + HLPExams.TABLE_NAME;
-		query += " LEFT JOIN " + HLPRelations.TABLE_NAME + " ON (" + HLPExams.TABLE_NAME + "." + HLPExams.COL_ID + " = " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_EXAM_ID + ")";
-		query += " LEFT JOIN " + HLPDates.TABLE_NAME + " ON ("  + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_DATE_ID + " = " + HLPDates.TABLE_NAME + "." + HLPDates.COL_ID + ")";
-		
+		if(joinDate) {
+			query += " LEFT JOIN " + HLPRelations.TABLE_NAME + " ON (" + HLPExams.TABLE_NAME + "." + HLPExams.COL_ID + " = " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_EXAM_ID + ")";
+			query += " LEFT JOIN " + HLPDates.TABLE_NAME + " ON ("  + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_DATE_ID + " = " + HLPDates.TABLE_NAME + "." + HLPDates.COL_ID + ")";
+		}
 		Log.i(DBsettings.LOG_TAG_EXAMS, query);
 		
 		if(limit > 0) {

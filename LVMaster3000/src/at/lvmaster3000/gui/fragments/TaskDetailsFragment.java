@@ -91,7 +91,16 @@ public class TaskDetailsFragment extends UIFragmentBase{
 		{
 			task.setTitle((taskTitle.getText().toString()));
 			task.setComment((taskComment.getText().toString()));
-			task.getDate().setTimestamp(datePicker.getCalendarView().getDate()/1000);
+			
+			if(task.getDate() != null) {
+				task.getDate().setTimestamp(datePicker.getCalendarView().getDate()/1000);
+				task.getDate().setType("");
+				task.getDate().setLocation("");
+				task.getDate().setComment("");
+			}
+			
+			task.printTask();
+			
 			updateTaskListener.updateTask(task);
 		}
 		Toast.makeText(context, "Saved :)", Toast.LENGTH_LONG).show();

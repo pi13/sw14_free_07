@@ -67,11 +67,14 @@ public class Exam {
 			this.id = cursor.getLong(idx);
 		}
 		
-//		this.id = cursor.getLong(cursor.getColumnIndex(HLPExams.COL_ID)); 
 		this.title = cursor.getString(cursor.getColumnIndex(HLPExams.COL_TITLE));
 		this.comment = cursor.getString(cursor.getColumnIndex(HLPExams.COL_COMMENT));
 		this.lecture_id = cursor.getLong(cursor.getColumnIndex(HLPExams.COL_LECTURE_ID));
-		this.date = new Date().cursorToDate(cursor);
+		if(idx > 0) {
+			this.date = new Date().cursorToDate(cursor);
+		} else {
+			this.date = null;
+		}
 		
 		return this;
 	}

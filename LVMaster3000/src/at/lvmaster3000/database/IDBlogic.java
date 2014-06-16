@@ -202,7 +202,15 @@ public class IDBlogic {
 	 * @return
 	 */
 	public int updateExam(Exam exam) {
-		return this.exames.updateExam(exam);
+		if(exam.getDate() != null) {
+			if(this.exames.updateExam(exam) > 0 && this.dates.updateDate(exam.getDate()) > 0) {
+				return 1;
+			}
+			
+			return -1;
+		} else {
+			return this.exames.updateExam(exam);
+		}
 	}
 	
 	/**
@@ -217,11 +225,21 @@ public class IDBlogic {
 	/**
 	 * 
 	 * @param limit
+	 * @param joinDate
+	 * @return
+	 */
+	public Exams getExams(int limit, boolean joinDate) {
+		return this.exames.getExams(limit, joinDate);
+	}	
+	
+	/**
+	 * 
+	 * @param limit
 	 * @return
 	 */
 	public Exams getExams(int limit) {
-		return this.exames.getExams(limit);
-	}	
+		return this.exames.getExams(limit, true);
+	}
 	
 	/**
 	 * 
@@ -238,7 +256,7 @@ public class IDBlogic {
 	 * @return
 	 */
 	public int updateTask(Task task) {
-		return this.tasks.updateTask(task);
+		return this.tasks.updateTask(task);		
 	}
 	
 	/**

@@ -60,13 +60,13 @@ public class DDTestsetA {
 		//create lecture
 		this.hlplectures.openCon();
 		this.hlplectures.resetTable();          
-        long lid1 = hlplectures.addLecture("701.123", "Test LV 1", "Some Comment...", "VO", 1, 1);
+        long lid1 = hlplectures.addLecture("705.036", "Rechnerorganisation", "Posch K", "VO", 1, 0);
         this.lecturecnt += 1;
-        long lid2 = hlplectures.addLecture("702.123", "Test LV 2", "Some Comment...", "UE", 0, 0);
+        long lid2 = hlplectures.addLecture("716.100", "Mobile Applications", "Slany W", "VU", 1, 0);
         this.lecturecnt += 1;
-        long lid3 = hlplectures.addLecture("703.123", "Test LV 3", "Some Comment...", "SE", 0, 1);
+        long lid3 = hlplectures.addLecture("707.025", "Multimedia Information Systems 2", "Sabol V", "VU", 0, 0);
         this.lecturecnt += 1;
-        long lid4 = hlplectures.addLecture("704.123", "Test LV 4 with resources", "Some Comment...", "KU", 1, 0);
+        long lid4 = hlplectures.addLecture("708.560", "Einführung in die Wissensverarbeitung", "Habenschuss S, Jonke Z, Pernkopf F", "VO", 1, 0);
         this.lecturecnt += 1;
 //        this.hlplectures.allEntriesToLog();
         this.hlplectures.closeCon();
@@ -74,9 +74,9 @@ public class DDTestsetA {
         //add tasks
         this.hlptasks.openCon();
         this.hlptasks.resetTable();          
-        long tid1 = hlptasks.addTask("Test TASK 1", "Some Comment...");
+        long tid1 = hlptasks.addTask("TASK 1", "Description of task 1");
         this.taskscnt += 1;
-        long tid2 = hlptasks.addTask("Test TASK 2", "Some Comment...");
+        long tid2 = hlptasks.addTask("TASK 2", "Additional information on task 2");
         this.taskscnt += 1;
 //        this.hlptasks.allEntriesToLog();
         this.hlptasks.closeCon();
@@ -108,11 +108,11 @@ public class DDTestsetA {
         //add exams
         this.hlpexams.openCon();
         this.hlpexams.resetTable();
-        long eid1 = hlpexams.addExam("Ex 1 ", "Some comment", lid1);
+        long eid1 = hlpexams.addExam("Ex 1 ", "Some comment", 0);
         this.examcnt++;
-        long eid2 = hlpexams.addExam("1. teilpruefung", "schwerig", lid1);
+        long eid2 = hlpexams.addExam("1. teilpruefung", "schwerig (comment)", 0);
         this.examcnt++;
-        long eid3 = hlpexams.addExam("Exam with res attatched", "schwerig", lid1);
+        long eid3 = hlpexams.addExam("Exam with res attatched", "schwerig", 0);
         this.examcnt++;
         this.hlpexams.closeCon();                      
         
