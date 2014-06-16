@@ -152,12 +152,14 @@ public class DBLTasks {
 			values.put(HLPTasks.COL_COMMENT, task.getComment());
 		}
 		
-		if(task.getDate() != null && task.getDate().getID() > 0) {
-			this.dblDates.updateDate(task.getDate());
-		} else if(task.getDate().getID() == 0) {
-			this.dblDates.addDate(task.getDate());
-			this.setTaskDate(task, task.getDate());
-		}
+		if(task.getDate() != null) {
+			if(task.getDate().getID() > 0) {
+				this.dblDates.updateDate(task.getDate());
+			} else if(task.getDate().getID() == 0) {
+				this.dblDates.addDate(task.getDate());
+				this.setTaskDate(task, task.getDate());
+			}
+		} 
 		
 		int ret = this.hlpTasks.openCon().update(HLPTasks.TABLE_NAME, values, "_id = " + task.getId(), null);
 		

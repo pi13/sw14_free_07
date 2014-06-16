@@ -3,6 +3,7 @@ package at.lvmaster3000.gui.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -89,13 +90,21 @@ public class TaskDetailsFragment extends UIFragmentBase implements OnClickListen
 		taskTitle.setText(task.getTitle()); 
 		taskComment.setText(task.getComment());
 		
+		task.printTask();
+		
 		if(task.getDate() != null)
 		{
-			setDate.setChecked(true);
-			datePicker.getCalendarView().setDate(task.getDate().getTimestamp()*1000);
-			datePicker.setVisibility(View.VISIBLE);
-		}else
-		{
+			
+			Log.w("TEST_", "id: " + task.getId());
+			
+			if(task.getDate().getID() > 0) {
+				setDate.setChecked(true);
+				datePicker.getCalendarView().setDate(task.getDate().getTimestamp()*1000);
+				datePicker.setVisibility(View.VISIBLE);
+			} else {
+				setDate.setChecked(false);
+			}
+		} else {
 			setDate.setChecked(false);
 		}
 		
@@ -106,27 +115,27 @@ public class TaskDetailsFragment extends UIFragmentBase implements OnClickListen
 		{
 			task.setTitle((taskTitle.getText().toString()));
 			task.setComment((taskComment.getText().toString()));
-			Date taskDate = null;
-			
-			if(setDate.isChecked()){
-				if(taskDate == null)
-				{
-					taskDate = new Date(0, datePicker.getCalendarView().getDate()/1000, "", "", "");
-					task.setDate(taskDate);
+						
+			if(setDate.isChecked()){					
+				if(task.getDate() != null) {
+					task.getDate().setTimestamp(datePicker.getCalendarView().getDate()/1000);
+					task.getDate().setType("");
+					task.getDate().setLocation("");
+					task.getDate().setComment("");
+				} else {
+					task.setDate(new Date(0, datePicker.getCalendarView().getDate()/1000, "", "", ""));
 				}
-			}else
-			{
-				task.setDate(taskDate);
+			} else {
+				if(task.getDate() != null) {
+					if(task.getDate().getID() > 0) {
+						dbLogic.deleteDate(task.getDate());
+					}
+				}
+				
+				task.setDate(null);				
 			}
 			
-			if(task.getDate() != null) {
-				task.getDate().setTimestamp(datePicker.getCalendarView().getDate()/1000);
-				task.getDate().setType("");
-				task.getDate().setLocation("");
-				task.getDate().setComment("");
-			}
-			
-			task.printTask();
+//			task.printTask();
 			
 			updateTaskListener.updateTask(task);
 		}
