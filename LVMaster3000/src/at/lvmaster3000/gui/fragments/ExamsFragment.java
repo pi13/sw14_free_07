@@ -37,7 +37,7 @@ public class ExamsFragment extends UIFragmentBase implements OnItemClickListener
 		base.dbLogic = dbLogic;
 		base.exams = dbLogic.getExams(0).getExams();
 		
-		dbLogic.getExams(0, false).printExamList();		
+//		dbLogic.getExams(0, false).printExamList();		
 		dbLogic.getExams(0).printExamList();
 		
 		base.adapter = new ExamListAdapter(context, base.exams, base);

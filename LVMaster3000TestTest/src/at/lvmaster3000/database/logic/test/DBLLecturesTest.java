@@ -2,6 +2,9 @@ package at.lvmaster3000.database.logic.test;
 
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
+import at.lvmaster3000.database.helper.HLPExams;
+import at.lvmaster3000.database.helper.HLPLectures;
+import at.lvmaster3000.database.helper.HLPRelations;
 import at.lvmaster3000.database.interfaces.IDBLTests;
 import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.logic.DBLLectures;
@@ -100,11 +103,31 @@ public class DBLLecturesTest extends AndroidTestCase implements IDBLTests {
 		Lecture lecture = new Lecture(0, "705.001", "LV with exam", "some text ...", "LV", 0, 0);
 		this.dblLectures.addLecture(lecture);
 		
-		this.dblLectures.addExamToLecture(new Exam(0, "Ex1", "Ex1 comment", 0, null), lecture);
+		long unixTime = System.currentTimeMillis() / 1000L;
+		this.dblLectures.addExamToLecture(new Exam(0, "Ex1", "Ex1 comment", 0, new Date(0, unixTime, "i13", "", "date comment")), lecture);
 		
 		Exams exams = this.dblLectures.getExamsForLecture(lecture);
 		
 		assertSame(1, exams.getExams().size());
+	}
+	
+	public void testGetExamsForLectureCheckContent() {
+		Lecture lecture = new Lecture(0, "705.001", "LV with exam", "some text ...", "LV", 0, 0);
+		this.dblLectures.addLecture(lecture);
+		
+		long unixTime = System.currentTimeMillis() / 1000L;
+		Date d1 = new Date(0, unixTime, "i13", "", "date comment");
+		String comment = "Ex1 comment";
+		this.dblLectures.addExamToLecture(new Exam(0, "Ex1", comment, 0, d1), lecture);
+		
+		Exams exams = this.dblLectures.getExamsForLecture(lecture);
+		exams.printExamList();
+		Date d2 = exams.getExams().get(0).getDate();
+		
+		boolean eval = ((long)d1.getTimestamp() == (long)d2.getTimestamp());		
+		assertTrue(eval);
+		
+		assertSame(comment, exams.getExams().get(0).getComment());
 	}
 	
 	public void testAddLectureWithTaks() {

@@ -41,6 +41,7 @@ public class TasksFragment extends UIFragmentBase implements OnItemClickListener
 		base.tasks = dbLogic.getTasks(0).getTasks();
 		base.adapter = new TaskListAdapter(context, base.tasks, base);
 
+		dbLogic.getTasks(0).printTaskList();
 
 		return base;
 	}

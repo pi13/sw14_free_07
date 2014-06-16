@@ -98,10 +98,28 @@ public class DBLTasks {
 	 * @return
 	 */
 	public Tasks getTasks(int limit) {
+		return this.getTasks(limit, true);
+	}
+	
+	/**
+	 * 
+	 * @param limit
+	 * @param joinDate
+	 * @return
+	 */
+	public Tasks getTasks(int limit, boolean joinDate) {
 		Tasks tasks = new Tasks();
+		
 		String query = "SELECT * FROM " + HLPTasks.TABLE_NAME;
-		query += " LEFT JOIN " + HLPRelations.TABLE_NAME + " ON (" + HLPTasks.TABLE_NAME + "." + HLPTasks.COL_ID + " = " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_TASK_ID + ")";
-		query += " LEFT JOIN " + HLPDates.TABLE_NAME + " ON ("  + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_DATE_ID + " = " + HLPDates.TABLE_NAME + "." + HLPDates.COL_ID + ")";
+		if(joinDate) {
+			query += " LEFT JOIN " + HLPRelations.TABLE_NAME + " ON (" + HLPTasks.TABLE_NAME + "." + HLPTasks.COL_ID + " = " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_TASK_ID + ")";
+			query += " LEFT JOIN " + HLPDates.TABLE_NAME + " ON ("  + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_DATE_ID + " = " + HLPDates.TABLE_NAME + "." + HLPDates.COL_ID + ")";
+//			query += " WHERE " + HLPDates.TABLE_NAME + "." + HLPDates.COL_TIMESTAMP + " > 0";
+//			query += " WHERE " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_SRCTABLE  + " = '" + HLPTasks.TABLE_NAME + "'";
+			query += " GROUP BY " + HLPRelations.TABLE_NAME + "." + HLPRelations.COL_TASK_ID;
+		}
+		
+		Log.i(DBsettings.LOG_TAG_TASKS, query);
 		
 		if(limit > 0) {
 			query += " LIMIT " + limit;

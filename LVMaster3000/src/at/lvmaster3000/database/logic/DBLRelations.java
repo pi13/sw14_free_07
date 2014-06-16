@@ -161,4 +161,10 @@ public class DBLRelations {
         return relation;
 	}
 	
+	public void printRelations() {
+		this.hlpRelations.openCon();
+		this.hlpRelations.allEntriesToLog();
+		this.hlpRelations.closeCon();
+	}
+	
 }

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.database.demodata.DDTestsetA;
+import at.lvmaster3000.database.demodata.DDTestsetB;
 import at.lvmaster3000.gui.adapters.NavDrawerListAdapter;
 
 public class TestFragment extends UIFragmentBase {
@@ -28,8 +29,11 @@ public class TestFragment extends UIFragmentBase {
 		base.dbLogic = dbLogic;
 		base.activity = activity;
 		
-		DDTestsetA TestA = new DDTestsetA(context);
-		TestA.FillDb();
+		DDTestsetB setB = new DDTestsetB(context);
+		setB.fillDb();
+		
+//		DDTestsetA TestA = new DDTestsetA(context);
+//		TestA.FillDb();
 //		TestA.getStuffForLecture();
 //		
 //		Log.e("TEST_", "adapter count: " + adapter.getCount());
