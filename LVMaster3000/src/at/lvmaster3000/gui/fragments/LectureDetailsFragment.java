@@ -378,7 +378,6 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 
 	public void deleteExam(Exam exam)
 	{
-		exam.printExam();
 		dbLogic.deleteExam(exam);
 		updateExamList();
 	}

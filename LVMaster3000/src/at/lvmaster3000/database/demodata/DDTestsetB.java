@@ -55,12 +55,47 @@ public class DDTestsetB {
         
 		Date d1 = new Date(0, unixTime, "i13", "", "");
 		this.dblDates.addDate(d1);
+		this.dblLectures.addDateToLecture(d1, l1);
 		
 		Date d2 = new Date(0, unixTime + week, "i13", "", "");		
 		this.dblDates.addDate(d2);
-		
-		this.dblLectures.addDateToLecture(d1, l1);
 		this.dblLectures.addDateToLecture(d2, l1);
+		
+		Date d3 = new Date(0, unixTime + (week * 2), "i13", "", "");		
+		this.dblDates.addDate(d3);
+		this.dblLectures.addDateToLecture(d3, l1);
+		
+		Date d4 = new Date(0, unixTime + (week * 3), "i13", "", "");		
+		this.dblDates.addDate(d4);
+		this.dblLectures.addDateToLecture(d4, l1);
+		
+		Date d5 = new Date(0, unixTime + (week * 4), "i13", "", "");		
+		this.dblDates.addDate(d5);
+		this.dblLectures.addDateToLecture(d5, l1);
+		
+		Date d6 = new Date(0, unixTime + (week * 5), "i13", "", "");		
+		this.dblDates.addDate(d6);
+		this.dblLectures.addDateToLecture(d6, l1);
+		
+		Date d7 = new Date(0, unixTime + (week * 6), "i13", "", "");		
+		this.dblDates.addDate(d7);
+		this.dblLectures.addDateToLecture(d7, l1);
+		
+		Date d8 = new Date(0, unixTime + (week * 7), "i13", "", "");		
+		this.dblDates.addDate(d8);
+		this.dblLectures.addDateToLecture(d8, l1);
+		
+		Date d9 = new Date(0, unixTime + (week * 8), "i13", "", "");		
+		this.dblDates.addDate(d9);
+		this.dblLectures.addDateToLecture(d9, l1);
+		
+		Date d10 = new Date(0, unixTime + (week * 9), "i13", "", "");		
+		this.dblDates.addDate(d10);
+		this.dblLectures.addDateToLecture(d10, l1);
+		
+		Date d11 = new Date(0, unixTime + (week * 10), "i13", "", "");		
+		this.dblDates.addDate(d11);
+		this.dblLectures.addDateToLecture(d11, l1);
 		
 		Task t1 = new Task(0, "Complete the app", "", null);
 		this.dblTasks.addTask(t1);
