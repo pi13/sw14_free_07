@@ -8,7 +8,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,7 +20,7 @@ import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Task;
 import at.lvmaster3000.gui.interfaces.IUpdateDBObject;
 
-public class TaskDetailsFragment extends UIFragmentBase{
+public class TaskDetailsFragment extends UIFragmentBase implements OnClickListener{
 
 	private Context context;
 	private IDBlogic dbLogic;
@@ -26,6 +28,7 @@ public class TaskDetailsFragment extends UIFragmentBase{
 	private EditText taskTitle;
 	private EditText taskComment;
 	private DatePicker datePicker;
+	private CheckBox setDate;
 	private Boolean initDone;
 	
 	private Task task;
@@ -68,6 +71,8 @@ public class TaskDetailsFragment extends UIFragmentBase{
 		taskTitle = (EditText) view.findViewById(R.id.detail_task_title);
 		taskComment = (EditText) view.findViewById(R.id.detail_task_comment);
 		datePicker = (DatePicker) view.findViewById(R.id.detail_task_date);
+		setDate = (CheckBox)view.findViewById(R.id.detail_task_has_date);
+		setDate.setOnClickListener(this);
 		return view;
 	}
 
@@ -83,7 +88,17 @@ public class TaskDetailsFragment extends UIFragmentBase{
 	{
 		taskTitle.setText(task.getTitle()); 
 		taskComment.setText(task.getComment());
-		datePicker.getCalendarView().setDate(task.getDate().getTimestamp()*1000);
+		
+		if(task.getDate() != null)
+		{
+			setDate.setChecked(true);
+			datePicker.getCalendarView().setDate(task.getDate().getTimestamp()*1000);
+			datePicker.setVisibility(View.VISIBLE);
+		}else
+		{
+			setDate.setChecked(false);
+		}
+		
 	}
 	
 	private void updateTask() {
@@ -91,6 +106,18 @@ public class TaskDetailsFragment extends UIFragmentBase{
 		{
 			task.setTitle((taskTitle.getText().toString()));
 			task.setComment((taskComment.getText().toString()));
+			Date taskDate = null;
+			
+			if(setDate.isChecked()){
+				if(taskDate == null)
+				{
+					taskDate = new Date(0, datePicker.getCalendarView().getDate()/1000, "", "", "");
+					task.setDate(taskDate);
+				}
+			}else
+			{
+				task.setDate(taskDate);
+			}
 			
 			if(task.getDate() != null) {
 				task.getDate().setTimestamp(datePicker.getCalendarView().getDate()/1000);
@@ -105,6 +132,23 @@ public class TaskDetailsFragment extends UIFragmentBase{
 		}
 		Toast.makeText(context, "Saved :)", Toast.LENGTH_LONG).show();
 
+	}
+	
+	private void onCheckboxClicked(View view) {
+		boolean checked = ((CheckBox) view).isChecked();
+
+		switch (view.getId()) {
+		case R.id.detail_task_has_date:
+			if (checked) {
+				datePicker.setVisibility(View.VISIBLE);
+				if(task.getDate() != null){
+					datePicker.getCalendarView().setDate(task.getDate().getTimestamp()*1000);
+				}
+			} else {
+				datePicker.setVisibility(View.GONE);
+			}
+			break;
+		}
 	}
 	
 	@Override
@@ -137,6 +181,15 @@ public class TaskDetailsFragment extends UIFragmentBase{
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.detail_task_has_date:
+			onCheckboxClicked(v);
+			break;
 		}
 	}
 }

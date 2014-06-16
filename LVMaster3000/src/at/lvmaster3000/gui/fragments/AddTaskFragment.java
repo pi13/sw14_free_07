@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import at.lvmaster3000.R;
@@ -29,6 +30,7 @@ public class AddTaskFragment extends DialogFragment implements OnClickListener {
 	private EditText taskTitle;
 	private EditText taskComment;
 	private DatePicker datePicker;
+	private CheckBox setDate;
 
 	private long lectureId;	
 	private IDBlogic dbLogic;
@@ -74,6 +76,8 @@ public class AddTaskFragment extends DialogFragment implements OnClickListener {
 		taskTitle = (EditText) view.findViewById(R.id.add_task_title);
 		taskComment = (EditText) view.findViewById(R.id.add_task_comment);
 		datePicker = (DatePicker)view.findViewById(R.id.add_task_date);
+		setDate = (CheckBox)view.findViewById(R.id.add_task_has_date);
+		setDate.setOnClickListener(this);
 		
 		Bundle bundle = getArguments();
 		if(bundle != null) {
@@ -83,14 +87,34 @@ public class AddTaskFragment extends DialogFragment implements OnClickListener {
 
 		return view;
 	}
+	
+	private void onCheckboxClicked(View view) {
+		boolean checked = ((CheckBox) view).isChecked();
+
+		switch (view.getId()) {
+		case R.id.add_task_has_date:
+			if (checked) {
+				datePicker.setVisibility(View.VISIBLE);
+			} else {
+				datePicker.setVisibility(View.GONE);
+			}
+			break;
+		}
+	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.ok_btn:
 			
-			task = new Task(0, taskTitle.getText().toString(), taskComment.getText().toString(), 
-					new Date(0, datePicker.getCalendarView().getDate()/1000, "", "", ""));
+			Date taskDate = null;
+			
+			if(setDate.isChecked())
+			{
+				taskDate = new Date(0, datePicker.getCalendarView().getDate()/1000, "", "", "");
+			}
+			
+			task = new Task(0, taskTitle.getText().toString(), taskComment.getText().toString(), taskDate);
 						
 			if(this.lectureId > 0) {				
 				Lecture lecture = new Lecture();
@@ -105,6 +129,10 @@ public class AddTaskFragment extends DialogFragment implements OnClickListener {
 
 		case R.id.cancel_btn:
 			dialogListener.onDialogNegativeClick(this);
+			break;
+			
+		case R.id.add_task_has_date:
+			onCheckboxClicked(v);
 			break;
 		}
 	}

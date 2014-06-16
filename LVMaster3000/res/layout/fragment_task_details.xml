@@ -26,10 +26,17 @@
         android:hint="@string/hint_comment"
         android:inputType="text" />
 
+    <CheckBox
+        android:id="@+id/detail_task_has_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_time" />
+
     <DatePicker
         android:id="@+id/detail_task_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:calendarViewShown="false" />
+        android:calendarViewShown="false"
+        android:visibility="gone" />
 
 </LinearLayout>

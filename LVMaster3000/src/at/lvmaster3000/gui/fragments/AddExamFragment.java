@@ -88,7 +88,7 @@ public class AddExamFragment  extends DialogFragment implements OnClickListener 
 		case R.id.ok_btn:
 			exam = new Exam(0, examTitle.getText().toString(), examComment.getText().toString(), 0, 
 							new Date(0, datePicker.getCalendarView().getDate()/1000, "","",""));
-			
+			exam.printExam();
 			if(this.lectureId > 0) {
 				Lecture lecture = new Lecture();
 				lecture.setID(this.lectureId);
