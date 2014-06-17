@@ -22,10 +22,7 @@ public class DDTestsetB {
 	private DBLDates dblDates;
 	private DBLRelations dblRelations;
 	
-	private Context context;
-	
 	public DDTestsetB(Context context) {
-		this.context = context;
 		this.dblLectures = new DBLLectures(context);
 		this.dblTasks = new DBLTasks(context);
 		this.dblExams = new DBLExams(context);
@@ -45,8 +42,14 @@ public class DDTestsetB {
 		Lecture l1 = new Lecture(0, "705.036", "Rechnerorganisation", "Posch K", "VO", 1, 0);
 		this.dblLectures.addLecture(l1);
 		
-		Lecture l2 = new Lecture(0, "716.100", "Mobile Applications", "Slany W", "VU", 1, 0);
+		Lecture l2 = new Lecture(0, "716.100", "Mobile Applications", "Slany W", "VU", 0, 1);
 		this.dblLectures.addLecture(l2);
+		
+		Lecture l3 = new Lecture(0, "705.088", "Rechner- und Kommunikationsnetze", "Teufl P", "VU", 1, 1);
+		this.dblLectures.addLecture(l3);
+		
+		Lecture l4 = new Lecture(0, "708.560", "Einführung in die Wissensverarbeitung", "Habenschuss S, Jonke Z, Pernkopf F", "VU", 0, 0);
+		this.dblLectures.addLecture(l4);
 		
 		long unixTime = System.currentTimeMillis() / 1000L;
         long hour = 3600;
