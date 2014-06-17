@@ -2,6 +2,7 @@ package at.lvmaster3000.database.logic.test;
 
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
+import android.util.Log;
 import at.lvmaster3000.database.interfaces.IDBLTests;
 import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.logic.DBLLectures;
@@ -124,7 +125,9 @@ public class DBLLecturesTest extends AndroidTestCase implements IDBLTests {
 		boolean eval = ((long)d1.getTimestamp() == (long)d2.getTimestamp());		
 		assertTrue(eval);
 		
-		assertSame(comment, exams.getExams().get(0).getComment());
+		Log.w("TEST_", "cmd: " + exams.getExams().get(0).getComment());
+		
+		assertSame(0,  comment.compareTo(exams.getExams().get(0).getComment()));
 	}
 	
 	public void testAddLectureWithTaks() {

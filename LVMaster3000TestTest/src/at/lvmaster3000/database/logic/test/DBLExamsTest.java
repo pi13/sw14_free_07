@@ -2,9 +2,11 @@ package at.lvmaster3000.database.logic.test;
 
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
+import android.util.Log;
 import at.lvmaster3000.database.demodata.DDTestsetA;
 import at.lvmaster3000.database.interfaces.IDBLTests;
 import at.lvmaster3000.database.logic.DBLExams;
+import at.lvmaster3000.database.logic.DBLRelations;
 import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Exam;
 
@@ -45,16 +47,23 @@ public class DBLExamsTest extends AndroidTestCase implements IDBLTests {
 	}
 	
 	public void testGetAll(){
-		Exam ex1 = new Exam(0, "Ex 2", "Comment...", 0, new Date(0, 0, "i13", "", "comment"));
-		Exam ex2 = new Exam(0, "Ex 2", "Comment...", 0, new Date(0, 0, "i12", "", "comment"));
+		long unixTime = System.currentTimeMillis() / 1000L;
+		Exam ex1 = new Exam(0, "Ex 1", "Comment...", 0, new Date(0, unixTime, "i13", "", "comment"));
+		Exam ex2 = new Exam(0, "Ex 2", "Comment...", 0, new Date(0, unixTime, "i12", "", "comment"));
 		this.dblExams.addExam(ex1);
 		this.dblExams.addExam(ex2);
+		
+		Log.w("TEST_", "size: " + this.dblExams.getExams(0, true).getExams().size());
+		
+		new DBLRelations(this.context).printRelations();
+		
 		assertSame(2, this.dblExams.getExams(0, true).getExams().size());
 	}
 	
 	public void testGetExamPrintDates() {
-		Exam ex1 = new Exam(0, "Ex 2", "Comment...", 0, new Date(0, 0, "i13", "", "comment"));
-		Exam ex2 = new Exam(0, "Ex 2", "Comment...", 0, new Date(0, 0, "i12", "", "comment"));
+		long unixTime = System.currentTimeMillis() / 1000L;
+		Exam ex1 = new Exam(0, "Ex 1", "Comment...", 0, new Date(0, unixTime, "i13", "", "comment"));
+		Exam ex2 = new Exam(0, "Ex 2", "Comment...", 0, new Date(0, unixTime, "i12", "", "comment"));
 		this.dblExams.addExam(ex1);
 		this.dblExams.addExam(ex2);
 		assertSame(2, this.dblExams.getExams(0, true).getExams().size());
