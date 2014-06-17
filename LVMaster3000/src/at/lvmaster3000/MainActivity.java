@@ -159,8 +159,8 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 		}
 		// Handle action bar actions click
 		switch (item.getItemId()) {
-		case R.id.action_settings:
-			return true;
+//		case R.id.action_settings:
+//			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
