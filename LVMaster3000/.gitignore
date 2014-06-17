@@ -1,5 +1,4 @@
 *.classpath
-*.project
 /project.properties
 /bin
 /gen
