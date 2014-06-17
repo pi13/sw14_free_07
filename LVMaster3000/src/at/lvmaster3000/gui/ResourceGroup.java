@@ -36,4 +36,8 @@ public class ResourceGroup {
 	public void setChildren(List<Resource> children){
 		this.children = children;
 	}
+	
+	public List<Resource> getChildren(){
+		return this.children;
+	}
 }

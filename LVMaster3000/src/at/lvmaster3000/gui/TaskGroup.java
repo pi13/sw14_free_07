@@ -36,4 +36,8 @@ public class TaskGroup {
 	public void setChildren(List<Task> children){
 		this.children = children;
 	}
+	
+	public List<Task> getChildren(){
+		return this.children;
+	}
 }

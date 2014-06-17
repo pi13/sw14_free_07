@@ -38,7 +38,7 @@ public class AddDateFragment extends DialogFragment implements OnClickListener {
 		return dialog;
 	}
 
-	public Date getResource() {
+	public Date getDate() {
 		return date;
 	}
 

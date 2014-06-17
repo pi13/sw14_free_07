@@ -18,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -36,12 +37,13 @@ import at.lvmaster3000.gui.adapters.DateExpandableListAdapters;
 import at.lvmaster3000.gui.adapters.ExamExpandableListAdapter;
 import at.lvmaster3000.gui.adapters.ResourceExpandableListAdapter;
 import at.lvmaster3000.gui.adapters.TaskExpandableListAdapter;
+import at.lvmaster3000.gui.adapters.TaskListAdapter;
 import at.lvmaster3000.gui.interfaces.IDeleteItems;
 import at.lvmaster3000.gui.interfaces.IExpandableListItemSelected;
 import at.lvmaster3000.gui.interfaces.IUpdateDBObject;
 
 public class LectureDetailsFragment extends UIFragmentBase implements
-		OnClickListener {
+		OnClickListener, OnGroupClickListener {
 
 	private Context context;
 	private SparseArray<ExamGroup> examsGroup;
@@ -62,10 +64,10 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 	private RelativeLayout inputContainer;
 
 	private ArrayAdapter<CharSequence> lvTypeAdapter;
-	ExamExpandableListAdapter examsAdapter;
-	TaskExpandableListAdapter tasksAdapter;
-	ResourceExpandableListAdapter resourcesAdapter;
-	DateExpandableListAdapters dateAdapter;
+	private ExamExpandableListAdapter examsAdapter;
+	private TaskExpandableListAdapter tasksAdapter;
+	private ResourceExpandableListAdapter resourcesAdapter;
+	private DateExpandableListAdapters dateAdapter;
 
 	int isRequired;
 	int isCompulsory;
@@ -77,6 +79,11 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 	private boolean tasksExpanded;
 	private boolean resourcesExpanded;
 	private boolean datesExpanded;
+
+	private ExpandableListView listviewExams;
+	private ExpandableListView listviewTasks;
+	private ExpandableListView listviewResources;
+	private ExpandableListView listviewDates;
 
 	public static LectureDetailsFragment newInstance(Lecture lecture,
 			Context context, IDBlogic dbLogic) {
@@ -99,16 +106,15 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 
 		return details;
 	}
-	
-	public IExpandableListItemSelected getExpandableItemListener()
-	{
+
+	public IExpandableListItemSelected getExpandableItemListener() {
 		return expandableItemListener;
 	}
 
-	public IDeleteItems getDeleteListener()
-	{
+	public IDeleteItems getDeleteListener() {
 		return deleteListener;
 	}
+
 	// Override the Fragment.onAttach() method to instantiate the
 	// NoticeDialogListener
 	@Override
@@ -160,17 +166,17 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 
 		updateFileds();
 
-		final ExpandableListView listviewExams = (ExpandableListView) getView()
-				.findViewById(R.id.details_lect_exams);
+		listviewExams = (ExpandableListView) getView().findViewById(
+				R.id.details_lect_exams);
 
-		final ExpandableListView listviewTasks = (ExpandableListView) getView()
-				.findViewById(R.id.details_lect_tasks);
+		listviewTasks = (ExpandableListView) getView().findViewById(
+				R.id.details_lect_tasks);
 
-		final ExpandableListView listviewResources = (ExpandableListView) getView()
-				.findViewById(R.id.details_lect_resources);
+		listviewResources = (ExpandableListView) getView().findViewById(
+				R.id.details_lect_resources);
 
-		final ExpandableListView listviewDates = (ExpandableListView) getView()
-				.findViewById(R.id.details_lect_dates);
+		listviewDates = (ExpandableListView) getView().findViewById(
+				R.id.details_lect_dates);
 
 		addGroups(dbLogic);
 
@@ -191,141 +197,10 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 		resourcesExpanded = false;
 		datesExpanded = false;
 
-		listviewExams
-				.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-					public boolean onGroupClick(ExpandableListView parent,
-							View v, int groupPosition, long id) {
-						if (!examsExpanded) {
-							examsExpanded = true;
-						} else {
-							examsExpanded = false;
-						}
-
-						// Log.w("TEST_", "expaned: " + examsExpanded + " / " +
-						// tasksExpanded + " / " + resourcesExpanded);
-
-						if (inputContainer.getVisibility() == View.VISIBLE) {
-							inputContainer.setVisibility(View.GONE);
-						}
-
-						if (inputContainer.getVisibility() == View.GONE
-								&& !examsExpanded && !tasksExpanded
-								&& !resourcesExpanded && !datesExpanded) {
-							inputContainer.setVisibility(View.VISIBLE);
-						}
-
-						listviewTasks.collapseGroup(0);
-						tasksExpanded = false;
-						listviewResources.collapseGroup(0);
-						resourcesExpanded = false;
-						listviewDates.collapseGroup(0);
-						datesExpanded = false;
-
-						return false;
-					}
-				});
-		
-		listviewTasks
-				.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-					public boolean onGroupClick(ExpandableListView parent,
-							View v, int groupPosition, long id) {
-						if (!tasksExpanded) {
-							tasksExpanded = true;
-						} else {
-							tasksExpanded = false;
-						}
-
-						// Log.w("TEST_", "expaned: " + examsExpanded + " / " +
-						// tasksExpanded + " / " + resourcesExpanded);
-
-						if (inputContainer.getVisibility() == View.VISIBLE) {
-							inputContainer.setVisibility(View.GONE);
-						}
-
-						if (inputContainer.getVisibility() == View.GONE
-								&& !examsExpanded && !tasksExpanded
-								&& !resourcesExpanded && !datesExpanded) {
-							inputContainer.setVisibility(View.VISIBLE);
-						}
-
-						listviewExams.collapseGroup(0);
-						examsExpanded = false;
-						listviewResources.collapseGroup(0);
-						resourcesExpanded = false;
-						listviewDates.collapseGroup(0);
-						datesExpanded = false;
-
-						return false;
-					}
-				});
-
-		listviewResources
-				.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-					public boolean onGroupClick(ExpandableListView parent,
-							View v, int groupPosition, long id) {
-						if (!resourcesExpanded) {
-							resourcesExpanded = true;
-						} else {
-							resourcesExpanded = false;
-						}
-
-						// Log.w("TEST_", "expaned: " + examsExpanded + " / " +
-						// tasksExpanded + " / " + resourcesExpanded);
-
-						if (inputContainer.getVisibility() == View.VISIBLE) {
-							inputContainer.setVisibility(View.GONE);
-						}
-
-						if (inputContainer.getVisibility() == View.GONE
-								&& !examsExpanded && !tasksExpanded
-								&& !resourcesExpanded && !datesExpanded) {
-							inputContainer.setVisibility(View.VISIBLE);
-						}
-
-						listviewExams.collapseGroup(0);
-						examsExpanded = false;
-						listviewTasks.collapseGroup(0);
-						tasksExpanded = false;
-						listviewDates.collapseGroup(0);
-						datesExpanded = false;
-
-						return false;
-					}
-				});
-		
-		listviewDates
-		.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-			public boolean onGroupClick(ExpandableListView parent,
-					View v, int groupPosition, long id) {
-				if (!datesExpanded) {
-					datesExpanded = true;
-				} else {
-					datesExpanded = false;
-				}
-
-				// Log.w("TEST_", "expaned: " + examsExpanded + " / " +
-				// tasksExpanded + " / " + resourcesExpanded);
-
-				if (inputContainer.getVisibility() == View.VISIBLE) {
-					inputContainer.setVisibility(View.GONE);
-				}
-
-				if (inputContainer.getVisibility() == View.GONE
-						&& !examsExpanded && !tasksExpanded
-						&& !resourcesExpanded && !datesExpanded) {
-					inputContainer.setVisibility(View.VISIBLE);
-				}
-
-				listviewExams.collapseGroup(0);
-				examsExpanded = false;
-				listviewTasks.collapseGroup(0);
-				tasksExpanded = false;
-				listviewResources.collapseGroup(0);
-				resourcesExpanded = false;
-
-				return false;
-			}
-		});
+		listviewExams.setOnGroupClickListener(this);
+		listviewTasks.setOnGroupClickListener(this);
+		listviewResources.setOnGroupClickListener(this);
+		listviewDates.setOnGroupClickListener(this);
 
 		initDone = true;
 	}
@@ -354,6 +229,7 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 
 	/**
 	 * Load sublists for lecture
+	 * 
 	 * @param dbLogic
 	 */
 	private void addGroups(IDBlogic dbLogic) {
@@ -369,80 +245,59 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 				R.string.resources));
 		res.setChildren(dbLogic.getResourcesForLecture(lecture).getResources());
 		resourcesGroup.append(0, res);
-		
-		DateGroup dates = new DateGroup(getResources().getString(
-				R.string.dates));
+
+		DateGroup dates = new DateGroup(getResources()
+				.getString(R.string.dates));
 		dates.setChildren(dbLogic.getDatesForLecture(lecture).getDates());
 		dateGroup.append(0, dates);
 	}
 
-	public void deleteExam(Exam exam)
-	{
+	public void deleteExam(Exam exam) {
 		dbLogic.deleteExam(exam);
-		updateExamList();
-	}
-	
-	public void deleteTask(Task task)
-	{
-		dbLogic.deleteTask(task);
-		updateTaskList();
-	}
-	
-	public void deleteResource(Resource resource)
-	{
-		dbLogic.deleteResource(resource);
-		updateResourceList();
-	}
-	
-	public void deleteDate(Date date)
-	{
-		dbLogic.deleteDate(date);
-		updateDateList();
-		
-	}
-	
-	public void updateTaskList() {
-		tasksGroup.clear();
-
-		TaskGroup task = new TaskGroup(getResources().getString(R.string.tasks));
-		task.setChildren(dbLogic.getTasksForLecture(lecture).getTasks());
-		tasksGroup.append(0, task);
-
-		tasksAdapter.notifyDataSetChanged();
-	}
-
-	public void updateExamList() {
-		examsGroup.clear();
-
-		ExamGroup exam = new ExamGroup(getResources().getString(R.string.exams));
-		exam.setChildren(dbLogic.getExamsForLecture(lecture).getExams());
-		examsGroup.append(0, exam);
-
+		examsGroup.get(0).getChildren().remove(exam);
 		examsAdapter.notifyDataSetChanged();
 	}
 
-	public void updateResourceList() {
-		resourcesGroup.clear();
+	public void deleteTask(Task task) {
+		dbLogic.deleteTask(task);
+		tasksGroup.get(0).getChildren().remove(task);
+		tasksAdapter.notifyDataSetChanged();
+	}
 
-		ResourceGroup res = new ResourceGroup(getResources().getString(
-				R.string.resources));
-		res.setChildren(dbLogic.getResourcesForLecture(lecture).getResources());
-		resourcesGroup.append(0, res);
-
+	public void deleteResource(Resource resource) {
+		dbLogic.deleteResource(resource);
+		resourcesGroup.get(0).getChildren().remove(resource);
 		resourcesAdapter.notifyDataSetChanged();
 	}
 
-	public void updateDateList() {
-		dateGroup.clear();
+	public void deleteDate(Date date) {
+		dbLogic.deleteDate(date);
+		dateGroup.get(0).getChildren().remove(date);
+		dateAdapter.notifyDataSetChanged();
 
-		DateGroup dates = new DateGroup(getResources().getString(
-				R.string.dates));
-		dates.setChildren(dbLogic.getDatesForLecture(lecture).getDates());
-		dateGroup.append(0, dates);
+	}
 
+	public void updateTaskList(Task task) {
+		
+		tasksGroup.get(0).getChildren().add(task);
+		tasksAdapter.notifyDataSetChanged();
+	}
+
+	public void updateExamList(Exam exam) {
+		examsGroup.get(0).getChildren().add(exam);
+		examsAdapter.notifyDataSetChanged();
+	}
+
+	public void updateResourceList(Resource res) {
+		resourcesGroup.get(0).getChildren().add(res);
+		resourcesAdapter.notifyDataSetChanged();
+	}
+
+	public void updateDateList(Date date) {
+		dateGroup.get(0).getChildren().add(date);
 		dateAdapter.notifyDataSetChanged();
 	}
-	
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -529,13 +384,15 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 		case R.id.action_addDate:
 			newFragment = AddDateFragment.newInstance(context);
 			newFragment.setArguments(bundle);
-			newFragment.show(getFragmentManager(), getResources().getString(R.string.add_date_frag));
+			newFragment.show(getFragmentManager(),
+					getResources().getString(R.string.add_date_frag));
 			return true;
 		case R.id.action_addTask:
 
 			newFragment = AddTaskFragment.newInstance(context);
 			newFragment.setArguments(bundle);
-			newFragment.show(getFragmentManager(), getResources().getString(R.string.add_task_frag));
+			newFragment.show(getFragmentManager(),
+					getResources().getString(R.string.add_task_frag));
 
 			Log.w("TEST_", "action_addTask");
 			return true;
@@ -543,7 +400,8 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 
 			newFragment = AddExamFragment.newInstance(context);
 			newFragment.setArguments(bundle);
-			newFragment.show(getFragmentManager(), getResources().getString(R.string.add_exam_frag));
+			newFragment.show(getFragmentManager(),
+					getResources().getString(R.string.add_exam_frag));
 
 			Log.w("TEST_", "action_addExam");
 			return true;
@@ -551,12 +409,149 @@ public class LectureDetailsFragment extends UIFragmentBase implements
 
 			newFragment = AddResourceFragment.newInstance(context);
 			newFragment.setArguments(bundle);
-			newFragment.show(getFragmentManager(), getResources().getString(R.string.add_res_frag));
+			newFragment.show(getFragmentManager(),
+					getResources().getString(R.string.add_res_frag));
 
 			Log.w("TEST_", "action_addResource");
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	public boolean onGroupClick(ExpandableListView parent, View v,
+			int groupPosition, long id) {
+		switch (parent.getId()) {
+		case R.id.details_lect_exams:
+			return onExamGroupClick(parent, v, groupPosition, id);
+		case R.id.details_lect_tasks:
+			return onTaskGroupClick(parent, v, groupPosition, id);
+		case R.id.details_lect_resources:
+			return onResourceGroupClick(parent, v, groupPosition, id);
+		case R.id.details_lect_dates:
+			return onDateGroupClick(parent, v, groupPosition, id);
+		}
+		return false;
+	}
+
+	private boolean onDateGroupClick(ExpandableListView parent, View v,
+			int groupPosition, long id) {
+		if (!datesExpanded) {
+			datesExpanded = true;
+		} else {
+			datesExpanded = false;
+		}
+
+		// Log.w("TEST_", "expaned: " + examsExpanded + " / " +
+		// tasksExpanded + " / " + resourcesExpanded);
+
+		if (inputContainer.getVisibility() == View.VISIBLE) {
+			inputContainer.setVisibility(View.GONE);
+		}
+
+		if (inputContainer.getVisibility() == View.GONE && !examsExpanded
+				&& !tasksExpanded && !resourcesExpanded && !datesExpanded) {
+			inputContainer.setVisibility(View.VISIBLE);
+		}
+
+		listviewExams.collapseGroup(0);
+		examsExpanded = false;
+		listviewTasks.collapseGroup(0);
+		tasksExpanded = false;
+		listviewResources.collapseGroup(0);
+		resourcesExpanded = false;
+
+		return false;
+	}
+
+	private boolean onResourceGroupClick(ExpandableListView parent, View v,
+			int groupPosition, long id) {
+		if (!resourcesExpanded) {
+			resourcesExpanded = true;
+		} else {
+			resourcesExpanded = false;
+		}
+
+		// Log.w("TEST_", "expaned: " + examsExpanded + " / " +
+		// tasksExpanded + " / " + resourcesExpanded);
+
+		if (inputContainer.getVisibility() == View.VISIBLE) {
+			inputContainer.setVisibility(View.GONE);
+		}
+
+		if (inputContainer.getVisibility() == View.GONE && !examsExpanded
+				&& !tasksExpanded && !resourcesExpanded && !datesExpanded) {
+			inputContainer.setVisibility(View.VISIBLE);
+		}
+
+		listviewExams.collapseGroup(0);
+		examsExpanded = false;
+		listviewTasks.collapseGroup(0);
+		tasksExpanded = false;
+		listviewDates.collapseGroup(0);
+		datesExpanded = false;
+
+		return false;
+	}
+
+	private boolean onTaskGroupClick(ExpandableListView parent, View v,
+			int groupPosition, long id) {
+		if (!tasksExpanded) {
+			tasksExpanded = true;
+		} else {
+			tasksExpanded = false;
+		}
+
+		// Log.w("TEST_", "expaned: " + examsExpanded + " / " +
+		// tasksExpanded + " / " + resourcesExpanded);
+
+		if (inputContainer.getVisibility() == View.VISIBLE) {
+			inputContainer.setVisibility(View.GONE);
+		}
+
+		if (inputContainer.getVisibility() == View.GONE && !examsExpanded
+				&& !tasksExpanded && !resourcesExpanded && !datesExpanded) {
+			inputContainer.setVisibility(View.VISIBLE);
+		}
+
+		listviewExams.collapseGroup(0);
+		examsExpanded = false;
+		listviewResources.collapseGroup(0);
+		resourcesExpanded = false;
+		listviewDates.collapseGroup(0);
+		datesExpanded = false;
+
+		return false;
+	}
+
+	private boolean onExamGroupClick(ExpandableListView parent, View v,
+			int groupPosition, long id) {
+		if (!examsExpanded) {
+			examsExpanded = true;
+		} else {
+			examsExpanded = false;
+		}
+
+		// Log.w("TEST_", "expaned: " + examsExpanded + " / " +
+		// tasksExpanded + " / " + resourcesExpanded);
+
+		if (inputContainer.getVisibility() == View.VISIBLE) {
+			inputContainer.setVisibility(View.GONE);
+		}
+
+		if (inputContainer.getVisibility() == View.GONE && !examsExpanded
+				&& !tasksExpanded && !resourcesExpanded && !datesExpanded) {
+			inputContainer.setVisibility(View.VISIBLE);
+		}
+
+		listviewTasks.collapseGroup(0);
+		tasksExpanded = false;
+		listviewResources.collapseGroup(0);
+		resourcesExpanded = false;
+		listviewDates.collapseGroup(0);
+		datesExpanded = false;
+
+		return false;
 	}
 }

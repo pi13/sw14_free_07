@@ -36,4 +36,9 @@ public class ExamGroup {
 	public void setChildren(List<Exam> children){
 		this.children = children;
 	}
+	
+	public List<Exam> getChildren(){
+		return this.children;
+	}
+	
 }

@@ -30,6 +30,7 @@ import at.lvmaster3000.database.objects.Resource;
 import at.lvmaster3000.database.objects.Task;
 import at.lvmaster3000.gui.NavDrawerItem;
 import at.lvmaster3000.gui.adapters.NavDrawerListAdapter;
+import at.lvmaster3000.gui.fragments.AddDateFragment;
 import at.lvmaster3000.gui.fragments.AddExamFragment;
 import at.lvmaster3000.gui.fragments.AddLectureFragment;
 import at.lvmaster3000.gui.fragments.AddResourceFragment;
@@ -339,30 +340,34 @@ public class MainActivity extends Activity implements IDialogListener, IUpdateDB
 	
 	@Override
 	public void onTaskAddToLecture(DialogFragment dialog) {
+		AddTaskFragment temp = (AddTaskFragment)dialog;
 		LectureDetailsFragment taskFrag = (LectureDetailsFragment)fragManager.findFragmentByTag(getResources().getString(R.string.lecture_details_frag));		
-		taskFrag.updateTaskList();		
+		taskFrag.updateTaskList(temp.getTask());		
 		dialog.dismiss();
 	}
 	
 	@Override
 	public void onExamAddToLecture(DialogFragment dialog) {
+		AddExamFragment temp = (AddExamFragment)dialog;
 		LectureDetailsFragment taskFrag = (LectureDetailsFragment)fragManager.findFragmentByTag(getResources().getString(R.string.lecture_details_frag));		
-		taskFrag.updateExamList();
+		taskFrag.updateExamList(temp.getExam());
 		dialog.dismiss();
 	}
 	
 	@Override
 	public void onResourceAddToLecture(DialogFragment dialog) {
+		AddResourceFragment temp = (AddResourceFragment)dialog;
 		LectureDetailsFragment taskFrag = (LectureDetailsFragment)fragManager.findFragmentByTag(getResources().getString(R.string.lecture_details_frag));		
-		taskFrag.updateResourceList();
+		taskFrag.updateResourceList(temp.getResource());
 		dialog.dismiss();
 	}
 
 
 	@Override
 	public void onDateAddToLecture(DialogFragment dialog) {
+		AddDateFragment temp = (AddDateFragment)dialog;
 		LectureDetailsFragment dateFrag = (LectureDetailsFragment)fragManager.findFragmentByTag(getResources().getString(R.string.lecture_details_frag));		
-		dateFrag.updateDateList();
+		dateFrag.updateDateList(temp.getDate());
 		dialog.dismiss();
 		
 	}

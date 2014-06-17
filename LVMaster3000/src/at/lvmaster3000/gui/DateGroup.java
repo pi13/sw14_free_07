@@ -37,5 +37,9 @@ public class DateGroup {
 	public void setChildren(List<Date> children){
 		this.children = children;
 	}
+	
+	public List<Date> getChildren(){
+		return this.children;
+	}
 
 }
