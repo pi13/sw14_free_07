@@ -4,7 +4,6 @@ import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 import at.lvmaster3000.database.demodata.DDTestsetA;
 import at.lvmaster3000.database.interfaces.IDBLTests;
-import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.logic.DBLExams;
 import at.lvmaster3000.database.objects.Date;
 import at.lvmaster3000.database.objects.Exam;
@@ -45,7 +44,7 @@ public class DBLExamsTest extends AndroidTestCase implements IDBLTests {
 		assertEquals(1, this.dblExams.updateExam(ex));
 	}
 	
-	public void testGetAllExams(){
+	public void testGetAll(){
 		Exam ex1 = new Exam(0, "Ex 2", "Comment...", 0, new Date(0, 0, "i13", "", "comment"));
 		Exam ex2 = new Exam(0, "Ex 2", "Comment...", 0, new Date(0, 0, "i12", "", "comment"));
 		this.dblExams.addExam(ex1);
@@ -108,9 +107,12 @@ public class DBLExamsTest extends AndroidTestCase implements IDBLTests {
 	}	
 	
 	public void testGetResourcesOfExam(){
-		long id = this.dblExams.addExam("Ex 1", "Comment...", 0);
-//		this.dblExams
-		//TODO: implement core function (if time)
+//		long unixTime = System.currentTimeMillis() / 1000L;
+//		Date date = new Date(0, unixTime, "i13", "", "Comment");
+//		Exam exam = new Exam(0, "Ex Title", "Comment", 0, date);
+//		Resource res = new Resource("Test");
+		
+		//TODO: function will not be implemented for release
 	}
 	
 }

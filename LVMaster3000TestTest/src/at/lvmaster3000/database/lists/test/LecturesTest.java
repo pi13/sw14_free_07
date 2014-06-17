@@ -29,7 +29,7 @@ public class LecturesTest extends AndroidTestCase implements IListTests{
 		try {
 			this.lectures.printLectureList();
 		} catch (Exception e) {
-			assertNull(null);
+			assertNotNull(null);
 		}
 	}
 

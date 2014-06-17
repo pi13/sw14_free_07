@@ -32,7 +32,7 @@ public class DatesTest extends AndroidTestCase implements IListTests {
 		try {
 			this.dates.printDateList();
 		} catch (Exception e) {
-			assertNull(null);
+			assertNotNull(null);
 		}
 	}
 	

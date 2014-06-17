@@ -29,7 +29,7 @@ public class TasksTest extends AndroidTestCase implements IListTests {
 		try {
 			this.tasks.printTaskList();
 		} catch (Exception e) {
-			assertNull(null);
+			assertNotNull(null);
 		}
 	}
 

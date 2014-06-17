@@ -38,7 +38,7 @@ public class CoworkersTest extends AndroidTestCase implements IListTests {
 		try {
 			this.coworkers.printCoworkerList();
 		} catch (Exception e) {
-			assertNull(null);
+			assertNotNull(null);
 		}
 	}
 	

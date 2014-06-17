@@ -40,7 +40,7 @@ public class DBLResourcesTest extends AndroidTestCase implements IDBLTests {
 		assertSame(1, this.dblResources.updateResource(res));
 	}
 	
-	public void testGetResources(){
+	public void testGetAll(){
 		DDTestsetA testset = new DDTestsetA(this.context);
 		testset.FillDb();
 		

@@ -5,7 +5,6 @@ import android.test.RenamingDelegatingContext;
 import at.lvmaster3000.database.interfaces.IDBLTests;
 import at.lvmaster3000.database.logic.DBLTasks;
 import at.lvmaster3000.database.objects.Date;
-import at.lvmaster3000.database.objects.Exam;
 import at.lvmaster3000.database.objects.Task;
 
 public class DBLTasksTest extends AndroidTestCase implements IDBLTests {
@@ -42,6 +41,16 @@ public class DBLTasksTest extends AndroidTestCase implements IDBLTests {
 		assertSame(1, this.dblTasks.updateTask(task));
 	}
 	
+	@Override
+	public void testGetAll() {
+		Task t1 = new Task(0, "Task title", "Comment ...", new Date(0, 0, "i13", "", "comment"));
+		Task t2 = new Task(0, "Task title", "Comment ...", null);
+		this.dblTasks.addTask(t1);
+		this.dblTasks.addTask(t2);
+		
+		assertSame(2, this.dblTasks.getTasks(0).getTasks().size());
+	}
+	
 	public void testCreateTaskWithDate() {
 		long unixTime = System.currentTimeMillis() / 1000L;
 		Date date = new Date(0, unixTime, "i13", "", "Comment ...");		
@@ -70,4 +79,5 @@ public class DBLTasksTest extends AndroidTestCase implements IDBLTests {
 			assertTrue(false);
 		}
 	}
+
 }

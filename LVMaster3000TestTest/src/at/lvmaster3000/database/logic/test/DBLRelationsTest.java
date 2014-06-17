@@ -46,4 +46,9 @@ public class DBLRelationsTest extends AndroidTestCase implements IDBLTests {
 		assertSame(1, this.dblRelations.deleteRelationByDate(date));
 	}
 
+	@Override
+	public void testGetAll() {
+		//functionality not needed for this logic class
+	}
+
 }

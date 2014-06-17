@@ -8,8 +8,7 @@ import at.lvmaster3000.database.objects.Coworker;
 
 public class DBLCoworkersTest extends AndroidTestCase implements IDBLTests {
 	
-	private DBLCoworkers dblCoworkers;
-	
+	private DBLCoworkers dblCoworkers;	
 	private RenamingDelegatingContext context;
 	
 	public static final String LOG_TAG_COWORKERS_LOGIC_TEST = "TEST_COWORKERS_LOGIC";

@@ -2,9 +2,6 @@ package at.lvmaster3000.database.logic.test;
 
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
-import at.lvmaster3000.database.helper.HLPExams;
-import at.lvmaster3000.database.helper.HLPLectures;
-import at.lvmaster3000.database.helper.HLPRelations;
 import at.lvmaster3000.database.interfaces.IDBLTests;
 import at.lvmaster3000.database.lists.Exams;
 import at.lvmaster3000.database.logic.DBLLectures;
@@ -62,7 +59,7 @@ public class DBLLecturesTest extends AndroidTestCase implements IDBLTests {
 		assertEquals(lecture.getNumber(), number);
 	}
 	
-	public void testGetAllLectures(){
+	public void testGetAll(){
 		this.dblLectures.addLecture("701.001","Test LV 1", "Some comment...", "LV", 1, 1);
 		this.dblLectures.addLecture("702.001","Test LV 2", "Some comment...", "LV", 0, 0);;		
 		

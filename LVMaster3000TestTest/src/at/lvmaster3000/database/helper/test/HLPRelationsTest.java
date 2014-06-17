@@ -11,7 +11,7 @@ public class HLPRelationsTest extends AndroidTestCase implements IHLPTest {
 
 	private HLPRelations hlpRelations;
 	private SQLiteDatabase db;
-	
+		
 	public void setUp() {
 		RenamingDelegatingContext context = new RenamingDelegatingContext(getContext(), "test_");
 		this.hlpRelations = new HLPRelations(context);

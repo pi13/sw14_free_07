@@ -29,7 +29,7 @@ public class ResourcesTest extends AndroidTestCase implements IListTests {
 		try {
 			this.resources.printResourceList();
 		} catch (Exception e) {
-			assertNull(null);
+			assertNotNull(null);
 		}
 	}
 
