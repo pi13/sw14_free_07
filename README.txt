@@ -30,3 +30,4 @@ Project setup instructions for Eclipse
 -+ Java Build Path
 	-> Projects -> Add -> LVMaster3000 (only listed, if imported correctly)
 
+After setting up the project you may need to clean all imports before it works
