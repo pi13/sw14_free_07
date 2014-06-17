@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import at.lvmaster3000.R;
 import at.lvmaster3000.database.IDBlogic;
 import at.lvmaster3000.database.demodata.DDTestsetA;
@@ -44,6 +45,8 @@ public class TestFragment extends UIFragmentBase {
 //		item.setCount(111);
 		
 //		base.forceShowActionBarOverflowMenu();
+		
+		Toast.makeText(context, "Demodata loaded, have fun :)", Toast.LENGTH_LONG).show();
 		
 		return base; 
 	}  

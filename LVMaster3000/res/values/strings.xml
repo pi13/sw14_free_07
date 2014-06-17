@@ -48,7 +48,7 @@
         <item>Tasks</item>
         <item>Exams</item>
         <item>Resources</item>
-        <item>Test</item>
+        <item>Load demodata</item>
     </string-array>
 
     <!-- Nav Drawer Menu Items -->
